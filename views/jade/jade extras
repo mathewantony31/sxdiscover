@@ -1,0 +1,9 @@
+        form(name="get-number", method="post")
+          Phone number:
+          input(type='text', name='number')
+          input(type='submit', name='submit')
+
+
+          #sendphone
+        a(href='/sms')
+          h3  Send to phone

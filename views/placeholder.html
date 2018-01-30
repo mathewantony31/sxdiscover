@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel="stylesheet" href="/stylesheets/reset.css">
+    <link rel="stylesheet" href="/stylesheets/home.css">
+    <link rel="stylesheet" href="/stylesheets/loaders.min.css">
+    <meta name="viewport" content="width=device-width initial-scale = 1.0 
+maximum-scale=1.0 user-scalable=no" /> 
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-75031530-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="/javascripts/loader.js"></script>
+    <script src="/javascripts/date.js"></script>
+    <script>
+      var user = "{{name}}";
+      console.log(user);
+
+            // DOM Ready =============================================================
+      // $(document).ready(function() {
+      //     loadUserPage();
+      // });
+      
+      // Functions =============================================================
+      // Fill table with data
+          function loadUserPage() {
+
+            console.log("Loading page for "+user);
+
+          // jQuery AJAX call
+          $.get( '/pages/'+user, function(data) {
+            console.log("Running /pages function");
+              if (data.hasOwnProperty('errors')){
+                  console.log(data);
+                  window.location.replace("http://sxdiscover.co/404");
+              }
+              window.location.replace("/pages/"+user);
+            });
+          };
+          
+      loadUserPage();
+    </script>
+  </head>
+  <body>
+    <div id="top">
+    </div>
+    <!-- Mid section of the site -->
+    <div id="mid-loader">
+        <img id="logo" src="/images/logo.png">
+        <div id="animation">
+         <div class="loader-inner ball-pulse">
+          <div id="red"></div>
+          <div id="yellow"></div>
+          <div id="turqoise"></div>
+         </div>
+        </div>
+    </div>
+      <!-- Bottom of site -->
+    <div id="footer">
+      <a href="/about" alt="about us">more info</a>
+    </div>
+  </body>
+</html>

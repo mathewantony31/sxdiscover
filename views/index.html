@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SXDiscover</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/home.css">
+    <link rel="shortcut icon" href="http://sxdiscover.co/favicon.ico?v=2">
+    <meta name="viewport" content="width=device-width initial-scale = 1.0
+maximum-scale=1.0 user-scalable=no" />
+    <meta property="fb:app_id"        content="618293678380263" /> 
+    <meta property="og:url" content="http://sxdiscover.co" />
+    <meta property="og:title" content="SXDiscover" />
+    <meta property="og:description" content="Log in with Spotify to find out if your favorite bands are playing during SXSW." />
+    <meta property="og:image" content="http://sxdiscover.co/images/sxd.png">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-75031530-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <script>
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+      document,'script','//connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '232630063749418');
+      fbq('track', "PageView");
+    </script>
+    <!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+ fbq('init', '1314513665283124');
+fbq('track', 'PageView');
+</script>
+<noscript>
+ <img height="1" width="1"
+src="https://www.facebook.com/tr?id=1314513665283124&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Facebook Pixel Code -->
+  </head>
+    <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript">
+    (function($){
+    $.fn.extend({
+        rotaterator: function(options) {
+
+            var defaults = {
+                fadeSpeed: 1000,
+                pauseSpeed: 500,
+        child:null
+            };
+
+            var options = $.extend(defaults, options);
+
+            return this.each(function() {
+                  var o =options;
+                  var obj = $(this);
+                  var items = $(obj.children(), obj);
+          items.each(function() {$(this).hide();})
+          if(!o.child){var next = $(obj).children(':first');
+          }else{var next = o.child;
+          }
+          $(next).fadeIn(o.fadeSpeed, function() {
+            $(next).delay(o.pauseSpeed).fadeOut(o.fadeSpeed, function() {
+              var next = $(this).next();
+              if (next.length == 0){
+                  next = $(obj).children(':first');
+              }
+              $(obj).rotaterator({child : next, fadeSpeed : o.fadeSpeed, pauseSpeed : o.pauseSpeed});
+            })
+          });
+            });
+        }
+    });
+})(jQuery);
+ $(document).ready(function() {
+        $('#rotate').rotaterator({fadeSpeed:1000, pauseSpeed:500});
+ });</script>
+    <script src="/javascripts/global.js"></script>
+    <script src="/javascripts/date.js"></script>
+
+    <!-- Mid section of the site -->
+    <div id="mid">
+            <img id="logo" src="/images/logo.png">
+            <h1>Discover your</h1>
+            <h2><div id="rotate"> <div>...March in Austin.</div> <div>...best show ever.</div> <div>...song of the summer.</div> <div>SXSW.</div> </div> </h2>
+          <a href="/login"><img id="spotify" src="images/svg/log_in-desktop.svg"></a>
+          <!-- OR img src="link to spotify button"-->
+      </div>
+      <!-- Bottom of site -->
+    <div id="footer">
+      <a href="/about" alt="about us" id="info">more info →</a>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,600i');
+@media only screen and (min-width: 320px) {
+	body {
+		background-position: left top;
+    background-size: cover;
+		background-attachment: fixed;
+    background-color: #303244;
+	}
+}
+@media only screen and (min-width: 700px) {
+	body {
+		background-image: url("/images/desktop_cover_light.png");
+    background-position: left top;
+		background-attachment: fixed;
+    background-size: cover;
+    background-color: #303244;
+	}
+}
+#top {
+	/*height: 50vh;*/
+	text-align: center;
+	display: block;
+}
+#top img {
+    height: 15vh;
+    display: inline-block;
+    vertical-align: middle;
+	position: relative;
+	margin: 3vh auto;
+}
+#top h2 {
+	font-family: "OpenSans", sans-serif;
+	font-weight: 300;
+	font-style: italic;
+	font-size: 1em;
+	color: #FFFFFF;
+	letter-spacing: 0px;
+	vertical-align: middle;
+	display: block;
+	margin: 0 auto;
+}
+#discoveryours {
+	font-family: "OpenSans", sans-serif;
+	font-weight: 300;
+	font-style: italic;
+	font-size: 1em;
+	color: #4ECDC4;
+	letter-spacing: 0px;
+	vertical-align: middle;
+	display: block;
+	margin: 0 auto;
+	padding: 5px 0;
+}
+#publicstatus {
+	font-family: "OpenSans", sans-serif;
+	font-weight: 300;
+	font-style: italic;
+	font-size: 1em;
+	color: #F5D76E;
+	letter-spacing: 0px;
+	vertical-align: middle;
+	display: block;
+	padding: 5px 0;
+}
+#publicstatusred {
+	font-family: "OpenSans", sans-serif;
+	font-weight: 300;
+	font-size: 1.25em;
+	color: #F5D76E;
+	letter-spacing: 0px;
+	vertical-align: middle;
+	display: block;
+	padding: 5px 0;
+}
+#bandList {
+	margin: 0 auto;
+	text-align: center;
+}
+#publicLink{
+	font-family: "OpenSans", sans-serif;
+	font-weight: 300;
+	font-style: italic;
+	font-size: 1.5em;
+	color: #4ECDC4;
+	letter-spacing: 0px;
+	vertical-align: middle;
+	display: block;
+	margin: 0 auto;
+	padding: 5px 0;
+}
+#makeitprivate {
+	font-family: "OpenSans", sans-serif;
+	font-weight: 300;
+	font-style: italic;
+	font-size: .75em;
+	color: #EF4836;
+	letter-spacing: 0px;
+	vertical-align: middle;
+	display: block;
+	padding: 5px 0;
+}
+#killpubliclink {
+	font-family: "OpenSans", sans-serif;
+	font-weight: 300;
+	font-style: italic;
+	font-size: .75em;
+	color: #4ECDC4;
+	letter-spacing: 0px;
+	vertical-align: middle;
+	display: inline;
+	padding: 5px 0;
+
+}
+
+/*Copied from last year*/
+
+/*try again*/
+article {
+	/*border: 1px solid black;*/
+	padding: 1em;
+/*	overflow: scroll;
+*/	height: 60%;
+	text-align: center;
+/*	background: #DEDEDE;
+	font-family: "Avenir";*/
+	padding-top: 20 vh;
+}
+.firstdate {
+	font-family: "OpenSans", sans-serif;
+	font-style: italic;
+	font-weight: 400;
+	color: #F5D76E;
+	letter-spacing: 0px;
+	margin-bottom: -1em;
+    font-size: 1.1em;
+	text-transform: uppercase;
+}
+.date {
+	font-family: "OpenSans", sans-serif;
+	font-style: italic;
+	font-weight: 400;
+	color: #4ECDC4;
+	letter-spacing: 0px;
+  margin-bottom: -1em;
+  margin-top: 4em;
+  font-size: .9em;
+  text-transform: uppercase;
+}
+.band-container {
+	display:block;
+	text-align: center;
+	width: 95%;
+	margin: 1.5em auto;
+	padding-top: .2em;
+}
+.artist {
+	font-family: "OpenSans", sans-serif;
+	font-weight: 400;
+	color: white;
+	font-size: 1.7em;
+	padding-bottom: .1em;
+}
+.venue {
+	font-family: "OpenSans", sans-serif;
+	font-weight: 300;
+	font-style: italic;
+	font-size: 1em;
+	color: white;
+}
+#send {
+	font-family: "OpenSans", sans-serif;
+	font-size: 2em;
+	color: #4B4A4A;
+	text-align: center;
+	display: block;
+	padding: .4em;
+	border: 1px solid black;
+}
+.infolink {
+	font-family: "OpenSans", sans-serif;
+	font-weight: 300;
+	font-style: italic;
+	font-size: .7em;
+	color: #4ECDC4;
+	margin-top: 1vh;
+	padding: 1px;
+  display: inline-block;
+}
+.status{
+	display: inline-block;
+	position: relative;
+}
+p{
+	display: inline-block;
+	font-family: "OpenSans", sans-serif;
+	font-weight: 300;
+	font-style: italic;
+	font-size: 1em;
+	color: white;
+	margin-bottom: 1.5em;
+}
+/* unvisited link */
+a:link {
+    text-decoration: none;
+}
+/* visited link */
+a:visited {
+    color: gray;
+    text-decoration: none;
+}
+/* mouse over link */
+a:hover {
+    color: #F5D76E;
+    text-decoration: none;
+}
+/* selected link */
+a:active {
+    color: #4B4A4A;
+    text-decoration: none;
+}
+#footer {
+	text-align: center;
+}
+#info {
+		font-family: "OpenSans", sans-serif;
+    font-style: italic;
+    font-weight: 300;
+    color: #fff;
+    margin: 0 auto;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    display: inline-block;
+    padding-bottom: 3vh;
+}
+.fb-iframe-widget {
+	padding-bottom: 10px;
+}

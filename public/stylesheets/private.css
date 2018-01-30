@@ -1,0 +1,16 @@
+a{
+	color: #F5D76E;
+	text-decoration: none;
+}
+
+a:visited{
+	color:#F5D76E;
+}
+
+a:hover{
+	color:#EF4836;
+}
+
+#view{
+	font-size:1em;
+}
