@@ -17,20 +17,7 @@ var bodyParser = require('body-parser'),
     mongo = require('mongodb'),
     mongoose = require('mongoose');
 
-// Environment variables
-var uri = process.env.MONGOLAB_URI,
-    client_id = process.env.CLIENT_ID,
-    client_secret = process.env.CLIENT_SECRET,
-    redirect_uri,
-    isProduction = process.env.NODE_ENV === 'production';
-
-router = express.Router(),
-
-// Import band and user schema
-var Band = require('./models/band.js'),
-    User = require('./models/user.js');
-
-var app = express();
+var isProduction = process.env.NODE_ENV === 'production';
 
 if(!isProduction){
   redirect_uri = 'http://localhost:5000/callback';
@@ -39,6 +26,20 @@ if(!isProduction){
 } else {
   redirect_uri = 'http://sxdiscover.co/callback';
 }
+
+// Environment variables
+var uri = process.env.MONGOLAB_URI,
+    client_id = process.env.CLIENT_ID,
+    client_secret = process.env.CLIENT_SECRET,
+    redirect_uri;
+
+var router = express.Router();
+
+// Import band and user schema
+var Band = require('./models/band.js'),
+    User = require('./models/user.js');
+
+var app = express();
 
 require('datejs');
 
