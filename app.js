@@ -1,47 +1,49 @@
-var express = require('express');
-var request = require('request');
-var redirect_uri;
+// Required modules
+var bodyParser = require('body-parser'),
+    cookieParser = require('cookie-parser'),
+    dateFunctions = require('./functions/date-functions.js'),
+    express = require('express'),
+    favicon = require('serve-favicon'),
+    logger = require('morgan'),
+    path = require('path'),
+    querystring = require('querystring'),
+    request = require('request'),
+    request2 = require('request'),    
+    hbs = require('hbs'), // Handlebars
+    routes = require('./routes/index'),
+    users = require('./routes/users'),
+    session = require('express-session'),
+    MongoDBStore = require('connect-mongodb-session')(session),
+    mongo = require('mongodb'),
+    mongoose = require('mongoose');
+
 var isProduction = process.env.NODE_ENV === 'production';
 
 if(!isProduction){
   redirect_uri = 'http://localhost:5000/callback';
-
   // Load local environment file
   require('dotenv').load();
-
 } else {
   redirect_uri = 'http://sxdiscover.co/callback';
 }
 
-require('datejs');
-
-var request2 = require('request');
-var querystring = require('querystring');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var dateFunctions = require('./functions/date-functions.js')
-var bodyParser = require('body-parser');
-
-var client_id = process.env.CLIENT_ID; // Your client id
-var client_secret = process.env.CLIENT_SECRET; // Your client secret
-
-// Handlebars
-var hbs = require('hbs');
-var routes = require('./routes/index');
-var users = require('./routes/users');
-
-// Set up sessions
-var session = require('express-session');
-var MongoDBStore = require('connect-mongodb-session')(session);
+// Environment variables
+var uri = process.env.MONGOLAB_URI,
+    client_id = process.env.CLIENT_ID,
+    client_secret = process.env.CLIENT_SECRET,
+    redirect_uri;
 
 var router = express.Router();
 
-var mongo = require('mongodb');
-var mongoose = require('mongoose');
-var uri = process.env.MONGOLAB_URI;
+// Import band and user schema
+var Band = require('./models/band.js'),
+    User = require('./models/user.js');
 
+var app = express();
+
+require('datejs');
+
+// Set up mongodb
 mongoose.connect(uri, function (error) {
     if (error){
       console.error(error);
@@ -50,11 +52,6 @@ mongoose.connect(uri, function (error) {
       console.log('mongo connected');
     }
 });
-
-var Band = require('./models/band.js');
-var User = require('./models/user.js');
-
-var app = express();
 
 // Set up session store
 var store = new MongoDBStore({
