@@ -94,10 +94,6 @@ var generateRandomString = function(length) {
 
 var stateKey = 'spotify_auth_state';
 
-app.get('/about', function(req, res){
-  res.render('about');
-});
-
 app.get('/ph', function(req, res){
   res.render('index');
 });
@@ -244,9 +240,6 @@ app.get('/callback', function(req, res) {
 
         });
 
-        // res.redirect('/my-sx');
-        // res.render('loader');
-
       // we can also pass the token to the browser to make requests from there
       //   res.redirect('/#' +
       //     querystring.stringify({
@@ -261,11 +254,6 @@ app.get('/callback', function(req, res) {
       }
     });
   }
-});
-
-app.get('/my-sx', function(req, res){
-  // res.render('loader');
-  res.render('loader');
 });
 
 // Route that's called when a user connects their Spotify to SXD
@@ -408,10 +396,6 @@ app.get('/venues/*', function(req, res) {
   }
 });
 
-app.get('/privateUser', function(req,res){
-  res.render('privateUser');
-});
-
 app.get('/private', function(req, res){
 
   // By default, set public to true
@@ -485,12 +469,6 @@ app.get('/refresh_token', function(req, res) {
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
-
-// Trying EJS
-// app.engine('html', require('ejs').renderFile);
-// app.set('view engine', 'html')
-// app.set('view engine', 'ejs');
 
 // Trying handlebars
 app.set('view engine', 'html');
@@ -510,15 +488,6 @@ app.use('/', routes);
 app.get('*', function(req, res){
   res.render('404')
 });
-
-// // catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   var err = new Error('Not Found');
-//   err.status = 404;
-//   next(err);
-// });
-
-// error handlers
 
 // development error handler
 // will print stacktrace
