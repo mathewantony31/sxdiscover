@@ -21,6 +21,9 @@ router.get('/privateUser', function(req, res, next){
   res.render('privateUser');
 });
 
+/* Spotify login. */
+router.use('/', require('./spotify'));
+
 router.post('/loader', function (req, res) {
     console.log(req.body.number);
     res.send('Number submitted');
