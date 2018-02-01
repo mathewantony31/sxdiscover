@@ -28,10 +28,10 @@ if(!isProduction){
 }
 
 // Environment variables
-var uri = process.env.MONGOLAB_URI,
-    client_id = process.env.CLIENT_ID,
-    client_secret = process.env.CLIENT_SECRET,
-    redirect_uri;
+var uri = process.env.MONGOLAB_URI;
+    // client_id = process.env.CLIENT_ID,
+    // client_secret = process.env.CLIENT_SECRET,
+    // redirect_uri;
 
 var router = express.Router();
 
@@ -76,197 +76,6 @@ app.use(require('express-session')({
 }));
 
 app.set('port', (process.env.PORT || 5000));
-
-/**
- * Generates a random string containing numbers and letters
- * @param  {number} length The length of the string
- * @return {string} The generated string
- */
-var generateRandomString = function(length) {
-  var text = '';
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-  for (var i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-};
-
-var stateKey = 'spotify_auth_state';
-
-app.get('/about', function(req, res){
-  res.render('about');
-});
-
-app.get('/ph', function(req, res){
-  res.render('index');
-});
-
-app.get('/login', function(req, res) {
-
-  var state = generateRandomString(16);
-  res.cookie(stateKey, state);
-
-  // your application requests authorization
-  var scope = 'user-read-private user-read-email playlist-read-private playlist-read-collaborative';
-  res.redirect('https://accounts.spotify.com/authorize?' +
-    querystring.stringify({
-      response_type: 'code',
-      client_id: client_id,
-      scope: scope,
-      redirect_uri: redirect_uri,
-      state: state
-    }));
-});
-
-app.get('/callback', function(req, res) {
-
-  // your application requests refresh and access tokens
-  // after checking the state parameter
-
-  var code = req.query.code || null;
-  var state = req.query.state || null;
-  // var storedState = req.cookies ? req.cookies[stateKey] : null;
-
-  // Can't figure out why storedState is null. It's not required by Spotify so commenting out for now.
-  // if (state === null || state !== storedState) {
-  if (state === null) {
-    res.redirect('/#' +
-      querystring.stringify({
-        error: 'state_mismatch'
-      }));
-  } else {
-    res.clearCookie(stateKey);
-    var authOptions = {
-      url: 'https://accounts.spotify.com/api/token',
-      form: {
-        code: code,
-        redirect_uri: redirect_uri,
-        grant_type: 'authorization_code'
-      },
-      headers: {
-        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
-      },
-      json: true
-    };
-
-    request.post(authOptions, function(error, response, body) {
-
-      var spotifyBands = [];
-      var userName = "No username.";
-      var displayName = "No display name.";
-      var email = "no email";
-
-      if (!error && response.statusCode === 200) {
-
-        var access_token = body.access_token,
-            refresh_token = body.refresh_token;
-
-        var getEmailOptions = {
-          url: 'https://api.spotify.com/v1/me',
-          headers: { 'Authorization': 'Bearer ' + access_token },
-          json: true
-        };
-
-        request.get(getEmailOptions, function(error, response, body){
-          email = body.email;
-          displayName = body.display_name;
-        });
-
-        var options = {
-          url: 'https://api.spotify.com/v1/me/playlists',
-          headers: { 'Authorization': 'Bearer ' + access_token },
-          json: true
-        };
-
-        // use the access token to access the Spotify Web API
-        request.get(options, function(error, response, body) {
-
-          // Function to extract Spotify username
-          var url = body.href;
-          startIndex = url.indexOf("users")+6;
-          endIndex = url.substring(startIndex).indexOf("/")+startIndex;
-          userName = url.substring(startIndex,endIndex);
-
-          for (var i=0; i<body.items.length; i++){
-
-            var option2 = {
-                url: 'https://api.spotify.com/v1/users/'+body.items[i].owner.id+'/playlists/'+body.items[i].id+'/tracks',
-                headers: { 'Authorization': 'Bearer ' + access_token },
-                json: true
-              };
-
-              request2.get(option2, function(error2, response2, body2){
-                if (!error2 && response2.statusCode === 200){
-
-                    for(var j=0; j<body2.total-1; j++){
-                        try{
-                          spotifyBands.push(body2.items[j].track.artists[0].name);
-                        } catch (e){
-                          // console.log("Error: Failed to pull info from Spotify: "+e);
-                        }
-                      }
-
-                } else{
-                }
-
-                if (spotifyBands.length > 0){
-
-                  for(j=0;j<spotifyBands.length;j++){
-                    spotifyBands[j] = spotifyBands[j].toLowerCase();
-                  }
-
-                  // Write to custom bands
-                  var bandData = {
-                    name:userName,
-                    displayName:displayName,
-                    email: email,
-                    uid: req.session.id,
-                    rawBands: spotifyBands,
-                    sxswBands: "test",
-                    public: true
-                  };
-
-                  var newUser = new User(bandData);
-
-                  var upsertData = newUser.toObject();
-                  delete upsertData._id;
-
-                  User.update({ "name" : userName }, upsertData, { upsert: true }, function(err){
-                    if(err){
-                      console.log("Error: Failed to save custom bands to database");
-                    }
-                  });
-                }
-            });
-        }
-        res.render('placeholder', {name:userName});
-
-        });
-
-        // res.redirect('/my-sx');
-        // res.render('loader');
-
-      // we can also pass the token to the browser to make requests from there
-      //   res.redirect('/#' +
-      //     querystring.stringify({
-      //       access_token: access_token,
-      //       refresh_token: refresh_token
-      //     }));
-      // } else {
-      //   res.redirect('/#' +
-      //     querystring.stringify({
-      //       error: 'invalid_token'
-      //     }));
-      }
-    });
-  }
-});
-
-app.get('/my-sx', function(req, res){
-  // res.render('loader');
-  res.render('loader');
-});
 
 // Route that's called when a user connects their Spotify to SXD
 app.get('/bands', function(req, res) {
@@ -408,10 +217,6 @@ app.get('/venues/*', function(req, res) {
   }
 });
 
-app.get('/privateUser', function(req,res){
-  res.render('privateUser');
-});
-
 app.get('/private', function(req, res){
 
   // By default, set public to true
@@ -485,12 +290,6 @@ app.get('/refresh_token', function(req, res) {
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
-
-// Trying EJS
-// app.engine('html', require('ejs').renderFile);
-// app.set('view engine', 'html')
-// app.set('view engine', 'ejs');
 
 // Trying handlebars
 app.set('view engine', 'html');
@@ -510,15 +309,6 @@ app.use('/', routes);
 app.get('*', function(req, res){
   res.render('404')
 });
-
-// // catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   var err = new Error('Not Found');
-//   err.status = 404;
-//   next(err);
-// });
-
-// error handlers
 
 // development error handler
 // will print stacktrace
