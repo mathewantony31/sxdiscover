@@ -5,7 +5,18 @@ var bodyParser = require('body-parser'),
     express = require('express'),
     favicon = require('serve-favicon'),
     logger = require('morgan'),
+    path = require('path'),
+    querystring = require('querystring'),
+    request = require('request'),
+    request2 = require('request'),    
+    routes = require('./routes/index'),
+    users = require('./routes/users'),
+    session = require('express-session'),
+    MongoDBStore = require('connect-mongodb-session')(session),
+    mongo = require('mongodb'),
+    mongoose = require('mongoose');
 
+var isProduction = process.env.NODE_ENV === 'production';
 
 if(!isProduction){
   redirect_uri = 'http://localhost:5000/callback';
@@ -17,6 +28,9 @@ if(!isProduction){
 
 // Environment variables
 var uri = process.env.MONGOLAB_URI;
+    // client_id = process.env.CLIENT_ID,
+    // client_secret = process.env.CLIENT_SECRET,
+    // redirect_uri;
 
 var router = express.Router();
 
@@ -25,6 +39,8 @@ var Band = require('./models/band.js'),
     User = require('./models/user.js');
 
 var app = express();
+
+require('datejs');
 
 // Set up mongodb
 mongoose.connect(uri, function (error) {
@@ -274,9 +290,7 @@ app.get('/refresh_token', function(req, res) {
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 
-// Trying handlebars
 app.set('view engine', 'html');
-app.engine('html', require('hbs').__express);
 
 
 // uncomment after placing your favicon in /public
