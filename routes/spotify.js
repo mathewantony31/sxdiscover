@@ -1,9 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var querystring = require('querystring'),
-    request = require('request'),
-    request2 = require('request'),
-    request3 = require('request');
+    request = require('request');
 
 
 var redirect_uri;
