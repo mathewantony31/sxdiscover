@@ -4,6 +4,7 @@ var bodyParser = require('body-parser'),
     dateFunctions = require('./functions/date-functions.js'),
     express = require('express'),
     favicon = require('serve-favicon'),
+    hbs = require('hbs'),
     logger = require('morgan'),
     path = require('path'),
     querystring = require('querystring'),
@@ -39,6 +40,11 @@ var Band = require('./models/band.js'),
     User = require('./models/user.js');
 
 var app = express();
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.engine('html', require('hbs').__express);
+app.set('view engine', 'html');
 
 require('datejs');
 
@@ -287,12 +293,6 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-
-app.set('view engine', 'html');
-
-
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -323,7 +323,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
+  res.render('error.html', {
     message: err.message,
     error: {}
   });
