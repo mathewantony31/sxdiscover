@@ -9,7 +9,6 @@ var bodyParser = require('body-parser'),
     querystring = require('querystring'),
     request = require('request'),
     request2 = require('request'),    
-    hbs = require('hbs'), // Handlebars
     routes = require('./routes/index'),
     users = require('./routes/users'),
     session = require('express-session'),
@@ -291,9 +290,7 @@ app.get('/refresh_token', function(req, res) {
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 
-// Trying handlebars
 app.set('view engine', 'html');
-app.engine('html', require('hbs').__express);
 
 
 // uncomment after placing your favicon in /public
