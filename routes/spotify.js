@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var querystring = require('querystring'),
     request = require('request'),
-    request2 = require('request');
+    request2 = require('request'),
+    request3 = require('request');
 
 
 var redirect_uri;
@@ -39,7 +40,7 @@ router.get('/login', function(req, res, next) {
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
 
-  var scope = 'user-read-private user-read-email playlist-read-private playlist-read-collaborative';
+  var scope = 'user-read-private user-read-email playlist-read-private playlist-read-collaborative user-top-read user-library-read';
 
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
@@ -101,92 +102,71 @@ router.get('/callback', function(req, res, next) {
         };
 
         request.get(getEmailOptions, function(error, response, body){
+          userName = body.id;
           email = body.email;
           displayName = body.display_name;
         });
 
+      // Get user's top tracks
         var options = {
-          url: 'https://api.spotify.com/v1/me/playlists',
+          url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=50',
           headers: { 'Authorization': 'Bearer ' + access_token },
           json: true
         };
 
-        // use the access token to access the Spotify Web API
-        request.get(options, function(error, response, body) {
+      request.get(options, function(error, response, body) {
+        for(var i=0; i <body.items.length; i++){
+          spotifyBands.push(body.items[i].name);
+          console.log(body.items.length);
+          console.log(userName);
+        }});
 
-          // Function to extract Spotify username
-          var url = body.href;
-          startIndex = url.indexOf("users")+6;
-          endIndex = url.substring(startIndex).indexOf("/")+startIndex;
-          userName = url.substring(startIndex,endIndex);
+      // Get user's saved albums
+      options = {
+          url: 'https://api.spotify.com/v1/me/albums?offset=0&limit=50',
+          headers: { 'Authorization': 'Bearer ' + access_token },
+          json: true
+        };
 
-          for (var i=0; i<body.items.length; i++){
+      request.get(options, function(error, response, body) {
+      for(var i=0; i <body.items.length; i++){
+        spotifyBands.push(body.items[i].album.artists[0].name);
+        console.log(body.items[i].album.artists[0].name);
+      }
 
-            var option2 = {
-                url: 'https://api.spotify.com/v1/users/'+body.items[i].owner.id+'/playlists/'+body.items[i].id+'/tracks',
-                headers: { 'Authorization': 'Bearer ' + access_token },
-                json: true
-              };
+        if (spotifyBands.length > 0){
 
-              request2.get(option2, function(error2, response2, body2){
-                if (!error2 && response2.statusCode === 200){
+          for(j=0;j<spotifyBands.length;j++){
+            spotifyBands[j] = spotifyBands[j].toLowerCase();
+            console.log(spotifyBands[j]);
+          }
 
-                    for(var j=0; j<body2.total-1; j++){
-                        try{
-                          spotifyBands.push(body2.items[j].track.artists[0].name);
-                        } catch (e){
-                          // console.log("Error: Failed to pull info from Spotify: "+e);
-                        }
-                      }
+          // Write to custom bands
+          var bandData = {
+            name:userName,
+            displayName:displayName,
+            email: email,
+            uid: req.session.id,
+            rawBands: spotifyBands,
+            sxswBands: "test",
+            public: true
+          };
 
-                } else{
-                }
+          var newUser = new User(bandData);
 
-                if (spotifyBands.length > 0){
+          var upsertData = newUser.toObject();
+          delete upsertData._id;
 
-                  for(j=0;j<spotifyBands.length;j++){
-                    spotifyBands[j] = spotifyBands[j].toLowerCase();
-                  }
-
-                  // Write to custom bands
-                  var bandData = {
-                    name:userName,
-                    displayName:displayName,
-                    email: email,
-                    uid: req.session.id,
-                    rawBands: spotifyBands,
-                    sxswBands: "test",
-                    public: true
-                  };
-
-                  var newUser = new User(bandData);
-
-                  var upsertData = newUser.toObject();
-                  delete upsertData._id;
-
-                  User.update({ "name" : userName }, upsertData, { upsert: true }, function(err){
-                    if(err){
-                      console.log("Error: Failed to save custom bands to database");
-                    }
-                  });
-                }
-            });
+          User.update({ "name" : userName }, upsertData, { upsert: true }, function(err){
+            if(err){
+              console.log("Error: Failed to save custom bands to database");
+            }
+          });
         }
+
         res.render('placeholder', {name:userName});
 
         });
-
-      // we can also pass the token to the browser to make requests from there
-      //   res.redirect('/#' +
-      //     querystring.stringify({
-      //       access_token: access_token,
-      //       refresh_token: refresh_token
-      //     }));
-      // } else {
-      //   res.redirect('/#' +
-      //     querystring.stringify({
-      //       error: 'invalid_token'
-      //     }));
       }
     });
   }
