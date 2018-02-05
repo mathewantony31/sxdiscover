@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* Get home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'SXDiscover' });
+  res.render('index');
 });
 
 /* Get about page. */
