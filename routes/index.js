@@ -21,6 +21,9 @@ router.get('/privateUser', function(req, res, next){
   res.render('privateUser');
 });
 
+/* Load itinerary for a specific venue. */
+router.use('/', require('./venues'));
+
 /* Spotify login. */
 router.use('/', require('./spotify'));
 
