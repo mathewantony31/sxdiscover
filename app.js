@@ -1,18 +1,11 @@
 // Required modules
 var bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
-    dateFunctions = require('./functions/date-functions.js'),
-    // bandFunctions = require('./functions/fetchBandInfo.js'),
     express = require('express'),
     favicon = require('serve-favicon'),
     hbs = require('hbs'),
     logger = require('morgan'),
-    path = require('path'),
-    querystring = require('querystring'),
-    request = require('request'),
-    request2 = require('request'),    
-    routes = require('./routes/index'),
-    users = require('./routes/users'),
+    path = require('path'), 
     session = require('express-session'),
     MongoDBStore = require('connect-mongodb-session')(session),
     mongo = require('mongodb'),
@@ -21,25 +14,14 @@ var bodyParser = require('body-parser'),
 var isProduction = process.env.NODE_ENV === 'production';
 
 if(!isProduction){
-  redirect_uri = 'http://localhost:5000/callback';
   // Load local environment file
   require('dotenv').load();
-} else {
-  redirect_uri = 'http://sxdiscover.co/callback';
 }
 
 // Environment variables
 var uri = process.env.MONGOLAB_URI;
-    // client_id = process.env.CLIENT_ID,
-    // client_secret = process.env.CLIENT_SECRET,
-    // redirect_uri;
 
 var router = express.Router();
-
-// Import band and user schema
-var Band = require('./models/band.js'),
-    User = require('./models/user.js');
-
 var app = express();
 
 // view engine setup
@@ -91,7 +73,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 
-app.use('/', routes);
+app.use('/', require('./routes/index'));
 
 app.get('*', function(req, res){
   res.render('404')
