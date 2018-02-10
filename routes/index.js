@@ -22,6 +22,9 @@ router.use('/', require('./venues'));
 /* Spotify login. */
 router.use('/', require('./spotify'));
 
+/* Load a user's itinerary. */
+router.use('/', require('./userPage'));
+
 /* Toggle's user's itinerary between public and private. */
 router.use('/', require('./private'));
 
