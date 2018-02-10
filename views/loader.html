@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+
     <title></title>
     <link rel="stylesheet" href="/stylesheets/reset.css">
     <link rel="stylesheet" href="/stylesheets/bands.css">
@@ -58,10 +59,6 @@
               }
               var results = ['SX'];
 
-              // data.sort(function(a,b){
-              //     return Date.parse(a["date"]+" "+a["time"]).getTime()-Date.parse(b["date"]+" "+b["time"]).getTime();
-              // });
-
               // For each item in our JSON, add a table row and cells to the content string
               $.each(data, function(){
                   try{
@@ -93,21 +90,25 @@
                   console.log("Error: Couldn't access bands from /bands response");
                 }
               });
-                //Remove first element
+                // This slices the json from our scraper
                 results = results.slice(1);
                 for(var j=0;j<results.length;j++){
+// This creates a particular div for the first date result, which we had defined with different margins due to the original layout of the site pre-grid.
                   if(j==0){
                       content += '<div class="firstdate">~ '+results[j][0].date + ' ~</div>';
-                  } else {
+                  }
+// this creates divs for dates
+                  else {
                       content += '<div class="date">~ '+results[j][0].date + ' ~</div>';
                   }
+// this creates divs for band cards with artist and show information inside
                   for(var k=0;k<results[j][0].bands.length;k++){
                       content += '<div class="band-container">';
                       content += '<h2 class="artist"><a href=\''+results[j][0].bands[k][3]+'\' target="_blank">'+results[j][0].bands[k][0]+'</a></h2><h3 class="venue">'+results[j][0].bands[k][1]+ ' '+results[j][0].bands[k][2]+'</h3>';
                       content += '</div>';
                       }
                   }
-                  
+
               // Inject the whole content string into our existing HTML table
               $('#bandList').html(content);
               $('body').addClass('loaded');
