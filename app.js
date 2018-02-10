@@ -2,6 +2,7 @@
 var bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
     dateFunctions = require('./functions/date-functions.js'),
+    bandFunctions = require('./functions/fetchBandInfo.js'),
     express = require('express'),
     favicon = require('serve-favicon'),
     hbs = require('hbs'),
@@ -114,7 +115,7 @@ app.get('/pages/*', function(req, res) {
 
                  // Check to see if page is set to public or private, or if user visiting their own page
 
-                var results = fetchBandInfo(docs[0].rawBands, function(result){
+                var results = bandFunctions.fetchBandInfo(docs[0].rawBands, function(result){
 
                   var r = JSON.stringify(result);
                   console.log("JSON result is");
@@ -179,17 +180,6 @@ app.get('/private', function(req, res){
     });
   });
 });
-
-function fetchBandInfo(bandList, callback){
-    Band.find({name: { $in: bandList}}).exec(function (err, docs){
-    if(err){
-    return "Error fetching bands";
-    } else {
-      console.log(docs);
-      callback(docs);
-    }
-  });
-}
 
 app.get('/refresh_token', function(req, res) {
 
