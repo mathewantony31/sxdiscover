@@ -145,41 +145,41 @@ app.get('/pages/*', function(req, res) {
   }
 });
 
-app.get('/private', function(req, res){
+// app.get('/private', function(req, res){
 
-  // By default, set public to true
-  var status = true
-  var statusStr = "public";
+//   // By default, set public to true
+//   var status = true
+//   var statusStr = "public";
 
-  // Check to see user's public status
-  User.find({"uid": req.session.id}).exec(function(err, docs){
-    if(err){
-      return res.send({errors:"Error finding profile. If issue persists, please message us on Facebook."})
-    }
+//   // Check to see user's public status
+//   User.find({"uid": req.session.id}).exec(function(err, docs){
+//     if(err){
+//       return res.send({errors:"Error finding profile. If issue persists, please message us on Facebook."})
+//     }
 
-    status = docs[0].public;
+//     status = docs[0].public;
 
-    // Toggle status
-    if (status == true){
-      status = false;
-      statusStr = "private"
-    } else {
-      status = true;
-      statusStr = "public"
-    }
+//     // Toggle status
+//     if (status == true){
+//       status = false;
+//       statusStr = "private"
+//     } else {
+//       status = true;
+//       statusStr = "public"
+//     }
 
-    console.log(req.session.id);
+//     console.log(req.session.id);
 
-    // Update status
-    User.update({ "uid" : req.session.id }, {$set: {"public" : status}}, function(err){
-    if(err){
-      console.log("Error: Failed to make user private");
-      return res.send({errors: "Failed to make itinerary private. If issue persists, please message us on Facebook."});
-    }
-      return res.send("Page is now "+statusStr+".");
-    });
-  });
-});
+//     // Update status
+//     User.update({ "uid" : req.session.id }, {$set: {"public" : status}}, function(err){
+//     if(err){
+//       console.log("Error: Failed to make user private");
+//       return res.send({errors: "Failed to make itinerary private. If issue persists, please message us on Facebook."});
+//     }
+//       return res.send("Page is now "+statusStr+".");
+//     });
+//   });
+// });
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

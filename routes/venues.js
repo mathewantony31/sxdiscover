@@ -1,8 +1,9 @@
+// Route that's called to access all bands playing a particular venue
+
 var express = require('express');
 var router = express.Router();
 var Band = require('../models/band.js');
 
-// Route that's called to access all bands playing a particular venue
 router.get('/venues/*', function(req, res, next) {
   try{
       Band.find({venue: { $in: req.params[0]}}).exec(function (err, docs){
