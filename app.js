@@ -82,65 +82,6 @@ app.use(require('express-session')({
 
 app.set('port', (process.env.PORT || 5000));
 
-// Route that's called when a user connects their Spotify to SXD
-app.get('/bands', function(req, res) {
-
-  try{
-    // Find user in Users database
-
-    User.find({uid: req.session.id}).exec(function(err, docs){
-
-      // console.log("Searching Users for user. Found the following "+docs);
-      if(err){
-          return res.send({errors: "Error fetching bands"});
-          } else{
-            try{
-
-              // Save bands to variable
-              var spotify = docs[0].rawBands;
-
-              // Remove duplicates
-              unique = spotify.filter(function(item, pos) {
-              return spotify.indexOf(item) == pos;
-              });
-
-              // Search for Spotify bands in our SX Database
-              Band.find({name: { $in: unique}}).exec(function (err2, docs2){
-
-                if(err2){
-                return res.send({errors: "Error fetching bands"});
-                } else {
-
-                  var sxBands = [];
-
-                  for (var i=0; i<docs2.length; i++){
-                    // console.log(docs2[i].name);
-                    sxBands.push(docs2[i].name);
-                  }
-
-                  console.log(sxBands);
-
-                   User.update({ "uid" : req.session.id }, {$set: {"sxswBands" : sxBands}}, function(err){
-                      if(err){
-                        console.log("Error: Failed to save SX bands to database");
-                      }
-                    });
-                   console.log("SXSW Bands updated!");
-
-                  res.send(docs2);
-                  }
-              });
-            } catch (e){
-              console.log("Hit this error.");
-              return res.send({errors: "Error fetching bands"});
-            }
-          }
-    });
-  } catch (e){
-    return res.send({errors: "Error fetching bands"});
-  }
-});
-
 // Route that's called to access any public itinerary
 app.get('/pages/*', function(req, res) {
 
