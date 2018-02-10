@@ -11,11 +11,6 @@ router.get('/about', function(req, res, next){
   res.render('about');
 });
 
-/* Get personal itinerary page. */
-router.get('/my-sx', function(req, res, next){
-  res.render('loader');
-});
-
 /* Load private user page. */
 router.get('/privateUser', function(req, res, next){
   res.render('privateUser');
