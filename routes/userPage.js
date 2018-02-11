@@ -3,7 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user.js');
-var bandFunctions = require('../functions/fetchBandInfo.js');
+var Band = require('../models/band.js');
 
 router.get('/pages/*', function(req, res) {
 
@@ -36,7 +36,7 @@ router.get('/pages/*', function(req, res) {
 
                  // Check to see if page is set to public or private, or if user visiting their own page
 
-                var results = bandFunctions.fetchBandInfo(docs[0].rawBands, function(result){
+                var results = Band.fetchBandInfo(docs[0].rawBands, function(result){
 
                   var r = JSON.stringify(result);
                   console.log("JSON result is");

@@ -6,7 +6,7 @@ var Band = require('../models/band.js');
 
 router.get('/venues/*', function(req, res, next) {
   try{
-      Band.find({venue: { $in: req.params[0]}}).exec(function (err, docs){
+      Band.model.find({venue: { $in: req.params[0]}}).exec(function (err, docs){
         if(err){ return "Error fetching bands";
         } else {
           var displayMessage = "Bands playing at "+req.params[0];
