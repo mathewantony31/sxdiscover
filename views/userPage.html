@@ -31,7 +31,7 @@ maximum-scale=1.0 user-scalable=no" />
     <script src="/javascripts/global.js"></script>
     <script src="/javascripts/date.js"></script>
 
-    <!-- Facebook SDK code for share button -->
+    <!-- UPDATE: 2017 Facebook SDK code for share button -->
     <div id="fb-root"></div>
     <script>(function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
@@ -44,18 +44,13 @@ maximum-scale=1.0 user-scalable=no" />
       <div id="wrapper">
       <script>
 
-      // $('#login').click(function(){
-      //   $.get("/login", function(data) {
-      //   }); return false;
-      // });
-
       var results = ['SX'];
       var bands = "{{bands}}";
       var content = '';
 
       // Remove &quot; and replace with actual quotes
       bands = JSON.parse(bands.replace(/&quot;/g,'"'));
-      
+
 
       // Convert date and time into milliseconds to sort by date
       bands.sort(function(a,b){
@@ -69,25 +64,11 @@ maximum-scale=1.0 user-scalable=no" />
         return Date.parse(a["date"]+" 2017 "+a["time"])-Date.parse(b["date"]+" 2017 "+b["time"]);
       });
 
-      // for (i = 0; i < bands.length; i++) {
-
-      //   var hour = bands[i]["time"].substring(0,2);
-
-      //   if(hour=='00' || hour == '01' || hour == '02'){
-      //     bands[i]["time"] = Date.parse(bands[i]["date"]).addDays(-1).toString('d');
-      //     console.log(bands[i]["name"]);
-      //     console.log(Date.parse(bands[i]["time"]));
-      //   }
-      // }
-
       $(document).ready(function() {
           populateTable();
       });
 
       function populateTable() {
-        // data.sort(function(a,b){
-              //     return Date.parse(a["date"]+" "+a["time"]).getTime()-Date.parse(b["date"]+" "+b["time"]).getTime();
-              // });
 
               // For each item in our JSON, add a table row and cells to the content string
               $.each(bands, function(){
@@ -99,7 +80,6 @@ maximum-scale=1.0 user-scalable=no" />
                       var v = this.venue + ".";
                       var l = this.link;
                       if (v == "tbd."){
-                        // t = "tba";
                         v = "";
                       }
 
@@ -128,6 +108,7 @@ maximum-scale=1.0 user-scalable=no" />
                 }
               });
                 //Remove first element
+                // need: 2018 update: remove first day's results
                 results = results.slice(1);
                 for(var j=0;j<results.length;j++){
                   if(j==0){
@@ -147,19 +128,11 @@ maximum-scale=1.0 user-scalable=no" />
               $('#publicLink').html(document.location.href);
               $('body').addClass('loaded');
       };
-
-
-
-
-      // if("{{public}}"=='y'){
-      //   $(".isPublic").show();
-      //   $(".isPrivate").hide();
-      // } else {
-      //   $(".isPrivate").show();
-      //   $(".isPublic").hide();
-      // }
     </script>
-    <!-- Top section of the site -->
+
+
+
+<!-- Top section of the site -->
       <div id="top">
           <img id="logo" src="/images/logo.png">
           <!-- Potentially an <a href="">for the about page?</a> -->
@@ -175,14 +148,6 @@ maximum-scale=1.0 user-scalable=no" />
       </div>
       <div class="private" id="changeStatus">
         <p id="makeitprivate">This page is private. To share it with your friends, <span id="changeStatus1" class="status"><a href="#" id="killpubliclink">click here →</a></span></p>
-        <!-- <h3 id="publicstatus">
-          <div class="status">
-            This page is private. To share it with your friends,
-            <a href="#" id="">
-              click here →
-            </a>
-          </div>
-        </h3> -->
       </div>
       <script>
     $('#changeStatus').click(function(){
