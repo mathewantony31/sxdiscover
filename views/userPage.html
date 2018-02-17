@@ -4,6 +4,7 @@
     <title>SXDiscover</title>
     <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/userpage-style.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/userpage-grid.css">
     <meta name="viewport" content="width=device-width initial-scale = 1.0 maximum-scale=1.0 user-scalable=no" />
     <link rel="shortcut icon" href="http://sxdiscover.co/favicon.ico?v=2">
 
@@ -40,8 +41,7 @@
       fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     </script>
-      <div id="wrapper">
-      <script>
+    <script>
 
       var results = ['SX'];
       var bands = "{{bands}}";
@@ -109,14 +109,15 @@
                 //Remove first element
                 // need: 2018 update: remove first day's results
                 results = results.slice(1);
+          // THIS CREATEs DIVS WITH THE NAMES OF DAYS
                 for(var j=0;j<results.length;j++){
                   if(j==0){
-                      content += '<div class="firstdate">~ '+results[j][0].date + ' ~</div>';
+                      // content += '<div class="firstdate">~ '+results[j][0].date + ' ~</div>';
                   } else {
-                      content += '<div class="date">~ '+results[j][0].date + ' ~</div>';
+                      // content += '<div class="date">~ '+results[j][0].date + ' ~</div>';
                   }
                   for(var k=0;k<results[j][0].bands.length;k++){
-                      content += '<a class="card" href=\''+results[j][0].bands[k][3]+'\' target="_blank">>';
+                      content += '<a class="card" href=\''+results[j][0].bands[k][3]+'\' target="_blank">';
                       content += '<h2 class="artist">'+results[j][0].bands[k][0]+'</h2><h3 class="venue">'+results[j][0].bands[k][1]+ ' '+results[j][0].bands[k][2]+'</h3>';
                       content += '</a>';
                       }
@@ -125,7 +126,7 @@
               // Inject the whole content string into our existing HTML table
               $('#bandList').html(content);
               $('#publicLink').html(document.location.href);
-              $('body').addClass('loaded');
+              $('body').addClass('siteloaded');
       };
     </script>
 
@@ -141,7 +142,7 @@
 
 <!-- Top section of the site -->
       <div id="top">
-          <img id="logo" src="/images/logo.png">
+          <!-- <img id="logo" src="/images/logo.png"> -->
 
           <!-- Potentially an <a href="">for the about page?</a> -->
           <!-- <div class="friendPage">

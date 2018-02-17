@@ -1,17 +1,26 @@
 /* if our browser supports grids, use grids */
-
 @supports (grid-area: auto) {
-  .site {
+  .siteloaded {
     display: grid;
   }
-  .card a {
+  /* article {
     display: grid;
-    grid-template-columns: 1em auto;
-    grid-template-rows: 1fr 1fr;
+    grid-row: 20vh;
+    grid-gap: 5vh;
+  } */
+  .card {
+    display: grid;
+    border-radius: 5px;
+    grid-template-rows: auto;
     padding: 0;
     grid-template-areas:
-      "band band band"
-      "blank meta meta";
+      "band"
+      "meta";
+    }
+    .card a:focus,
+    .card a:hover {
+    	margin: -5px 5px 5px -5px;
+    	box-shadow: 5px 5px 0px 0px hsla(0, 0%, 70%, .8);
     }
     .meta {
       grid-area: meta;
