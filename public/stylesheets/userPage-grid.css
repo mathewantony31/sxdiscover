@@ -1,0 +1,20 @@
+/* if our browser supports grids, use grids */
+
+@supports (grid-area: auto) {
+  .site {
+    display: grid;
+  }
+  .card a {
+    display: grid;
+    grid-template-columns: 1em auto;
+    grid-template-rows: 1fr 1fr;
+    padding: 0;
+    grid-template-areas:
+      "band band band"
+      "blank meta meta";
+    }
+    .meta {
+      grid-area: meta;
+    }
+  }
+}
