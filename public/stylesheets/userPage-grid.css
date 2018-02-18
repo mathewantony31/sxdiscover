@@ -2,6 +2,8 @@
 @supports (grid-area: auto) {
   .siteloaded {
     display: grid;
+    grid-template-columns: 1fr;
+
   }
   /* article {
     display: grid;

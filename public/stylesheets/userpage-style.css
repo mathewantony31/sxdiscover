@@ -44,9 +44,8 @@
 
 article {
 	padding: 1em;
-	overflow: scroll;
-	height: 60%;
 	padding-top: 20 vh;
+	margin: 0 auto -10vh;
 }
 .band-container {
 	display:block;
@@ -125,8 +124,6 @@ a:hover {
 a:active {
     color: #4B4A4A;
     text-decoration: none;
-}
-footer {
 }
 #info {
 		font-family: "OpenSans", sans-serif;
