@@ -1,15 +1,10 @@
 /* if our browser supports grids, use grids */
 @supports (grid-area: auto) {
-  .siteloaded {
+  article {
     display: grid;
-    grid-template-columns: 1fr;
-
+    grid-template-rows: auto;
+    grid-gap: 3vh;
   }
-  /* article {
-    display: grid;
-    grid-row: 20vh;
-    grid-gap: 5vh;
-  } */
   .card {
     display: grid;
     border-radius: 5px;
@@ -19,13 +14,33 @@
       "band"
       "meta";
     }
+    .daycard {
+      display: grid;
+      border-radius: 5px;
+      grid-template-rows: auto;
+      padding: 0 10vw;
+    }
+    footer {
+      display: grid;
+      height: 20vh;
+      grid-template-rows: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas:  "day day"
+                            "nav-previous nav-next";
+      grid-column-gap: .5vw;
+    }
+    .previous {
+      grid-area: nav-previous;
+    }
+    .next {
+      grid-area: nav-next;
+    }
+    .daycard {
+      grid-area: day;
+    }
     .card a:focus,
     .card a:hover {
     	margin: -5px 5px 5px -5px;
     	box-shadow: 5px 5px 0px 0px hsla(0, 0%, 70%, .8);
     }
-    .meta {
-      grid-area: meta;
-    }
   }
-}

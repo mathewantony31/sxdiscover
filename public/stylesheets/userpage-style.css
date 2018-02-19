@@ -2,14 +2,35 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,600i');
 @media only screen and (min-width: 320px) {
 	body {
-    background: linear-gradient(to bottom right, red, yellow);
+    background: rgb(247,202,201);
 	}
 }
 @media only screen and (min-width: 700px) {
 	body {
-    background: linear-gradient(to bottom right, red, yellow);
+    background: rgb(247,202,201);
 	}
 }
+
+
+/* LAYOUT */
+.viewable {
+	margin: 0 auto 20vh;
+	overflow: scroll;
+}
+footer {
+	position: fixed;
+	bottom: 0;
+	margin: 0 auto;
+	width: 100vw;
+	background: rgb(247,202,201);
+}
+button {
+	background: rgb(146,168,209);
+	border: none;
+	border-radius: 5px;
+	margin: 0 1vw .5vw;
+}
+
 #top {
 	/*height: 50vh;*/
 	text-align: center;
@@ -45,7 +66,6 @@
 article {
 	padding: 1em;
 	padding-top: 20 vh;
-	margin: 0 auto -10vh;
 }
 .band-container {
 	display:block;
@@ -96,6 +116,25 @@ article {
 .status{
 	display: inline-block;
 	position: relative;
+}
+.currentday {
+	display: inline-block;
+	font-family: "OpenSans", sans-serif;
+	font-weight: 300;
+	font-size: 1.5em;
+	color: grey;
+	text-align: center;
+	padding-top: .3vh;
+}
+.daycard > h3 {
+	display: inline-block;
+	font-family: "OpenSans", sans-serif;
+	font-weight: 300;
+	font-style: italic;
+	font-size: .8em;
+	color: grey;
+	margin: auto;
+	text-align: center;
 }
 p{
 	display: inline-block;
