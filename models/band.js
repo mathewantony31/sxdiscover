@@ -2,17 +2,18 @@ var mongoose = require('mongoose');
 
 var bandSchema = mongoose.Schema({
   name: String,
-  date: String,
-  time: String,
+  price: String,
   venue: String,
-  link: String
+  name_lower: String,
+  link: String,
+  time: String,
+  date: String
 });
 
-var Band = exports.model = mongoose.model('bands-2017-03-17', bandSchema);
+var Band = exports.model = mongoose.model('_2018-02-18', bandSchema);
 
 exports.fetchBandInfo = function(bandList, callback){
-    console.log("THIS IS RUNNING")
-    return Band.find({name: { $in: bandList}}).exec(function (err, docs){
+    return Band.find({name_lower: { $in: bandList}}).exec(function (err, docs){
         if(err){
             return "Error fetching bands";
         } else {
