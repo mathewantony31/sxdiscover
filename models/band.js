@@ -17,7 +17,7 @@ exports.fetchBandInfo = function(bandList, callback){
         if(err){
             return "Error fetching bands";
         } else {
-            console.log(docs);
+            // console.log(docs);
             callback(docs);
         }
     });

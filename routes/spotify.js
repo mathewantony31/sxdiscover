@@ -119,6 +119,44 @@ router.get('/callback', function(req, res, next) {
           console.log(userName);
         }});
 
+      // Get user's artists in saved playlists
+      var options = {
+          url: 'https://api.spotify.com/v1/me/playlists',
+          headers: { 'Authorization': 'Bearer ' + access_token },
+          json: true
+      };
+
+      request.get(options, function(error, response, body) {
+
+        console.log(body);
+
+          // Extract Spotify username
+          var url = body.href;
+          startIndex = url.indexOf("users")+6;
+          endIndex = url.substring(startIndex).indexOf("/")+startIndex;
+          userName = url.substring(startIndex,endIndex);
+          console.log("User name is "+userName);
+
+        for(var i=0; i <body.items.length; i++){
+          var options2 = {
+            url: 'https://api.spotify.com/v1/users/'+body.items[i].owner.id+'/playlists/'+body.items[i].id+'/tracks', headers: { 'Authorization': 'Bearer ' + access_token }, json: true
+          };
+
+          request.get(options2, function(error2, response2, body2){
+            if (!error2 && response2.statusCode === 200){
+              for(var j=0; j<body2.total-1; j++){
+                try{
+                  console.log("FOUND BAND! ADDING TO LIST.")
+                  spotifyBands.push(body2.items[j].track.artists[0].name);
+                } catch (e){
+                  console.log("Error: Failed to pull info from Spotify: "+e);
+                }
+              }
+            }
+          });
+        }
+      });
+
       // Get user's saved albums
       options = {
           url: 'https://api.spotify.com/v1/me/albums?offset=0&limit=50',
