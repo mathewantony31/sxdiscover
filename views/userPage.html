@@ -4,8 +4,11 @@
     <title>SXDiscover</title>
     <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/userpage-style.css">
-    <meta name="viewport" content="width=device-width initial-scale = 1.0
-maximum-scale=1.0 user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/userpage-grid.css">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- <meta name="viewport" content="width=device-width initial-scale = 1.0 maximum-scale=1.0 user-scalable=no" /> -->
     <link rel="shortcut icon" href="http://sxdiscover.co/favicon.ico?v=2">
 
     <!-- Facebook link previews -->
@@ -26,7 +29,7 @@ maximum-scale=1.0 user-scalable=no" />
       ga('send', 'pageview');
     </script>
   </head>
-  <body>
+  <body class="site">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="/javascripts/global.js"></script>
     <script src="/javascripts/date.js"></script>
@@ -41,8 +44,7 @@ maximum-scale=1.0 user-scalable=no" />
       fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     </script>
-      <div id="wrapper">
-      <script>
+    <script>
 
       var results = ['SX'];
       var bands = "{{bands}}";
@@ -110,45 +112,64 @@ maximum-scale=1.0 user-scalable=no" />
                 //Remove first element
                 // need: 2018 update: remove first day's results
                 results = results.slice(1);
+          // THIS CREATEs DIVS WITH THE NAMES OF DAYS
                 for(var j=0;j<results.length;j++){
                   if(j==0){
-                      content += '<div class="firstdate">~ '+results[j][0].date + ' ~</div>';
+                      // content += '<div class="firstdate">~ '+results[j][0].date + ' ~</div>';
                   } else {
-                      content += '<div class="date">~ '+results[j][0].date + ' ~</div>';
+                      // content += '<div class="date">~ '+results[j][0].date + ' ~</div>';
                   }
                   for(var k=0;k<results[j][0].bands.length;k++){
-                      content += '<div class="band-container">';
-                      content += '<h2 class="artist">'+results[j][0].bands[k][0]+'</h2><h3 class="venue">'+results[j][0].bands[k][1]+ ' '+results[j][0].bands[k][2]+'</h3><a class="infolink" href=\''+results[j][0].bands[k][3]+'\' target="_blank">show info →</a>';
-                      content += '</div>';
+                      content += '<a class="card" href=\''+results[j][0].bands[k][3]+'\' target="_blank">';
+                      content += '<h2 class="artist">'+results[j][0].bands[k][0]+'</h2><h3 class="venue">'+results[j][0].bands[k][1]+ ' '+results[j][0].bands[k][2]+'</h3>';
+                      content += '</a>';
                       }
                   }
 
               // Inject the whole content string into our existing HTML table
               $('#bandList').html(content);
               $('#publicLink').html(document.location.href);
-              $('body').addClass('loaded');
+              $('body').addClass('siteloaded');
       };
     </script>
 
 
+<!-- header and article (non-nav content) -->
+<div class="viewable">
+  <h1 class="textlogo">SXDiscover</h1>
+  <article id="bandList">
+  </article>
+</div>
+<!-- navigation -->
+  <footer>
+    <!-- EDIT JAVASCRIPT TO INPUT CALCULATED CURRENT DISPLAY DAY IN THIS H2 -->
+    <div class="daycard">
+      <h3>currently viewing results from</h3>
+      <h2 class="currentday">Monday, March 16th</h2>
+    </div>
+    <!-- NAV BUTTONS -->
+    <button type="button" name="previous">Previous Day</button>
+    <button type="button" name="next">Next Day</button>
+  </footer>
 
 <!-- Top section of the site -->
       <div id="top">
-          <img id="logo" src="/images/logo.png">
+          <!-- <img id="logo" src="/images/logo.png"> -->
+
           <!-- Potentially an <a href="">for the about page?</a> -->
-          <div class="friendPage">
+          <!-- <div class="friendPage">
             <h2>{{displayMessage}}</h2>
             <h3 id="discoveryours"><a id="discoveryours" href="/login">Discover yours →</a></h3>
-          </div>
-      <div class="public">
+          </div> -->
+      <!-- <div class="public">
         <h3 id="publicstatusred">Here's your public SXSW itinerary.</h3>
-        <h3 id="publicstatus">Share your itinerary with your friends on Facebook:</h3>
-        <div class="fb-share-button" data-href="{{link}}" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
-        <p id="makeitprivate">Itineraries are public by default. If you want to keep yours private, <span id="changeStatus1" class="status"><a href="#" id="killpubliclink">click here →</a></span></p>
+        <h3 id="publicstatus">Share SXDiscover with your friends on Facebook:</h3>
+        <div class="fb-share-button" data-href="{{link}}" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div> -->
+        <!-- <p id="makeitprivate">Itineraries are public by default. If you want to keep yours private, <span id="changeStatus1" class="status"><a href="#" id="killpubliclink">click here →</a></span></p> -->
       </div>
-      <div class="private" id="changeStatus">
+      <!-- <div class="private" id="changeStatus">
         <p id="makeitprivate">This page is private. To share it with your friends, <span id="changeStatus1" class="status"><a href="#" id="killpubliclink">click here →</a></span></p>
-      </div>
+      </div> -->
       <script>
     $('#changeStatus').click(function(){
       $.get("/private", function(data) {
@@ -178,8 +199,8 @@ maximum-scale=1.0 user-scalable=no" />
       }
   </script>
       </div>
-  <article id="bandList"></article>
+  <!-- <article id="bandList"></article>
   </div>
-<div id="footer"><a href="/about" alt="about us" id="info">more info →</a></div>
+<div id="footer"><a href="/about" alt="about us" id="info">more info →</a></div> -->
 </body>
 </html>
