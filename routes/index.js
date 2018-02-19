@@ -16,11 +16,6 @@ router.get('/privateUser', function(req, res, next){
   res.render('privateUser');
 });
 
-/* Load private user page. */
-router.get('/react', function(req, res, next){
-  res.render('react-test');
-});
-
 /* Load itinerary for a specific venue. */
 router.use('/', require('./venues'));
 

@@ -7,8 +7,6 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "@babel/standalone": "^7.0.0-beta.40",
-    "babel-register": "^6.26.0",
     "body-parser": "~1.13.2",
     "connect-mongodb-session": "1.1.1",
     "consolidate": "^0.14.5",
