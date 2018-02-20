@@ -68,20 +68,6 @@ maximum-scale=1.0 user-scalable=no" />
           populateTable();
       });
 
-      function buttonClicked(div_to_show, div_id_list){
-                return function(){
-                  console.log("BUTTON CLICKED!")
-                  $('#'+div_to_show).show();
-                  for(var i=0;i<div_id_list.length;i++){
-                    if(div_id_list[i]==div_to_show){
-                      // Do nothing
-                    } else {
-                      $('#'+div_id_list[i]).hide();
-                    }
-                    }                
-                  }
-              }
-
       function populateTable() {
 
               // For each item in our JSON, add a table row and cells to the content string
@@ -138,35 +124,6 @@ maximum-scale=1.0 user-scalable=no" />
                   }
 
               // Inject the whole content string into our existing HTML table
-              // $('#bandList').html(content);
-
-              var days = []
-              var buttonIdList = []
-
-              for(var i=0;i<results.length;i++){
-                var day
-                var dateString = results[i][0].date
-
-                if(dateString=="tba"){
-                  day="tba"
-                } else {
-                  day = dateString.substring(0,dateString.indexOf(",")).toLowerCase()
-                }
-                $('#bandList').append("<article id='"+day+"''></article>");
-                days.push(day);
-                buttonIdList.push(day+'-button')
-              }
-
-              for(var i=0;i<days.length;i++){
-                var buttonId = days[i]+'-button'
-                console.log(results[i][0])
-                console.log("THE DAY IS "+days[i])
-
-                $('#'+days[i]).html('<div>'+results[i][0].bands+'</div>'); 
-                var addButtonHtml = "<input type='button' id='"+buttonId+"' value='"+days[i]+"' >"
-                 $('#week-nav').append(addButtonHtml);
-                 $('#'+buttonId).on('click', buttonClicked(days[i], days));
-              }
 
               $('#publicLink').html(document.location.href);
               $('body').addClass('loaded');
