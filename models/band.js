@@ -13,12 +13,11 @@ var bandSchema = mongoose.Schema({
 var Band = exports.model = mongoose.model('_2018-02-18', bandSchema);
 
 exports.fetchBandInfo = function(bandList, callback){
-    console.log("THIS IS RUNNING")
     return Band.find({name_lower: { $in: bandList}}).exec(function (err, docs){
         if(err){
             return "Error fetching bands";
         } else {
-            console.log(docs);
+            // console.log(docs);
             callback(docs);
         }
     });
