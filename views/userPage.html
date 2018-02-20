@@ -80,9 +80,9 @@
       });
 
       function convertBandInfoToDiv(bandData){
-        var html;
+        var html = '';
         for(var i=0;i<bandData.length;i++){
-          html = '<a class="card" href=\''+bandData[i][3]+'\' target="_blank">';
+          html += '<a class="card" href=\''+bandData[i][3]+'\' target="_blank">';
           html += '<a class="card" href=\''+bandData[i][3]+'\' target="_blank">';
           html += '<h2 class="artist">'+bandData[i][0]+'</h2><h3 class="venue">'+bandData[i][1]+ ' '+bandData[i][2]+'</h3>';
           html += '</a>';
@@ -164,8 +164,8 @@
 
           // Create div for each day and add bands to each div
           for(var i=0;i<results.length;i++){
-                var day
-                var dateString = results[i][0].date
+                var day;
+                var dateString = results[i][0].date;
 
                 if(dateString=="TBD"){
                   day="TBD"
