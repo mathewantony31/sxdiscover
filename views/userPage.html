@@ -48,31 +48,83 @@
 
       var results = ['SX'];
       var bands = "{{bands}}";
-      var content = '';
+      var days = [];
+      var currentDay = 0;
 
       // Remove &quot; and replace with actual quotes
       bands = JSON.parse(bands.replace(/&quot;/g,'"'));
 
-
       // Convert date and time into milliseconds to sort by date
       bands.sort(function(a,b){
-        if(a["time"]=='tbd'){
+        if(a["time"]=='TBD'){
           a["time"] = '00:00'
         }
-        if(b["time"]=='tbd'){
+        if(b["time"]=='TBD'){
           b["time"] = '00:00'
         }
 
-        return Date.parse(a["date"]+" 2017 "+a["time"])-Date.parse(b["date"]+" 2017 "+b["time"]);
+        return Date.parse(a["date"]+" 2018 "+a["time"])-Date.parse(b["date"]+" 2018 "+b["time"]);
       });
 
       $(document).ready(function() {
-          populateTable();
+          populateTable(function(){
+            // Once all data is loaded, just show Monday's values
+            for(var i=0;i<days.length;i++){
+            if(i==0){
+              $('#current-day').html(results[currentDay][0].date);
+            } else {
+              $('#'+days[i]).hide();
+            }
+          } 
+        });
       });
 
-      function populateTable() {
+      function convertBandInfoToDiv(bandData){
+        var html;
+        for(var i=0;i<bandData.length;i++){
+          html = '<a class="card" href=\''+bandData[i][3]+'\' target="_blank">';
+          html += '<a class="card" href=\''+bandData[i][3]+'\' target="_blank">';
+          html += '<h2 class="artist">'+bandData[i][0]+'</h2><h3 class="venue">'+bandData[i][1]+ ' '+bandData[i][2]+'</h3>';
+          html += '</a>';
+        }
+        return html;
+      }
 
-              // For each item in our JSON, add a table row and cells to the content string
+      function dayButtonClicked(type){
+        return function(){
+          switch(type){
+            case "previous":
+              if(currentDay==0){
+                currentDay = days.length-1
+              } else {
+                currentDay-=1
+              }
+              break;
+            default:
+              if(currentDay==days.length-1){
+                currentDay=0
+              } else {
+                currentDay+=1
+              }
+          }
+
+          $('#'+days[currentDay]).show();
+          $('#current-day').html(results[currentDay][0].date);
+          for(var i=0;i<days.length;i++){
+            if(i==currentDay){
+              // Do nothing
+            } else {
+              $('#'+days[i]).hide();
+            }
+          }  
+        }
+      }
+
+      function populateTable(callback) {
+        console.log("RESULTS ARE:")
+        console.log(results);
+
+              // For each item in our JSON, extract the useful info and add it to the results array
               $.each(bands, function(){
 
                   try{
@@ -81,22 +133,19 @@
                       var t = "tbd.";
                       var v = this.venue + ".";
                       var l = this.link;
-                      if (v == "tbd."){
-                        v = "";
-                      }
+                      var p = this.price;
 
-                      if(this.time != "tbd"){
+                      if(this.time != "TBD"){
                         t = getTime(this.time) + ".";
                       }
 
-                      if (d == "2016-01-01"){
-                          d = "tbd";
-                      }
-
+                  // Add unique dates as a dictionary to the results array, and each band's info as an array under each date
                   for(var i=0;i<results.length; i++){
-                  if (results[i][0].date == d){
+                    if (results[i][0].date == d){
+                      // If a date already exists in the results array, add a new band's info to that date
                     results[i][0].bands.push([n, v, t, l]);
                     break;
+                    // If a date doesn't exist, add it to the results array
                   } else if (i==results.length-1) {
                     results.push([{
                       date:d,
@@ -112,24 +161,32 @@
                 //Remove first element
                 // need: 2018 update: remove first day's results
                 results = results.slice(1);
-          // THIS CREATEs DIVS WITH THE NAMES OF DAYS
-                for(var j=0;j<results.length;j++){
-                  if(j==0){
-                      // content += '<div class="firstdate">~ '+results[j][0].date + ' ~</div>';
-                  } else {
-                      // content += '<div class="date">~ '+results[j][0].date + ' ~</div>';
-                  }
-                  for(var k=0;k<results[j][0].bands.length;k++){
-                      content += '<a class="card" href=\''+results[j][0].bands[k][3]+'\' target="_blank">';
-                      content += '<h2 class="artist">'+results[j][0].bands[k][0]+'</h2><h3 class="venue">'+results[j][0].bands[k][1]+ ' '+results[j][0].bands[k][2]+'</h3>';
-                      content += '</a>';
-                      }
-                  }
 
-              // Inject the whole content string into our existing HTML table
-              $('#bandList').html(content);
-              $('#publicLink').html(document.location.href);
-              $('body').addClass('siteloaded');
+          // Create div for each day and add bands to each div
+          for(var i=0;i<results.length;i++){
+                var day
+                var dateString = results[i][0].date
+
+                if(dateString=="TBD"){
+                  day="TBD"
+                } else {
+                  day = dateString.substring(0,dateString.indexOf(",")).toLowerCase()
+                }
+                $('#bandList').append("<div id='"+day+"''></div>");
+                days.push(day);
+                $('#'+day).html(convertBandInfoToDiv(results[i][0].bands)); 
+          }
+
+          var buttonHtml = '<button type="button" name="previous" id="previous-day">Previous Day</button><button type="button" name="next" id="next-day">Next Day</button>'
+
+          // Add buttons to footer
+          $('#footer').append(buttonHtml)
+          $('#previous-day').on('click', dayButtonClicked("previous"));
+          $('#next-day').on('click', dayButtonClicked("next"));
+          $('#publicLink').html(document.location.href);
+          $('body').addClass('siteloaded');
+
+          callback();
       };
     </script>
 
@@ -141,15 +198,12 @@
   </article>
 </div>
 <!-- navigation -->
-  <footer>
+  <footer id="footer">
     <!-- EDIT JAVASCRIPT TO INPUT CALCULATED CURRENT DISPLAY DAY IN THIS H2 -->
     <div class="daycard">
       <h3>currently viewing results from</h3>
-      <h2 class="currentday">Monday, March 16th</h2>
+      <h2 class="currentday" id="current-day"></h2>
     </div>
-    <!-- NAV BUTTONS -->
-    <button type="button" name="previous">Previous Day</button>
-    <button type="button" name="next">Next Day</button>
   </footer>
 
 <!-- Top section of the site -->
@@ -171,6 +225,10 @@
         <p id="makeitprivate">This page is private. To share it with your friends, <span id="changeStatus1" class="status"><a href="#" id="killpubliclink">click here →</a></span></p>
       </div> -->
       <script>
+    $('#next-day').click(function(){
+      console.log("CLICKED!")
+    });
+
     $('#changeStatus').click(function(){
       $.get("/private", function(data) {
         location.reload();
