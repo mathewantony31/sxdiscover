@@ -80,8 +80,6 @@
       });
 
       function convertBandInfoToDiv(bandData){
-        console.log("Band data is:");
-        console.log(bandData);
         var html = '';
         for(var i=0;i<bandData.length;i++){
           html += '<a class="card" href=\''+bandData[i][3]+'\' target="_blank">';
@@ -176,7 +174,7 @@
                 }
                 $('#bandList').append("<div id='"+day+"''></div>");
                 days.push(day);
-                $('#'+day).append(convertBandInfoToDiv(results[i][0].bands)); 
+                $('#'+day).html(convertBandInfoToDiv(results[i][0].bands)); 
           }
 
           var buttonHtml = '<button type="button" name="previous" id="previous-day">Previous Day</button><button type="button" name="next" id="next-day">Next Day</button>'
