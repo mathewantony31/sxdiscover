@@ -77,14 +77,38 @@ article {
 	padding-top: .4em;
 	padding-right: 2em;
 }
-.venue {
+.source {
 	font-family: 'Archivo', sans-serif;
 	font-weight: 500;
 	font-style: italic;
 	font-size: .8em;
 	color: white;
 	padding-right: .4em;
+	/* padding-top: .4em; */
+	padding-bottom: .4em;
+	padding-left: 1.2em;
+	text-align: left;
+}
+.venue {
+	font-family: 'Archivo', sans-serif;
+	font-weight: 500;
+	font-style: italic;
+	font-size: .8em;
+	color: white;
+	padding-right: 1.4em;
 	padding-top: .4em;
+	/* padding-bottom: .4em; */
+	padding-left: 2em;
+	text-align: right;
+}
+.price {
+	font-family: 'Archivo', sans-serif;
+	font-weight: 500;
+	font-style: italic;
+	font-size: .8em;
+	color: white;
+	padding-right: 1.4em;
+	/* padding-top: .4em; */
 	padding-bottom: .4em;
 	padding-left: 2em;
 	text-align: right;
