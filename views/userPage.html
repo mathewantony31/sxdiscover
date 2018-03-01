@@ -75,14 +75,13 @@
             } else {
               $('#'+days[i]).hide();
             }
-          } 
+          }
         });
       });
 
       function convertBandInfoToDiv(bandData){
         var html = '';
         for(var i=0;i<bandData.length;i++){
-          html += '<a class="card" href=\''+bandData[i][3]+'\' target="_blank">';
           html += '<a class="card" href=\''+bandData[i][3]+'\' target="_blank">';
           html += '<h2 class="artist">'+bandData[i][0]+'</h2><h3 class="venue">'+bandData[i][1]+ ' '+bandData[i][2]+'</h3>';
           html += '</a>';
@@ -116,7 +115,7 @@
             } else {
               $('#'+days[i]).hide();
             }
-          }  
+          }
         }
       }
 
@@ -172,9 +171,9 @@
                 } else {
                   day = dateString.substring(0,dateString.indexOf(",")).toLowerCase()
                 }
-                $('#bandList').append("<div id='"+day+"''></div>");
+                $('#bandList').append("<div class='bandcards' id='"+day+"''></div>");
                 days.push(day);
-                $('#'+day).html(convertBandInfoToDiv(results[i][0].bands)); 
+                $('#'+day).html(convertBandInfoToDiv(results[i][0].bands));
           }
 
           var buttonHtml = '<button type="button" name="previous" id="previous-day">Previous Day</button><button type="button" name="next" id="next-day">Next Day</button>'
@@ -194,37 +193,19 @@
 <!-- header and article (non-nav content) -->
 <div class="viewable">
   <h1 class="textlogo">SXDiscover</h1>
+  <div class="daycard">
+    <h3>bands playing on</h3>
+    <h2 class="currentday" id="current-day"></h2>
+  </div>
   <article id="bandList">
   </article>
 </div>
 <!-- navigation -->
   <footer id="footer">
-    <!-- EDIT JAVASCRIPT TO INPUT CALCULATED CURRENT DISPLAY DAY IN THIS H2 -->
-    <div class="daycard">
-      <h3>currently viewing results from</h3>
-      <h2 class="currentday" id="current-day"></h2>
-    </div>
   </footer>
 
-<!-- Top section of the site -->
-      <div id="top">
-          <!-- <img id="logo" src="/images/logo.png"> -->
 
-          <!-- Potentially an <a href="">for the about page?</a> -->
-          <!-- <div class="friendPage">
-            <h2>{{displayMessage}}</h2>
-            <h3 id="discoveryours"><a id="discoveryours" href="/login">Discover yours →</a></h3>
-          </div> -->
-      <!-- <div class="public">
-        <h3 id="publicstatusred">Here's your public SXSW itinerary.</h3>
-        <h3 id="publicstatus">Share SXDiscover with your friends on Facebook:</h3>
-        <div class="fb-share-button" data-href="{{link}}" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div> -->
-        <!-- <p id="makeitprivate">Itineraries are public by default. If you want to keep yours private, <span id="changeStatus1" class="status"><a href="#" id="killpubliclink">click here →</a></span></p> -->
-      </div>
-      <!-- <div class="private" id="changeStatus">
-        <p id="makeitprivate">This page is private. To share it with your friends, <span id="changeStatus1" class="status"><a href="#" id="killpubliclink">click here →</a></span></p>
-      </div> -->
-      <script>
+<script>
     $('#next-day').click(function(){
       console.log("CLICKED!")
     });
@@ -255,7 +236,7 @@
         $(".public").hide();
         $(".private").hide();
       }
-  </script>
+</script>
       </div>
 </body>
 </html>
