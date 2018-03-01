@@ -39,8 +39,6 @@ router.get('/pages/*', function(req, res) {
                 var results = Band.fetchBandInfo(docs[0].rawBands, function(result){
 
                   var r = JSON.stringify(result);
-                  // console.log("JSON result is");
-                  // console.log(r);
 
                   if(public==true){
                     if(requestSession==userSession){

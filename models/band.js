@@ -13,12 +13,46 @@ var bandSchema = mongoose.Schema({
 var Band = exports.model = mongoose.model('_2018-02-18', bandSchema);
 
 exports.fetchBandInfo = function(bandList, callback){
-    return Band.find({name_lower: { $in: bandList}}).exec(function (err, docs){
+  var bandNames = []
+  for(var i=0;i<bandList.length;i++){
+    bandNames.push(bandList[i].name.toLowerCase())
+  }
+  console.log("Band names are:");
+  console.log(bandNames);
+    return Band.find({name_lower: { $in: bandNames}}).exec(function (err, docs){
         if(err){
             return "Error fetching bands";
         } else {
-            // console.log(docs);
+            // For each result, add a property saying the source of that band in the user's Spotify. Source can be "playlist", "top", "album".
+            for(var i=0;i<docs.length;i++){
+              var bandDictionary = {}
+              bandDictionary.name = docs[i].name
+              bandDictionary.price = docs[i].price
+              bandDictionary.venue = docs[i].venue
+              bandDictionary.name_lower = docs[i].name_lower
+              bandDictionary.link = docs[i].link
+              bandDictionary.time = docs[i].time
+              bandDictionary.date = docs[i].date
+              bandDictionary.source = [search(docs[i].name, bandList)]
+              console.log("SOURCEX IS "+bandDictionary.source)
+
+              console.log("DICTIONARYX IS:")
+              console.log(bandDictionary)
+
+              docs[i] = bandDictionary
+            }
             callback(docs);
         }
     });
+}
+
+function search(nameKey, myArray){
+    for (var i=0; i < myArray.length; i++) {
+        if (myArray[i].name === nameKey) {
+            console.log("RETURNING "+myArray[i])
+            return myArray[i];
+        }
+    }
+
+    return "none"
 }
