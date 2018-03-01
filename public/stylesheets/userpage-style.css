@@ -1,16 +1,10 @@
 /* GENERAL STYLING */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,600i');
-@media only screen and (min-width: 320px) {
-	body {
-    background: rgb(247,202,201);
-	}
-}
-@media only screen and (min-width: 700px) {
-	body {
-    background: rgb(247,202,201);
-	}
-}
+@import url('https://fonts.googleapis.com/css?family=Archivo+Black|Archivo:400,500,600');
 
+body {
+    background: black;
+	}
 
 /* LAYOUT */
 .viewable {
@@ -22,32 +16,33 @@ footer {
 	bottom: 0;
 	margin: 0 auto;
 	width: 100vw;
-	background: rgb(247,202,201);
+	background: black;
+	grid-column-gap: 1px;
 }
 button {
-	background: rgb(146,168,209);
-	border: none;
-	border-radius: 5px;
-	margin: 0 1vw .5vw;
+	background: #ffcf7b;
+	border: 1px black;
+	color: black;
+	font-size: 1em;
+	text-transform: uppercase;
+	font-family: 'Archivo', sans-serif;
+	font-weight: 600;
 }
-
 #top {
 	/*height: 50vh;*/
 	text-align: center;
 	display: block;
 }
 .textlogo {
-    height: 15vh;
     display: block;
     vertical-align: middle;
 		text-align: center;
-	position: relative;
-	margin: 3vh auto;
+		position: relative;
+		margin: 3vh auto;
 }
 #bandList {
 }
 .card {
-	background-color: rgba(255, 255, 255, 0.8);
 }
 .card h2 {
   grid-area: band;
@@ -56,11 +51,11 @@ button {
 
 /* TYPOGRAPHY */
 .textlogo {
-	font-family: "OpenSans", sans-serif;
+	font-family: 'Archivo Black', sans-serif;
 	font-weight: 300;
-	font-size: 3em;
+	font-size: 1em;
 	letter-spacing: 0px;
-	color: #000000;
+	color: white;
 }
 
 article {
@@ -74,62 +69,40 @@ article {
 	padding-top: .2em;
 }
 .artist {
-	font-family: "OpenSans", sans-serif;
+	font-family: 'Archivo Black', sans-serif;
 	font-weight: 400;
-	color: black;
-	font-size: 1.7em;
+	color: white;
+	font-size: 2em;
 	padding-bottom: .1em;
 	padding-top: .4em;
 	padding-right: 2em;
 }
 .venue {
-	font-family: "OpenSans", sans-serif;
-	font-weight: 300;
+	font-family: 'Archivo', sans-serif;
+	font-weight: 500;
 	font-style: italic;
-	font-size: 1em;
-	color: black;
+	font-size: .8em;
+	color: white;
 	padding-right: .4em;
 	padding-top: .4em;
 	padding-bottom: .4em;
 	padding-left: 2em;
 	text-align: right;
 }
-#send {
-	font-family: "OpenSans", sans-serif;
-	font-size: 2em;
-	color: #4B4A4A;
-	text-align: center;
-	display: block;
-	padding: .4em;
-	border: 1px solid black;
-}
-.infolink {
-	font-family: "OpenSans", sans-serif;
-	font-weight: 300;
-	font-style: italic;
-	font-size: .7em;
-	color: #4ECDC4;
-	margin-top: 1vh;
-	padding: 1px;
-  display: inline-block;
-}
-.status{
-	display: inline-block;
-	position: relative;
-}
+
 .currentday {
 	display: inline-block;
-	font-family: "OpenSans", sans-serif;
+	font-family: 'Archivo Black', sans-serif;
 	font-weight: 300;
-	font-size: 1.5em;
-	color: grey;
+	font-size: 1.8em;
+	color: #ffcf7b;
 	text-align: center;
 	padding-top: .3vh;
 }
 .daycard > h3 {
 	display: inline-block;
-	font-family: "OpenSans", sans-serif;
-	font-weight: 300;
+	font-family: 'Archivo', sans-serif;
+	font-weight: 500;
 	font-style: italic;
 	font-size: .8em;
 	color: grey;
@@ -138,7 +111,7 @@ article {
 }
 p{
 	display: inline-block;
-	font-family: "OpenSans", sans-serif;
+	font-family: 'Archivo Black', sans-serif;
 	font-weight: 300;
 	font-style: italic;
 	font-size: 1em;
@@ -165,7 +138,7 @@ a:active {
     text-decoration: none;
 }
 #info {
-		font-family: "OpenSans", sans-serif;
+		font-family: 'Archivo Black', sans-serif;
     font-style: italic;
     font-weight: 300;
     color: #fff;

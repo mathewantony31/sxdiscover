@@ -1,32 +1,42 @@
 /* if our browser supports grids, use grids */
 @supports (grid-area: auto) {
-  article {
+
+  .viewable {
     display: grid;
     grid-template-rows: auto;
-    grid-gap: 3vh;
+    grid-template-areas:  "title"
+                          "day"
+                          "..."
+  }
+  article > div {
+    display: grid;
+    grid-template-rows: auto;
+    grid-gap: 2vh;
   }
   .card {
     display: grid;
-    border-radius: 5px;
     grid-template-rows: auto;
     padding: 0;
-    grid-template-areas:
-      "band"
-      "meta";
+    grid-template-areas: "band"
+                          "playlist"           "meta";
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
     }
     .daycard {
       display: grid;
+      grid-area: day;
       border-radius: 5px;
       grid-template-rows: auto;
-      padding: 0 10vw;
+      padding: 0 2vw;
     }
     footer {
       display: grid;
-      height: 20vh;
-      grid-template-rows: repeat(2, 1fr);
+      height: 10vh;
+      grid-template-rows: auto;
       grid-template-columns: repeat(2, 1fr);
-      grid-template-areas:  "day day"
-                            "nav-previous nav-next";
+      grid-template-areas:
+                "nav-previous nav-next";
       grid-column-gap: .5vw;
     }
     .previous {
@@ -34,9 +44,6 @@
     }
     .next {
       grid-area: nav-next;
-    }
-    .daycard {
-      grid-area: day;
     }
     .card a:focus,
     .card a:hover {
