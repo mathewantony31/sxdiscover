@@ -3,8 +3,8 @@
   <head>
     <title>SXDiscover</title>
     <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/userpage-style.css">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/userpage-grid.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/userPage-style.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/userPage-grid.css">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -121,7 +121,7 @@
             html += '<h3 class="source">No source</h3>'
           }
 
-          // Adding venue and time 
+          // Adding venue and time
           html += '<h3 class="venue">'+bandData[i][1]+ ' '+bandData[i][2]+'</h3>';
 
           // Adding price
@@ -211,7 +211,7 @@
                     break;
                     // If a date doesn't exist, add it to the results array
                   } else if (i==results.length-1) {
-                    
+
                     // Get day name
                     var dayNum = Date.parse(this.date).getDay();
                     var dayText = weekdays[dayNum];
