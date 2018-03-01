@@ -94,10 +94,11 @@
             }
           }
 
+          // Adding link and band name
           html += '<a class="card" href=\''+bandData[i][3]+'\' target="_blank">';
-          html += '<h2 class="artist">'+bandData[i][0]+'</h2><h3 class="venue">'+bandData[i][1]+ ' '+bandData[i][2]+'</h3>';
-          html += '<h2 class="venue">'+bandData[i][4]+'</h2>'
+          html += '<h2 class="artist">'+bandData[i][0]+'</h2><h3 class="venue">'
 
+          // Checking if there's a source and adding it
           if(hasSource){
             var source = bandData[i][5]
             var sourceText = ""
@@ -115,11 +116,16 @@
               default:
                 break;
             }
-
             html += '<h3>'+sourceText+'</h3>'
           } else {
             html += '<h3>No source</h3>'
           }
+
+          // Adding venue and time 
+          html += bandData[i][1]+ ' '+bandData[i][2]+'</h3>';
+
+          // Adding price
+          html += '<h3>'+bandData[i][4]+'</h3>'
 
           html += '</a>';
         }
