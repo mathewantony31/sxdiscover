@@ -80,10 +80,53 @@
       });
 
       function convertBandInfoToDiv(bandData){
+
         var html = '';
         for(var i=0;i<bandData.length;i++){
+
+          var isPlaylist = false
+          var hasSource = false
+
+          if(bandData[i][5]!="none"){
+            hasSource=true
+            if(bandData[i][6]!=""){
+            isPlaylist = true
+            }
+          }
+
+          // Adding link and band name
           html += '<a class="card" href=\''+bandData[i][3]+'\' target="_blank">';
-          html += '<h2 class="artist">'+bandData[i][0]+'</h2><h3 class="venue">'+bandData[i][1]+ ' '+bandData[i][2]+'</h3>';
+          html += '<h2 class="artist">'+bandData[i][0]+'</h2><h3 class="venue">'
+
+          // Checking if there's a source and adding it
+          if(hasSource){
+            var source = bandData[i][5]
+            var sourceText = ""
+            switch(source){
+              case "top":
+                sourceText = "Top artist";
+                break;
+              case "playlist":
+                var playlist = bandData[i][6];
+                sourceText = "From the playlist "+playlist;
+                break;
+              case "album":
+                sourceText = "From an album you saved"
+                break;
+              default:
+                break;
+            }
+            html += '<h3>'+sourceText+'</h3>'
+          } else {
+            html += '<h3>No source</h3>'
+          }
+
+          // Adding venue and time 
+          html += bandData[i][1]+ ' '+bandData[i][2]+'</h3>';
+
+          // Adding price
+          html += '<h3>'+bandData[i][4]+'</h3>'
+
           html += '</a>';
         }
         return html;
@@ -126,6 +169,8 @@
               // For each item in our JSON, extract the useful info and add it to the results array
               $.each(bands, function(){
 
+                // "source":[{"source":"top","name":"Max Richter"}]
+
                   try{
                       var n = this.name;
                       var d = getDate(this.date);
@@ -133,6 +178,17 @@
                       var v = this.venue + ".";
                       var l = this.link;
                       var p = this.price;
+                      var s = this.source;
+                      var s_n = "";
+
+                      // If there's no source, do nothing.
+                      if(s=="none"){
+                      } else {
+                        s = this.source[0].source
+                        if(s=="playlist"){
+                          s_n = this.source[0].playlistName
+                        }
+                    }
 
                       if(this.time != "TBD"){
                         t = getTime(this.time) + ".";
@@ -142,19 +198,20 @@
                   for(var i=0;i<results.length; i++){
                     if (results[i][0].date == d){
                       // If a date already exists in the results array, add a new band's info to that date
-                    results[i][0].bands.push([n, v, t, l]);
+                    results[i][0].bands.push([n, v, t, l, p, s, s_n]);
                     break;
                     // If a date doesn't exist, add it to the results array
                   } else if (i==results.length-1) {
                     results.push([{
                       date:d,
-                      bands: [[n, v, t, l]]
+                      bands: [[n, v, t, l, p, s, s_n]]
                       }]);
                     break;
                     }
                   }
                 } catch (e){
                   console.log("Error: Couldn't access bands from /bands response");
+                  console.log(e.message);
                 }
               });
                 //Remove first element

@@ -84,9 +84,11 @@ router.get('/callback', function(req, res, next) {
     request.post(authOptions, function(error, response, body) {
 
       var spotifyBands = [];
+      var spotifyBands2 = [];
       var userName = "No username.";
       var displayName = "No display name.";
       var email = "no email";
+      var bandName = "";
 
       if (!error && response.statusCode === 200) {
 
@@ -114,9 +116,11 @@ router.get('/callback', function(req, res, next) {
 
       request.get(options, function(error, response, body) {
         for(var i=0; i <body.items.length; i++){
-          spotifyBands.push(body.items[i].name);
-          console.log(body.items.length);
-          console.log(userName);
+          bandName = body.items[i].name;
+          // spotifyBands.push(body.items[i].name);
+          spotifyBands2.push({
+            "name": bandName,
+            "source":"top"});
         }});
 
       // Get user's artists in saved playlists
@@ -128,16 +132,16 @@ router.get('/callback', function(req, res, next) {
 
       request.get(options, function(error, response, body) {
 
-        console.log(body);
-
           // Extract Spotify username
           var url = body.href;
           startIndex = url.indexOf("users")+6;
           endIndex = url.substring(startIndex).indexOf("/")+startIndex;
           userName = url.substring(startIndex,endIndex);
-          console.log("User name is "+userName);
 
         for(var i=0; i <body.items.length; i++){
+          var playlistName = "";
+          playlistName = body.items[i].name;
+
           var options2 = {
             url: 'https://api.spotify.com/v1/users/'+body.items[i].owner.id+'/playlists/'+body.items[i].id+'/tracks', headers: { 'Authorization': 'Bearer ' + access_token }, json: true
           };
@@ -146,8 +150,14 @@ router.get('/callback', function(req, res, next) {
             if (!error2 && response2.statusCode === 200){
               for(var j=0; j<body2.total-1; j++){
                 try{
-                  console.log("FOUND BAND! ADDING TO LIST.")
-                  spotifyBands.push(body2.items[j].track.artists[0].name);
+                  console.log("Found band. Adding to list.")
+                  // spotifyBands.push(body2.items[j].track.artists[0].name);
+                  bandName = body2.items[j].track.artists[0].name;
+                  playlistName = body2.items[j].track.artists[0].name;
+                  spotifyBands2.push({
+                    "name": bandName,
+                    "source":"playlist",
+                    "playlistName":playlistName});
                 } catch (e){
                   console.log("Error: Failed to pull info from Spotify: "+e);
                 }
@@ -167,15 +177,20 @@ router.get('/callback', function(req, res, next) {
       request.get(options, function(error, response, body) {
       for(var i=0; i <body.items.length; i++){
         spotifyBands.push(body.items[i].album.artists[0].name);
-        console.log(body.items[i].album.artists[0].name);
+        bandName = body.items[i].album.artists[0].name
+        spotifyBands2.push({
+                    "name": bandName,
+                    "source":"album"});
       }
 
-        if (spotifyBands.length > 0){
+        if (spotifyBands2.length > 0){
 
           for(j=0;j<spotifyBands.length;j++){
             spotifyBands[j] = spotifyBands[j].toLowerCase();
-            console.log(spotifyBands[j]);
           }
+
+          console.log("Final spotify array is:")
+          console.log(spotifyBands2);
 
           // Write to custom bands
           var bandData = {
@@ -183,8 +198,8 @@ router.get('/callback', function(req, res, next) {
             displayName:displayName,
             email: email,
             uid: req.session.id,
-            rawBands: spotifyBands,
-            sxswBands: "test",
+            rawBands: spotifyBands2,
+            sxswBands: [{"name":"test"}],
             public: true
           };
 
@@ -193,7 +208,8 @@ router.get('/callback', function(req, res, next) {
           var upsertData = newUser.toObject();
           delete upsertData._id;
 
-          User.update({ "name" : userName }, upsertData, { upsert: true }, function(err){
+          User.update({ "name" : userName }, upsertData, { upsert: true }, function(err, count, status){
+            console.log("Status of write operation was: "+status)
             if(err){
               console.log("Error: Failed to save custom bands to database");
             }
