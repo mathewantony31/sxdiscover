@@ -5,6 +5,11 @@
 body {
     background: black;
 	}
+.bandcards {
+	border-style: solid;
+	border-width: 1px;
+	border-color: white;
+}
 
 /* LAYOUT */
 .viewable {
@@ -175,3 +180,63 @@ a:active {
 .fb-iframe-widget {
 	padding-bottom: 10px;
 }
+
+  .viewable {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-areas:  "title"
+                          "day"
+                          "..."
+  }
+  article > div {
+    display: grid;
+    grid-template-rows: auto;
+    grid-gap: 2vh;
+  }
+  .card {
+    display: grid;
+    grid-template-rows: auto;
+    padding: 0;
+    grid-template-areas: "band"
+                          "source"           "venue"
+                          "price";
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
+    }
+    .source {
+      grid-template-areas: source;
+    }
+    .venue {
+      grid-template-areas: venue;
+    }
+    .price {
+      grid-template-areas: price;
+    }
+    .daycard {
+      display: grid;
+      grid-area: day;
+      border-radius: 5px;
+      grid-template-rows: auto;
+      padding: 0 2vw;
+    }
+    footer {
+      display: grid;
+      height: 10vh;
+      grid-template-rows: auto;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas:
+                "nav-previous nav-next";
+      grid-column-gap: .5vw;
+    }
+    .previous {
+      grid-area: nav-previous;
+    }
+    .next {
+      grid-area: nav-next;
+    }
+    .card a:focus,
+    .card a:hover {
+    	margin: -5px 5px 5px -5px;
+    	box-shadow: 5px 5px 0px 0px hsla(0, 0%, 70%, .8);
+    }
