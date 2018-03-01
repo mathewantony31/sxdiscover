@@ -17,12 +17,11 @@ exports.fetchBandInfo = function(bandList, callback){
   for(var i=0;i<bandList.length;i++){
     bandNames.push(bandList[i].name.toLowerCase())
   }
-  console.log("Band names are:");
-  console.log(bandNames);
     return Band.find({name_lower: { $in: bandNames}}).exec(function (err, docs){
         if(err){
             return "Error fetching bands";
         } else {
+
             // For each result, add a property saying the source of that band in the user's Spotify. Source can be "playlist", "top", "album".
             for(var i=0;i<docs.length;i++){
               var bandDictionary = {}
@@ -34,11 +33,6 @@ exports.fetchBandInfo = function(bandList, callback){
               bandDictionary.time = docs[i].time
               bandDictionary.date = docs[i].date
               bandDictionary.source = [search(docs[i].name, bandList)]
-              console.log("SOURCEX IS "+bandDictionary.source)
-
-              console.log("DICTIONARYX IS:")
-              console.log(bandDictionary)
-
               docs[i] = bandDictionary
             }
             callback(docs);
