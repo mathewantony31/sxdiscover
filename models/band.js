@@ -11,6 +11,7 @@ var bandSchema = mongoose.Schema({
 });
 
 var Band = exports.model = mongoose.model('_2018-02-18', bandSchema);
+var priceMap = require('../public/javascripts/priceMapping.js')
 
 exports.fetchBandInfo = function(bandList, callback){
   var bandNames = []
@@ -26,7 +27,7 @@ exports.fetchBandInfo = function(bandList, callback){
             for(var i=0;i<docs.length;i++){
               var bandDictionary = {}
               bandDictionary.name = docs[i].name
-              bandDictionary.price = docs[i].price
+              bandDictionary.price = getConcisePriceName(docs[i].price)
               bandDictionary.venue = docs[i].venue
               bandDictionary.name_lower = docs[i].name_lower
               bandDictionary.link = docs[i].link
@@ -49,4 +50,9 @@ function search(nameKey, myArray){
     }
 
     return "none"
+}
+
+function getConcisePriceName(price){
+  console.log("Concise price is "+priceMap[0].price)
+  return priceMap[0].price
 }

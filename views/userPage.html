@@ -203,6 +203,11 @@
                         t = getTime(this.time) + ".";
                       }
 
+                      // Convert price to concise price
+                      if(p!=""){
+                        p = priceMap[p]
+                      }
+
                   // Add unique dates as a dictionary to the results array, and each band's info as an array under each date
                   for(var i=0;i<results.length; i++){
                     if (results[i][0].date == d){
