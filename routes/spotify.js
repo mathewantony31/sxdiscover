@@ -180,9 +180,6 @@ router.get('/callback', function(req, res, next) {
 
         if (spotifyBands.length > 0){
 
-          console.log("Final spotify array is:")
-          console.log(spotifyBands);
-
           // Write to custom bands
           var bandData = {
             name:userName,

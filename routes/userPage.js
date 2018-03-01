@@ -17,8 +17,6 @@ router.get('/pages/*', function(req, res) {
           } else{
             try{
 
-              console.log("Looking at data for username: "+docs[0].name)
-
                 // Check to see if current page matches the user's logged in session
                 var requestSession = req.session.id;
                 var userSession = docs[0].uid;
