@@ -84,7 +84,6 @@ router.get('/callback', function(req, res, next) {
     request.post(authOptions, function(error, response, body) {
 
       var spotifyBands = [];
-      var spotifyBands2 = [];
       var userName = "No username.";
       var displayName = "No display name.";
       var email = "no email";
@@ -117,8 +116,7 @@ router.get('/callback', function(req, res, next) {
       request.get(options, function(error, response, body) {
         for(var i=0; i <body.items.length; i++){
           bandName = body.items[i].name;
-          // spotifyBands.push(body.items[i].name);
-          spotifyBands2.push({
+          spotifyBands.push({
             "name": bandName,
             "source":"top"});
         }});
@@ -151,10 +149,9 @@ router.get('/callback', function(req, res, next) {
               for(var j=0; j<body2.total-1; j++){
                 try{
                   console.log("Found band. Adding to list.")
-                  // spotifyBands.push(body2.items[j].track.artists[0].name);
                   bandName = body2.items[j].track.artists[0].name;
                   playlistName = body2.items[j].track.artists[0].name;
-                  spotifyBands2.push({
+                  spotifyBands.push({
                     "name": bandName,
                     "source":"playlist",
                     "playlistName":playlistName});
@@ -176,21 +173,16 @@ router.get('/callback', function(req, res, next) {
 
       request.get(options, function(error, response, body) {
       for(var i=0; i <body.items.length; i++){
-        spotifyBands.push(body.items[i].album.artists[0].name);
         bandName = body.items[i].album.artists[0].name
-        spotifyBands2.push({
+        spotifyBands.push({
                     "name": bandName,
                     "source":"album"});
       }
 
-        if (spotifyBands2.length > 0){
-
-          for(j=0;j<spotifyBands.length;j++){
-            spotifyBands[j] = spotifyBands[j].toLowerCase();
-          }
+        if (spotifyBands.length > 0){
 
           console.log("Final spotify array is:")
-          console.log(spotifyBands2);
+          console.log(spotifyBands);
 
           // Write to custom bands
           var bandData = {
@@ -198,7 +190,7 @@ router.get('/callback', function(req, res, next) {
             displayName:displayName,
             email: email,
             uid: req.session.id,
-            rawBands: spotifyBands2,
+            rawBands: spotifyBands,
             sxswBands: [{"name":"test"}],
             public: true
           };
