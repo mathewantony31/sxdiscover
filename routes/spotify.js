@@ -150,7 +150,6 @@ router.get('/callback', function(req, res, next) {
                 try{
                   console.log("Found band. Adding to list.")
                   bandName = body2.items[j].track.artists[0].name;
-                  playlistName = body2.items[j].track.artists[0].name;
                   spotifyBands.push({
                     "name": bandName,
                     "source":"playlist",
