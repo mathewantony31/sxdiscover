@@ -119,29 +119,28 @@ router.get('/callback', function(req, res, next) {
           spotifyBands.push({
             "name": bandName,
             "source":"top"});
-        }});
-
-      // Get user's artists in saved playlists
-      var options = {
+        }
+              // Get user's artists in saved playlists
+      var playlistOptions = {
           url: 'https://api.spotify.com/v1/me/playlists',
           headers: { 'Authorization': 'Bearer ' + access_token },
           json: true
       };
 
-      request.get(options, function(error, response, body) {
+      request.get(playlistOptions, function(playlistError, playlistResponse, playlistBody) {
 
           // Extract Spotify username
-          var url = body.href;
+          var url = playlistBody.href;
           startIndex = url.indexOf("users")+6;
           endIndex = url.substring(startIndex).indexOf("/")+startIndex;
           userName = url.substring(startIndex,endIndex);
 
-        for(var i=0; i <body.items.length; i++){
+        for(var i=0; i <playlistBody.items.length; i++){
           var playlistName = "";
-          playlistName = body.items[i].name;
+          playlistName = playlistBody.items[i].name;
 
           var options2 = {
-            url: 'https://api.spotify.com/v1/users/'+body.items[i].owner.id+'/playlists/'+body.items[i].id+'/tracks', headers: { 'Authorization': 'Bearer ' + access_token }, json: true
+            url: 'https://api.spotify.com/v1/users/'+playlistBody.items[i].owner.id+'/playlists/'+playlistBody.items[i].id+'/tracks', headers: { 'Authorization': 'Bearer ' + access_token }, json: true
           };
 
           request.get(options2, function(error2, response2, body2){
@@ -162,6 +161,8 @@ router.get('/callback', function(req, res, next) {
           });
         }
       });
+      });
+
 
       // Get user's saved albums
       options = {
