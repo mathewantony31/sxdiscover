@@ -1,4 +1,4 @@
-var priceMap = exports.priceMap = 
+var priceMap = exports.map = 
 
 [
  {
