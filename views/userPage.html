@@ -72,7 +72,6 @@
 
             var today = new Date().getDate();
             var currentDayIndex = 0
-            var timeDifference;
 
             // If date is less than today, hide and show next one
             for(var i=0;i<results.length;i++){
@@ -83,22 +82,18 @@
                 currentDayIndex += 1
               }
               console.log("Today's date is "+today+" and this band's day is "+dayNum)
-              console.log("We will display results for "+results[currentDayIndex][0].dayString)
             }
 
+            console.log("We will display results for "+results[currentDayIndex][0].dayString)
+
+            // Hide all days
             for(var i=0;i<days.length;i++){
               $('#'+days[i]).hide();
             }
 
+            // Only show current day that was calculated earlier
             $('#current-day').html(results[currentDayIndex][0].dayString);
-
-          //   for(var i=0;i<days.length;i++){
-          //   if(i==0){
-          //     $('#current-day').html(results[currentDay][0].dayString);
-          //   } else {
-          //     $('#'+days[i]).hide();
-          //   }
-          // }
+            $('#'+days[currentDayIndex]).show();
         });
       });
 
@@ -127,7 +122,7 @@
             var sourceText = ""
             switch(source){
               case "top":
-                sourceText = "Top artist";
+                sourceText = "Artist you've been listening to recently";
                 break;
               case "playlist":
                 var playlist = bandData[i][6];
