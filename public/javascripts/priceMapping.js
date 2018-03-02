@@ -1,5 +1,4 @@
 var priceMap = exports.map = 
-
 [
  {
    "original": "Badge / Wristband Required",
