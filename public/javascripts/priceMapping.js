@@ -1,28 +1,108 @@
-var priceMap = exports.priceMap = [{
-    "Badge / Wristband Required":"Wristband only",
-"Free w/ RSVP | 21+":"RSVP",
-"Free | All Ages":"Free",
-"Free":"Free",
-"Free | 21+":"Free",
-"Free w/ RSVP | All Ages":"RSVP",
-"Badge / Wristband Required | 21+":"Wristband only",
-"Free w/ RSVP":"RSVP",
-"Badge / Wristband Priority | Limited Tickets at the Door":"Limited tickets",
-"Free w/ RSVP | SXSW Badges Welcome | 21+":"RSVP",
-"Badge / Wristband Priority | $10 For Everyone Else | All Ages":"$10",
-"$5 Suggested Donation | All Ages":"$5",
-"5":"$5",
-"Free | 21+ | $10 Minor Surcharge":"Free",
-"11.48":"$11.48",
-"$20 Early Bird / $25 GA | 21+":"Buy tickets",
-"Badge / Wristband Required | 18+":"Wristband only",
-"$20 GA / $50 VIP":"Buy tickets",
-"All Ages":"Free",
-"Badge / Wristband Priority | $5 Cover for Public | 21+":"$5",
-"7":"$7",
-"$5 Per Family (up to 5) | All Ages":"$5",
-"$5 Suggested Donation":"$5",
-"21":"$21",
-"$10 | All Ages":"$10",
-"Free | Open To The Public | Open To All Badges":"Free"
-}]
+var priceMap = exports.priceMap = 
+
+[
+ {
+   "original": "Badge / Wristband Required",
+   "concise": "Wristband only"
+ },
+ {
+   "original": "Free w/ RSVP | 21+",
+   "concise": "RSVP"
+ },
+ {
+   "original": "Free | All Ages",
+   "concise": "Free"
+ },
+ {
+   "original": "Free",
+   "concise": "Free"
+ },
+ {
+   "original": "Free | 21+",
+   "concise": "Free"
+ },
+ {
+   "original": "Free w/ RSVP | All Ages",
+   "concise": "RSVP"
+ },
+ {
+   "original": "Badge / Wristband Required | 21+",
+   "concise": "Wristband only"
+ },
+ {
+   "original": "Free w/ RSVP",
+   "concise": "RSVP"
+ },
+ {
+   "original": "Badge / Wristband Priority | Limited Tickets at the Door",
+   "concise": "Limited tickets"
+ },
+ {
+   "original": "Free w/ RSVP | SXSW Badges Welcome | 21+",
+   "concise": "RSVP"
+ },
+ {
+   "original": "Badge / Wristband Priority | $10 For Everyone Else | All Ages",
+   "concise": "10"
+ },
+ {
+   "original": "$5 Suggested Donation | All Ages",
+   "concise": "5"
+ },
+ {
+   "original": "5",
+   "concise": "5"
+ },
+ {
+   "original": "Free | 21+ | $10 Minor Surcharge",
+   "concise": "Free"
+ },
+ {
+   "original": "11.48",
+   "concise": "11.48"
+ },
+ {
+   "original": "$20 Early Bird / $25 GA | 21+",
+   "concise": "Buy tickets"
+ },
+ {
+   "original": "Badge / Wristband Required | 18+",
+   "concise": "Wristband only"
+ },
+ {
+   "original": "$20 GA / $50 VIP",
+   "concise": "Buy tickets"
+ },
+ {
+   "original": "All Ages",
+   "concise": "Free"
+ },
+ {
+   "original": "Badge / Wristband Priority | $5 Cover for Public | 21+",
+   "concise": "5"
+ },
+ {
+   "original": "7",
+   "concise": "7"
+ },
+ {
+   "original": "$5 Per Family (up to 5) | All Ages",
+   "concise": "5"
+ },
+ {
+   "original": "$5 Suggested Donation",
+   "concise": "5"
+ },
+ {
+   "original": "21",
+   "concise": "21"
+ },
+ {
+   "original": "$10 | All Ages",
+   "concise": "10"
+ },
+ {
+   "original": "Free | Open To The Public | Open To All Badges",
+   "concise": "Free"
+ }
+]

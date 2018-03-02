@@ -59,6 +59,10 @@ function search(nameKey, myArray){
 }
 
 function getConcisePriceName(price){
-  console.log("Concise price is "+priceMap[0].price)
-  return priceMap[0].price
+  for (var i=0; i < priceMap.length; i++) {
+        if (priceMap[i].original === price) {
+            return priceMap[i].concise;
+        }
+    }
+  return ""
 }
