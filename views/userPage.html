@@ -69,13 +69,36 @@
       $(document).ready(function() {
           populateTable(function(){
             // Once all data is loaded, just show Monday's values
+
+            var today = new Date().getDate();
+            var currentDayIndex = 0
+            var timeDifference;
+
+            // If date is less than today, hide and show next one
+            for(var i=0;i<results.length;i++){
+              var dayNum = Date.parse(results[i][0].date).getDate();
+              
+              // If the current day is earlier than today, then move to the next day
+              if(today-dayNum>0){
+                currentDayIndex += 1
+              }
+              console.log("Today's date is "+today+" and this band's day is "+dayNum)
+              console.log("We will display results for "+results[currentDayIndex][0].dayString)
+            }
+
             for(var i=0;i<days.length;i++){
-            if(i==0){
-              $('#current-day').html(results[currentDay][0].dayString);
-            } else {
               $('#'+days[i]).hide();
             }
-          }
+
+            $('#current-day').html(results[currentDayIndex][0].dayString);
+
+          //   for(var i=0;i<days.length;i++){
+          //   if(i==0){
+          //     $('#current-day').html(results[currentDay][0].dayString);
+          //   } else {
+          //     $('#'+days[i]).hide();
+          //   }
+          // }
         });
       });
 
@@ -173,8 +196,6 @@
       weekdays[6] = "Saturday";
 
       function populateTable(callback) {
-        console.log("RESULTS ARE:")
-        console.log(results);
 
               // For each item in our JSON, extract the useful info and add it to the results array
               $.each(bands, function(){
@@ -234,6 +255,8 @@
                 //Remove first element
                 // need: 2018 update: remove first day's results
                 results = results.slice(1);
+                console.log("RESULTS ARE:")
+                console.log(results);
 
           // Create div for each day and add bands to each div
           for(var i=0;i<results.length;i++){
