@@ -60,3 +60,12 @@ function getConcisePriceName(price){
     }
   return ""
 }
+
+function parseLongNames(name){
+  var names = name.split(" ")
+  for(var i=0;i<names.length;i++){
+    if(names[i].length>10){
+      
+    }
+  }
+}
