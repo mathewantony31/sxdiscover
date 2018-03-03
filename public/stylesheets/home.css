@@ -65,9 +65,21 @@ body {
 #mid a {
 	display: inline-block;
 }
-#spotify {
-	height: 7vh;
+/* Spotify Login button fix for phones */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 550px) {
+		#spotify {
+			width: 80vw;
+		}
 }
+/* anything bigger than a phone gets vh treatment */
+@media only screen
+  and (min-device-width: 550px) {
+		#spotify {
+			height: 7vh;
+		}
+	}
 #info {
 		font-family: "OpenSans", sans-serif;
     font-style: italic;
