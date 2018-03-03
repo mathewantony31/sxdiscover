@@ -154,8 +154,8 @@
         // Pull the second digit
         var secondDigit = date % 10
 
-        // Special cases: 12 and 13 are treated as "th"
-        if(date==12 || date==13){
+        // Special cases: 11, 12 and 13 are treated as "th"
+        if(date==11 || date==12 || date==13){
           return "th"
         }
         // 1st, 2nd, 3rd, 4th, 21st, 22nd, 23rd
