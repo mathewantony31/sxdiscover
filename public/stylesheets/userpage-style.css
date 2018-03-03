@@ -8,7 +8,7 @@ body {
 
 /* LAYOUT */
 .viewable {
-	margin: 0 auto 20vh;
+	margin: 5vh auto 20vh;
 	overflow: scroll;
 }
 footer {
