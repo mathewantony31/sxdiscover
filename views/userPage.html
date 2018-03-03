@@ -68,14 +68,30 @@
 
       $(document).ready(function() {
           populateTable(function(){
-            // Once all data is loaded, just show Monday's values
+
+            var today = new Date().getDate();
+            var currentDayIndex = 0
+
+            // If date is less than today, hide and show next one
+            for(var i=0;i<results.length;i++){
+              var dayNum = Date.parse(results[i][0].date).getDate();
+              
+              // If the current day is earlier than today, then move to the next day
+              if(today-dayNum>0){
+                currentDayIndex += 1
+              }
+            }
+
+            // Hide all days
             for(var i=0;i<days.length;i++){
-            if(i==0){
-              $('#current-day').html(results[currentDay][0].dayString);
-            } else {
               $('#'+days[i]).hide();
             }
-          }
+
+            // Only show current day that was calculated earlier
+            // Set currentDay to the index value (the day button functions use this value)
+            currentDay = currentDayIndex
+            $('#current-day').html(results[currentDayIndex][0].dayString);
+            $('#'+days[currentDayIndex]).show();
         });
       });
 
@@ -104,7 +120,7 @@
             var sourceText = ""
             switch(source){
               case "top":
-                sourceText = "Top artist";
+                sourceText = "Artist you've been listening to recently";
                 break;
               case "playlist":
                 var playlist = bandData[i][6];
@@ -130,6 +146,32 @@
           html += '</a>';
         }
         return html;
+      }
+
+      // Function that returns the correct suffix for a given date, e.g. if you input 22, it will return "nd" to form "22nd". The approach here is to extract the second digit from the date (e.g. if you input 23, it'll just look at 3), and return a string based on the value of the second digit: 1 = "st", 2 = "nd", 3 = "rd", everything else = "th".
+
+      function getDateSuffix(date){
+        // Pull the second digit
+        var secondDigit = date % 10
+
+        // Special cases: 12 and 13 are treated as "th"
+        if(date==12 || date==13){
+          return "th"
+        }
+        // 1st, 2nd, 3rd, 4th, 21st, 22nd, 23rd
+        switch(secondDigit){
+          case 1:
+            return "st"
+            break;
+          case 2:
+            return "nd"
+            break;
+          case 3:
+            return "rd"
+            break;
+          default:
+            return "th"
+        }
       }
 
       function dayButtonClicked(type){
@@ -173,8 +215,6 @@
       weekdays[6] = "Saturday";
 
       function populateTable(callback) {
-        console.log("RESULTS ARE:")
-        console.log(results);
 
               // For each item in our JSON, extract the useful info and add it to the results array
               $.each(bands, function(){
@@ -215,8 +255,9 @@
 
                     // Get day name
                     var dayNum = Date.parse(this.date).getDay();
+                    var date = Date.parse(this.date).getDate();
                     var dayText = weekdays[dayNum];
-                    var dayString = dayText+" the "+Date.parse(this.date).getDate()+"th"
+                    var dayString = dayText+" the "+date+getDateSuffix(date)
                     results.push([{
                       date:d,
                       bands: [[n, v, t, l, p, s, s_n]],
@@ -234,16 +275,19 @@
                 //Remove first element
                 // need: 2018 update: remove first day's results
                 results = results.slice(1);
+                console.log("Results are:")
+                console.log(results);
 
           // Create div for each day and add bands to each div
           for(var i=0;i<results.length;i++){
                 var day;
+                var date = Date.parse(results[i][0].date).getDate();
                 var dateString = results[i][0].dayText;
 
                 if(dateString=="TBD"){
                   day="TBD"
                 } else {
-                  day = dateString
+                  day = dateString+date
                 }
                 $('#bandList').append("<div class='bandcards' id='"+day+"''></div>");
                 days.push(day);
