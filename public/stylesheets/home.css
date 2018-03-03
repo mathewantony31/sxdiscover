@@ -65,17 +65,17 @@ body {
 #mid a {
 	display: inline-block;
 }
-/* Spotify Login button fix for iPhone SE */
+/* Spotify Login button fix for phones */
 @media only screen
   and (min-device-width: 320px)
-  and (max-device-width: 374px) {
+  and (max-device-width: 550px) {
 		#spotify {
 			width: 80vw;
 		}
 }
-/* anything bigger than an SE gets vh treatment */
+/* anything bigger than a phone gets vh treatment */
 @media only screen
-  and (min-device-width: 375px) {
+  and (min-device-width: 550px) {
 		#spotify {
 			height: 7vh;
 		}
