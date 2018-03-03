@@ -4,9 +4,6 @@
 body {
 	background: black;
 }
-#mid {
-	position: fixed;
-}
 .splashlogo {
 	font-family: 'Archivo', sans-serif;
 	font-size: 3.4em;
