@@ -8,7 +8,7 @@ body {
 
 /* LAYOUT */
 .viewable {
-	margin: 0 auto 20vh;
+	margin: 5vh auto 20vh;
 	overflow: scroll;
 }
 footer {
@@ -20,7 +20,7 @@ footer {
 	grid-column-gap: 1px;
 }
 button {
-	background: #ffcf7b;
+	background: #F4D675;
 	border: 1px black;
 	color: black;
 	font-size: 1em;
@@ -120,7 +120,7 @@ article {
 	font-family: 'Archivo Black', sans-serif;
 	font-weight: 300;
 	font-size: 1.8em;
-	color: #ffcf7b;
+	color: #F4D675;
 	text-align: center;
 	padding-top: .3vh;
 }
@@ -130,7 +130,7 @@ article {
 	font-weight: 500;
 	font-style: italic;
 	font-size: .8em;
-	color: grey;
+	color: white;
 	margin: auto;
 	text-align: center;
 }
