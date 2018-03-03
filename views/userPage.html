@@ -76,7 +76,7 @@
             // If date is less than today, hide and show next one
             for(var i=0;i<results.length;i++){
               var dayNum = Date.parse(results[i][0].date).getDate();
-              
+
               // If the current day is earlier than today, then move to the next day
               if(today-dayNum>0){
                 currentDayIndex += 1
@@ -311,7 +311,7 @@
 
 <!-- header and article (non-nav content) -->
 <div class="viewable">
-  <h1 class="textlogo">SXDiscover</h1>
+  <!-- <h1 class="textlogo">SXDiscover</h1> -->
   <div class="daycard">
     <h3>bands playing on</h3>
     <h2 class="currentday" id="current-day"></h2>

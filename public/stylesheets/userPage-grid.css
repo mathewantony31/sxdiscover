@@ -2,11 +2,10 @@
 @supports (grid-area: auto) {
 
   .viewable {
-    display: grid;
-    grid-template-rows: auto;
-    grid-template-areas:  "title"
-                          "day"
-                          "..."
+    /* display: grid; */
+    /* grid-template-rows: auto;
+    grid-template-areas:  "day"
+                          "..." */
   }
   article > div {
     display: grid;
