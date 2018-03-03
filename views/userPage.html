@@ -67,9 +67,6 @@
         return Date.parse(a["date"]+" 2018 "+a["time"])-Date.parse(b["date"]+" 2018 "+b["time"]);
       });
 
-      console.log("JSON-ified and sorted bands results are:")
-      console.log(bands)
-
       $(document).ready(function() {
           populateTable(function(){
 
@@ -245,10 +242,7 @@
                     }
 
                       if(this.time != "TBD"){
-                        console.log("Time for "+n+" is "+this.time)
-                        // t = getTime(this.time) + ".";
                         t = moment(Date.parse(this.time)).format("h:mm a") + ".";
-                        console.log("Time for "+n+" is "+t)
                       }
 
                   // Add unique dates as a dictionary to the results array, and each band's info as an array under each date
