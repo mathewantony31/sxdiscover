@@ -120,14 +120,14 @@
             var sourceText = ""
             switch(source){
               case "top":
-                sourceText = "Artist you've been listening to recently";
+                sourceText = "Recently played";
                 break;
               case "playlist":
                 var playlist = bandData[i][6];
                 sourceText = "From the playlist "+playlist;
                 break;
               case "album":
-                sourceText = "From an album you saved"
+                sourceText = "From your library"
                 break;
               default:
                 break;
