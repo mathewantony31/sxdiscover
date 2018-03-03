@@ -135,9 +135,14 @@ router.get('/callback', function(req, res, next) {
           endIndex = url.substring(startIndex).indexOf("/")+startIndex;
           userName = url.substring(startIndex,endIndex);
 
+          // Map playlist IDs to playlist names
+          var playlistDictionary = []
+
           for(var i=0; i <playlistBody.items.length; i++){
-            var playlistName = "";
-            playlistName = playlistBody.items[i].name;
+            playlistDictionary.push({
+              "id":playlistBody.items[i].id,
+              "name":playlistBody.items[i].name
+            });
 
             var options2 = {
               url: 'https://api.spotify.com/v1/users/'+playlistBody.items[i].owner.id+'/playlists/'+playlistBody.items[i].id+'/tracks', headers: { 'Authorization': 'Bearer ' + access_token }, json: true
@@ -146,17 +151,25 @@ router.get('/callback', function(req, res, next) {
             request.get(options2, function(error2, response2, body2){
               if (!error2 && response2.statusCode === 200){
                 for(var j=0; j<body2.total-1; j++){
+
+                  // Extract playlist ID
+                  var playlistId = body2.href;
+                  startIndex = playlistId.indexOf("playlists")+10;
+                  endIndex = playlistId.substring(startIndex).indexOf("/")+startIndex;
+                  playlistId = playlistId.substring(startIndex,endIndex);
+
                   try{
                     console.log("Found band. Adding to list.")
                     bandName = body2.items[j].track.artists[0].name;
                     spotifyBands.push({
                       "name": bandName,
                       "source":"playlist",
-                      "playlistName":playlistName});
+                      "playlistName":search(playlistId,playlistDictionary)});
                   } catch (e){
                     console.log("Error: Failed to pull info from Spotify: "+e);
                   }
                 }
+                console.log("New spotify bands array after adding playlists is "+spotifyBands)
               }
             });
           }
@@ -234,5 +247,14 @@ router.get('/refresh_token', function(req, res, next) {
     }
   });
 });
+
+function search(nameKey, myArray){
+    for (var i=0; i < myArray.length; i++) {
+        if (myArray[i].id === nameKey) {
+            return myArray[i].name;
+        }
+    }
+    return nameKey;
+}
 
 module.exports = router;
