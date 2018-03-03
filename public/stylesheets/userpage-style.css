@@ -44,6 +44,7 @@ button {
 }
 .card {
 }
+
 .card h2 {
   grid-area: band;
   padding-left: .4em;
