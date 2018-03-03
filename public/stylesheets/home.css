@@ -1,125 +1,59 @@
-/*DESIGN FOR MOBILE DEVICES*/
-@media only screen and (min-width: 320px) {
-	body {
-		background-image: url("/images/mobile_cover.png");
-	    background-position: left top;
-	    background-attachment: fixed;
-	    background-size: cover;
-	    background-color: #303244;
-	}
-	h2 {
-	font-family: "OpenSans", sans-serif;
+@import url('https://fonts.googleapis.com/css?family=Archivo+Black|Archivo:400,500,600');
+/* dat new shit */
+
+body {
+	background: black;
+}
+.splashlogo {
+	font-family: 'Archivo', sans-serif;
+	font-size: 3.4em;
+	font-weight: 700;
+	letter-spacing: -2px;
+	color: #FFFFFF;
+	vertical-align: middle;
+	display: block;
+	margin: 0 auto;
+	margin-bottom:0.2em;
+}
+.hero {
+	font-family: "Archivo", sans-serif;
 	font-size: 1em;
 	color: #FFFFFF;
+	letter-spacing: .9px;
+	display: block;
+	margin: auto 15vw;
+	margin-bottom: .3em;
+	font-weight: 400;
+}
+.whisper {
+	font-family: "Archivo Narrow", sans-serif;
+	font-size: .8em;
+	color: #484848;
 	letter-spacing: 0px;
 	display: block;
-	margin: 0 auto;
-	/*padding: 5% 0 5% 0;*/
-	margin-bottom: 1em;
-	font-weight: lighter;
+	margin: auto 15vw;
 	font-style: italic;
-	}
-
-	#mid img {
-	display: inline-block;
-	/*width: 110%;*/
-	}
-
-	h1 {
-	font-family: "OpenSans", sans-serif;
-	font-weight: lighter;
-	font-size: 1.5em;
-	color: #FFFFFF;
-	letter-spacing: 0px;
-	vertical-align: middle;
-	display: block;
-	margin: 0 auto;
-	margin-bottom:0.2em;
-	}
-}
-@media only screen and (min-width: 700px) {
-	body {
-		background-image: url("/images/desktop_cover_light.png");
-	    background-position: left top;
-	    background-attachment: fixed;
-	    background-size: cover;
-	    background-color: #303244;
-	}
-	h2 {
-	font-family: "OpenSans", sans-serif;
-	font-size: 1.5em;
-	color: #FFFFFF;
-	letter-spacing: 0px;
-	display: block;
-	margin: 0 auto;
-	/*padding: 5% 0 5% 0;*/
-	margin-bottom: 1em;
-	font-weight: lighter;
-	font-style: italic;
-	}
-
-	#mid img {
-	display: inline-block;
-	/*width: 75%;*/
-	}
-
-	h1 {
-	font-family: "OpenSans", sans-serif;
-	font-weight: lighter;
-	font-size: 2.5em;
-	color: #FFFFFF;
-	letter-spacing: 0px;
-	vertical-align: middle;
-	display: block;
-	margin: 0 auto;
-	margin-bottom:0.2em;
-	}
 }
 
-#top {
-	height: 20vh;
-	text-align: center;
+
+/* coloring text */
+#s {
+	color: #F5D76E
 }
-#top img {
-    height: 20vh;
-    display: inherit;
-		width: inherit;
-    vertical-align: middle;
-    border-style: solid;
-	/*border-width: thick;*/
-	/*border-color: white;*/
-	position: relative;
-	margin: 3vh auto;
+#x {
+	color: #4B4A4A;
+}
+#discover {
+	color: white;
 }
 
-#logo{
-	height: 20vh;
-	/*display: inherit;*/
-  	vertical-align: middle;
-	position: relative;
-	margin: 3vh auto;
-}
 
-#mid {
-	padding-top: 20vh;
-	margin: 0 auto;
-	text-align: center;
-	/*width: 50%;*/
-}
 #mid-loader {
 	padding-top: 10vh;
 	margin: 0 auto;
 	text-align: center;
 }
 
-#footer {
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	padding: 1rem;
-	text-align: center;
-}
 #footer a {
 	font-family: "OpenSans", sans-serif;
 	font-style: italic;
@@ -145,24 +79,7 @@
     display: inline-block;
     padding-bottom: 3vh;
 }
-a:link {
-    text-decoration: none;
-}
-/* visited link */
-a:visited {
-    color: gray;
-    text-decoration: none;
-}
-/* mouse over link */
-a:hover {
-    color: #F5D76E;
-    text-decoration: none;
-}
-/* selected link */
-a:active {
-    color: #4B4A4A;
-    text-decoration: none;
-}
+
 #comingsoon{
     height: 20vh;
     padding-top: 15vh;
