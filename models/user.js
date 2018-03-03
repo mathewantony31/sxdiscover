@@ -10,4 +10,4 @@ var userSchema = mongoose.Schema({
   public: Boolean
 });
 
-module.exports = mongoose.model('users', userSchema);
+module.exports = mongoose.model('users-2018', userSchema);
