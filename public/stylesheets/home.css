@@ -3,9 +3,9 @@
 
 body {
 	background: black;
-	margin: 0;
-	height: 100%;
-	overflow: hidden
+}
+#mid {
+	position: fixed;
 }
 .splashlogo {
 	font-family: 'Archivo', sans-serif;
