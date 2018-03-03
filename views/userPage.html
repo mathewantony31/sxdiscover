@@ -33,6 +33,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="/javascripts/global.js"></script>
     <script src="/javascripts/date.js"></script>
+    <script src="/javascripts/moment.js"></script>
 
     <!-- UPDATE: 2017 Facebook SDK code for share button -->
     <div id="fb-root"></div>
@@ -241,7 +242,7 @@
                     }
 
                       if(this.time != "TBD"){
-                        t = getTime(this.time) + ".";
+                        t = moment(Date.parse(this.time)).format("h:mm a") + ".";
                       }
 
                   // Add unique dates as a dictionary to the results array, and each band's info as an array under each date
