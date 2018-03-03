@@ -65,9 +65,21 @@ body {
 #mid a {
 	display: inline-block;
 }
-#spotify {
-	height: 7vh;
+/* Spotify Login button fix for iPhone SE */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 568px) {
+		#spotify {
+			width: 80vw;
+		}
 }
+/* anything bigger than an SE gets vh treatment */
+@media only screen
+  and (min-device-width: 375px) {
+		#spotify {
+			height: 7vh;
+		}
+	}
 #info {
 		font-family: "OpenSans", sans-serif;
     font-style: italic;
