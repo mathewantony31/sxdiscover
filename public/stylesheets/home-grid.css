@@ -1,0 +1,41 @@
+@supports (grid-area: auto) {
+
+body {
+  display: grid;
+  grid-template-rows: auto;
+}
+#mid {
+	padding-top: 32vh;
+	margin: 0 auto;
+	text-align: center;
+}
+/* footer on homepage is the login button */
+footer {
+  display: grid;
+  height: 20vh;
+  grid-template-rows: auto;
+  grid-template-areas: "info"
+                        "login";
+  position: fixed;
+	bottom: 0;
+	margin: 0 auto;
+	width: 100vw;
+	background: black;
+}
+.login {
+  align-content: center;
+  text-align: center;
+  vertical-align: middle;
+  margin: auto;
+}
+.info {
+  font-family: 'archivo', sansserif;
+  font-weight: 400;
+}
+
+
+
+
+
+
+}
