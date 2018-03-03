@@ -33,6 +33,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="/javascripts/global.js"></script>
     <script src="/javascripts/date.js"></script>
+    <script src="/javascripts/moment.js"></script>
 
     <!-- UPDATE: 2017 Facebook SDK code for share button -->
     <div id="fb-root"></div>
@@ -65,6 +66,9 @@
 
         return Date.parse(a["date"]+" 2018 "+a["time"])-Date.parse(b["date"]+" 2018 "+b["time"]);
       });
+
+      console.log("JSON-ified and sorted bands results are:")
+      console.log(bands)
 
       $(document).ready(function() {
           populateTable(function(){
@@ -241,7 +245,10 @@
                     }
 
                       if(this.time != "TBD"){
-                        t = getTime(this.time) + ".";
+                        console.log("Time for "+n+" is "+this.time)
+                        // t = getTime(this.time) + ".";
+                        t = moment(Date.parse(this.time)).format("h:mm a") + ".";
+                        console.log("Time for "+n+" is "+t)
                       }
 
                   // Add unique dates as a dictionary to the results array, and each band's info as an array under each date
