@@ -5,8 +5,9 @@
     <link rel="stylesheet" href="/stylesheets/reset.css">
     <link rel="stylesheet" href="/stylesheets/home.css">
     <link rel="stylesheet" href="/stylesheets/loaders.min.css">
-    <meta name="viewport" content="width=device-width initial-scale = 1.0 
-maximum-scale=1.0 user-scalable=no" /> 
+    <link rel="stylesheet" type="text/css" href="/stylesheets/home-grid.css">
+    <meta name="viewport" content="width=device-width initial-scale = 1.0
+maximum-scale=1.0 user-scalable=no" />
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -26,7 +27,7 @@ maximum-scale=1.0 user-scalable=no" />
       // $(document).ready(function() {
       //     loadUserPage();
       // });
-      
+
       // Functions =============================================================
       // Fill table with data
           function loadUserPage() {
@@ -43,16 +44,15 @@ maximum-scale=1.0 user-scalable=no" />
               window.location.replace("/pages/"+user);
             });
           };
-          
+
       loadUserPage();
     </script>
   </head>
   <body>
-    <div id="top">
-    </div>
-    <!-- Mid section of the site -->
+    <div id="mid">
+            <h1 class="splashlogo">SXDiscover</h1>
+      </div>
     <div id="mid-loader">
-        <img id="logo" src="/images/logo.png">
         <div id="animation">
          <div class="loader-inner ball-pulse">
           <div id="red"></div>
@@ -60,10 +60,6 @@ maximum-scale=1.0 user-scalable=no" />
           <div id="turqoise"></div>
          </div>
         </div>
-    </div>
-      <!-- Bottom of site -->
-    <div id="footer">
-      <a href="/about" alt="about us">more info</a>
     </div>
   </body>
 </html>
