@@ -1,13 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-/* Temporary landing page pre-launch. */
-router.get('/', function(req, res, next) {
-  res.render('soon');
-});
-
 /* Get home page. */
-router.get('/banana', function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.render('index');
 });
 
