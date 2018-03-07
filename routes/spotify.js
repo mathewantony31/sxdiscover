@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var querystring = require('querystring'),
     request = require('request');
+var async = require('async');
 
 
 var redirect_uri;
@@ -115,81 +116,45 @@ router.get('/callback', function(req, res, next) {
           request.get(topOptions, function(topError, topResponse, topBody) {
             for(var i=0; i <topBody.items.length; i++){
               bandName = topBody.items[i].name;
+              bandId = topBody.items[i].id;
               spotifyBands.push({
                 "name": bandName,
-                "source":"top"});
+                "source":"top",
+                "id":bandId});
             }
 
-          // Get user's artists in saved playlists
-          var playlistOptions = {
-            url: 'https://api.spotify.com/v1/me/playlists',
+        var bandsForAsyncLoop = spotifyBands
+
+        // // Get related artists: https://api.spotify.com/v1/artists/{id}/related-artists
+        async.each(bandsForAsyncLoop, function(band, callback){
+          console.log("Processing band "+band.name)
+          var options = {
+            url: 'https://api.spotify.com/v1/artists/'+band.id+'/related-artists',
             headers: { 'Authorization': 'Bearer ' + access_token },
-            json: true
-          };
+            json: true};
 
-          request.get(playlistOptions, function(playlistError, playlistResponse, playlistBody) {
+          request.get(options, function(error, response, body){
 
-          // Extract Spotify username
-          var url = playlistBody.href;
-          startIndex = url.indexOf("users")+6;
-          endIndex = url.substring(startIndex).indexOf("/")+startIndex;
-          userName = url.substring(startIndex,endIndex);
-
-          // Map playlist IDs to playlist names
-          var playlistDictionary = []
-
-          for(var i=0; i <playlistBody.items.length; i++){
-            playlistDictionary.push({
-              "id":playlistBody.items[i].id,
-              "name":playlistBody.items[i].name
-            });
-
-            var options2 = {
-              url: 'https://api.spotify.com/v1/users/'+playlistBody.items[i].owner.id+'/playlists/'+playlistBody.items[i].id+'/tracks', headers: { 'Authorization': 'Bearer ' + access_token }, json: true
-            };
-
-            request.get(options2, function(error2, response2, body2){
-              if (!error2 && response2.statusCode === 200){
-                for(var j=0; j<body2.total-1; j++){
-
-                  // Extract playlist ID
-                  var playlistId = body2.href;
-                  startIndex = playlistId.indexOf("playlists")+10;
-                  endIndex = playlistId.substring(startIndex).indexOf("/")+startIndex;
-                  playlistId = playlistId.substring(startIndex,endIndex);
-
-                  try{
-                    console.log("Found band. Adding to list.")
-                    bandName = body2.items[j].track.artists[0].name;
-                    spotifyBands.push({
-                      "name": bandName,
-                      "source":"playlist",
-                      "playlistName":search(playlistId,playlistDictionary)});
-                  } catch (e){
-                    console.log("Error: Failed to pull info from Spotify: "+e);
-                  }
-                }
-                console.log("New spotify bands array after adding playlists is "+spotifyBands)
+            try{
+              for(var j=0; j<body.artists.length; j++){
+                var bandName = body.artists[j].name;
+                spotifyBands.push({
+                  "name": bandName,
+                  "source":"related",
+                  "relatedTo":band.name});
               }
-            });
+              console.log("Related artists added for "+band.name)
+              callback();
+            }
+            catch(e){
+              console.log("Error is "+e)
+            }
+          })
+        }, function(err){
+          if(err){
+            throw err;
           }
-
-        // Get user's saved albums
-        albumOptions = {
-          url: 'https://api.spotify.com/v1/me/albums?offset=0&limit=50',
-          headers: { 'Authorization': 'Bearer ' + access_token },
-          json: true
-        };
-
-        request.get(albumOptions, function(albumError, albumResponse, albumBody) {
-          for(var i=0; i <albumBody.items.length; i++){
-            bandName = albumBody.items[i].album.artists[0].name
-            spotifyBands.push({
-              "name": bandName,
-              "source":"album"});
-          }
-          if (spotifyBands.length > 0){
-
+          console.log("Related artists pulled for all bands.")
           // Write to custom bands
           var bandData = {
             name:userName,
@@ -197,7 +162,7 @@ router.get('/callback', function(req, res, next) {
             email: email,
             uid: req.session.id,
             rawBands: spotifyBands,
-            sxswBands: [{"name":"test"}],
+            sxswBands: [{"name":"related"}],
             public: true
           };
 
@@ -212,16 +177,14 @@ router.get('/callback', function(req, res, next) {
               console.log("Error: Failed to save custom bands to database");
             }
           });
-        }
 
-        res.render('placeholder', {name:userName});
-      });
-      });
+          res.render('placeholder', {name:userName});
+        })
         });
         });
         }
       });
-}
+    }
 });
 
 router.get('/refresh_token', function(req, res, next) {

@@ -130,6 +130,10 @@
               case "album":
                 sourceText = "From your library"
                 break;
+              case "related":
+                var relatedToBand = bandData[i][6]
+                sourceText = "Because you like "+relatedToBand;
+                break;
               default:
                 break;
             }
@@ -238,6 +242,9 @@
                         s = this.source[0].source
                         if(s=="playlist"){
                           s_n = this.source[0].playlistName
+                        }
+                        if(s=="related"){
+                          s_n = this.source[0].relatedTo
                         }
                     }
 
