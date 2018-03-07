@@ -22,9 +22,29 @@
     border-style: solid;
     border-width: 1px;
     border-color: white;
-    width: 90vw;
     word-wrap: break-word;
     }
+
+    /* Desktop */
+@media only screen
+  and (min-device-width: 550px) {
+    footer{
+      height: 10vh;
+    }
+  }
+
+    /* Mobile */
+    @media only screen
+    and (min-device-width: 320px)
+    and (max-device-width: 550px) {
+      .card {
+        width: 90vw;
+      }
+      footer{
+        height: 13vh;
+      }
+    }
+
     .source {
       grid-template-areas: source;
     }
@@ -43,7 +63,6 @@
     }
     footer {
       display: grid;
-      height: 13vh;
       grid-template-rows: auto;
       grid-template-columns: repeat(2, 1fr);
       grid-template-areas:

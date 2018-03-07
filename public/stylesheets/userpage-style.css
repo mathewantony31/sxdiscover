@@ -9,13 +9,37 @@ body {
 /* LAYOUT */
 .viewable {
 	margin: 5vh auto 20vh;
-	overflow: scroll;
 }
+/* Desktop */
+@media only screen
+and (min-device-width: 550px) {
+	.viewable {
+		width: 400px;
+	}
+	footer{
+		width: 400px;
+		transform: translateX(-50%);
+		left: 50%;
+		bottom: 0;
+	}
+}
+
+/* Mobile */
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 550px) {
+	footer{
+		width: 100vw;
+		bottom: 0;
+	}
+	.viewable {
+		overflow: scroll;
+	}
+}
+
 footer {
 	position: fixed;
-	bottom: 0;
 	margin: 0 auto;
-	width: 100vw;
 	background: black;
 	grid-column-gap: 1px;
 }
