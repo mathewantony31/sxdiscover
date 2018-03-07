@@ -5,6 +5,9 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/userpage-style.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/userPage-grid.css">
+    <link rel="stylesheet" href="/stylesheets/vex.css" />
+    <link rel="stylesheet" href="/stylesheets/vex-theme-wireframe.css" />
+
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -34,6 +37,8 @@
     <script src="/javascripts/global.js"></script>
     <script src="/javascripts/date.js"></script>
     <script src="/javascripts/moment.js"></script>
+    <script src="/javascripts/vex.combined.min.js"></script>
+    <script>vex.defaultOptions.className = 'vex-theme-wireframe';</script>
 
     <!-- UPDATE: 2017 Facebook SDK code for share button -->
     <div id="fb-root"></div>
@@ -68,6 +73,12 @@
       });
 
       $(document).ready(function() {
+        // function(){
+        //   vex.dialog.confirm({ message: 'Are you absolutely sure you want to destroy the alien planet?', callback: function(value) { console.log("Yes")}
+        // })
+        // };
+        vex.dialog.alert({ unsafeMessage: 'Here\'s your SXSW schedule for the week, pulled from your top Spotify artists and their related artists. <br /><br />✌🏽✌🏻,<br />- Will + Mathew'})
+
           populateTable(function(){
 
             var today = new Date().getDate();
