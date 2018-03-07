@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var querystring = require('querystring'),
     request = require('request');
-var async = require("async");
+var async = require('async');
 
 
 var redirect_uri;
@@ -123,37 +123,38 @@ router.get('/callback', function(req, res, next) {
                 "id":bandId});
             }
 
-        var spotifyBandsLength = spotifyBands.length;
-        var pulledAllRelatedArtists = false;
-        var position = 0;
+        var bandsForAsyncLoop = spotifyBands
 
         // // Get related artists: https://api.spotify.com/v1/artists/{id}/related-artists
-        for(var i=0;i<spotifyBandsLength;i++){
+        async.each(bandsForAsyncLoop, function(band, callback){
+          console.log("Processing band "+band.name)
+          var options = {
+            url: 'https://api.spotify.com/v1/artists/'+band.id+'/related-artists',
+            headers: { 'Authorization': 'Bearer ' + access_token },
+            json: true};
 
-          relatedOptions = {
-          url: 'https://api.spotify.com/v1/artists/'+spotifyBands[i].id+'/related-artists',
-          headers: { 'Authorization': 'Bearer ' + access_token },
-          json: true
-        };
+          request.get(options, function(error, response, body){
 
-        position = i;
-
-        // Pull all related artists for a given band and save it to the spotifyBands array
-        request.get(relatedOptions, function(relatedError, relatedResponse, relatedBody) {
-
-            for(var j=0; j<relatedBody.artists.length; j++){
-              bandName = relatedBody.artists[j].name;
-              spotifyBands.push({
-                "name": bandName,
-                "source":"related",
-                "id":"test"});
+            try{
+              for(var j=0; j<body.artists.length; j++){
+                var bandName = body.artists[j].name;
+                spotifyBands.push({
+                  "name": bandName,
+                  "source":"related",
+                  "relatedTo":band.name});
+              }
+              console.log("Related artists added for "+band.name)
+              callback();
             }
-            if(position==spotifyBandsLength-1){
-              console.log("WE DONE!")
+            catch(e){
+              console.log("Error is "+e)
             }
-          });
-      }
-
+          })
+        }, function(err){
+          if(err){
+            throw err;
+          }
+          console.log("Related artists pulled for all bands.")
           // Write to custom bands
           var bandData = {
             name:userName,
@@ -178,11 +179,10 @@ router.get('/callback', function(req, res, next) {
           });
 
           res.render('placeholder', {name:userName});
-
-
+        })
         });
         });
-}
+        }
       });
     }
 });
