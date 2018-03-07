@@ -49,8 +49,8 @@ button {
 	color: black;
 	font-size: 1em;
 	text-transform: uppercase;
-	font-family: 'Archivo', sans-serif;
-	font-weight: 600;
+	font-family: 'Archivo Black', sans-serif;
+	/*font-weight: 600;*/
 }
 #top {
 	/*height: 50vh;*/
