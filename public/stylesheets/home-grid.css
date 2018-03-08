@@ -22,18 +22,31 @@ footer {
 	width: 100vw;
 	background: black;
 }
-.login {
-  align-content: center;
-  text-align: center;
-  vertical-align: middle;
-  margin: auto;
-}
+
 .info {
   font-family: 'archivo', sansserif;
   font-weight: 400;
 }
 
+    /* Desktop */
+@media only screen
+  and (min-device-width: 550px) {
+    .login{
+      margin: 0 auto;
+    }
+  }
 
+    /* Mobile */
+    @media only screen
+    and (min-device-width: 320px)
+    and (max-device-width: 550px) {
+      .login{
+        position: fixed;
+        bottom: 1em;
+        transform: translateX(-50%);
+        left: 50%;
+      }
+    }
 
 
 

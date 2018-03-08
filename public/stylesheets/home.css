@@ -73,11 +73,12 @@ body {
 			width: 80vw;
 		}
 }
-/* anything bigger than a phone gets vh treatment */
+/* Desktop size for login button */
 @media only screen
   and (min-device-width: 550px) {
 		#spotify {
-			height: 7vh;
+			height: 3em;
+            margin-top: 1em;
 		}
 	}
 #info {
