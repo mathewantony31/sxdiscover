@@ -96,7 +96,6 @@ article {
 .artist {
 	font-family: 'Archivo Black', sans-serif;
 	font-weight: 400;
-	color: white;
 	font-size: 2em;
 	padding-bottom: .1em;
 	padding-top: .4em;
@@ -107,7 +106,6 @@ article {
 	font-weight: 500;
 	font-style: italic;
 	font-size: .8em;
-	color: white;
 	padding-right: .4em;
 	/* padding-top: .4em; */
 	padding-bottom: .4em;
@@ -119,7 +117,6 @@ article {
 	font-weight: 500;
 	font-style: italic;
 	font-size: .8em;
-	color: white;
 	padding-right: 1.4em;
 	padding-top: .4em;
 	/* padding-bottom: .4em; */
@@ -131,7 +128,6 @@ article {
 	font-weight: 500;
 	font-style: italic;
 	font-size: .8em;
-	color: white;
 	padding-right: 1.4em;
 	/* padding-top: .4em; */
 	padding-bottom: .4em;
@@ -170,22 +166,22 @@ p{
 /* unvisited link */
 a:link {
     text-decoration: none;
+    color: white;
 }
 /* visited link */
 a:visited {
     color: gray;
+    background-color: none;
     text-decoration: none;
 }
 /* mouse over link */
 a:hover {
-    color: #F5D76E;
+    background-color: #F5D76E;
+    color: black;
     text-decoration: none;
+    border-color: #F5D76E; 
 }
-/* selected link */
-a:active {
-    color: #4B4A4A;
-    text-decoration: none;
-}
+
 #info {
 		font-family: 'Archivo Black', sans-serif;
     font-style: italic;
