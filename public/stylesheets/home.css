@@ -77,7 +77,7 @@ body {
 @media only screen
   and (min-device-width: 550px) {
 		#spotify {
-			height: 4em;
+			height: 3em;
             margin-top: 1em;
 		}
 	}
