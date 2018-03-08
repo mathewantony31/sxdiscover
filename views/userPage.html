@@ -134,13 +134,6 @@
               case "top":
                 sourceText = "Recently played";
                 break;
-              case "playlist":
-                var playlist = bandData[i][6];
-                sourceText = "From the playlist "+playlist;
-                break;
-              case "album":
-                sourceText = "From your library"
-                break;
               case "related":
                 var relatedToBand = bandData[i][6]
                 sourceText = "Because you like "+relatedToBand;
@@ -149,8 +142,6 @@
                 break;
             }
             html += '<h3 class="source">'+sourceText+'</h3>'
-          } else {
-            html += '<h3 class="source">No source</h3>'
           }
 
           // Adding venue and time
