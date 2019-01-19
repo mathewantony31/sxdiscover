@@ -1,8 +1,13 @@
 var express = require('express');
 var router = express.Router();
 
-/* Get home page. */
+/* Get comingSoon page. */
 router.get('/', function(req, res, next) {
+  res.render('comingSoon');
+});
+
+/* Get home page. */
+router.get('/secretentrypoint', function(req, res, next) {
   res.render('index');
 });
 
