@@ -82,17 +82,18 @@
           populateTable(function(){
 
             var today = new Date().getDate();
-            var currentDayIndex = 0
+            var currentDayIndex = 0;
 
-            // If date is less than today, hide and show next one
-            for(var i=0;i<results.length;i++){
-              var dayNum = Date.parse(results[i][0].date).getDate();
 
-              // If the current day is earlier than today, then move to the next day
-              if(today-dayNum>0){
-                currentDayIndex += 1
-              }
-            }
+            // // If date is less than today, hide and show next one
+            // for(var i=0;i<results.length;i++){
+            //   var dayNum = Date.parse(results[i][0].date).getDate();
+
+            //   // If the current day is earlier than today, then move to the next day
+            //   if(today-dayNum>0){
+            //     currentDayIndex += 1
+            //   }
+            // }
 
             // Hide all days
             for(var i=0;i<days.length;i++){
@@ -101,7 +102,7 @@
 
             // Only show current day that was calculated earlier
             // Set currentDay to the index value (the day button functions use this value)
-            currentDay = currentDayIndex
+
             $('#current-day').html(results[currentDayIndex][0].dayString);
             $('#'+days[currentDayIndex]).show();
         });
