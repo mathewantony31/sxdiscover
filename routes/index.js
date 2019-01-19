@@ -6,11 +6,6 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
-/* Ben test */
-router.get('/banana', function(req, res, next) {
-  res.render('about');
-});
-
 /* Get about page. */
 router.get('/about', function(req, res, next){
   res.render('about');
