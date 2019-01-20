@@ -104,8 +104,7 @@
             var lastShowDate = new Date(allShowDates[allShowDates.length - 1]);
 
             // If today is not within SXSW dates, just start on day 0
-            // use getTime() to convert date to milliseconds for easy math 
-            if(today.getTime()<firstShowDate.getTime() | today.getTime()>lastShowDate.getTime()) {
+            if(today<firstShowDate | today>lastShowDate) {
               console.log("it's not SXSW :(");
             } else {
             // If today is within SXSW dates, start on appropriate day
@@ -114,7 +113,7 @@
               for(var i=0;i<results.length;i++){
                 var showDate = allShowDates[i];
                 // If the show day is earlier than today, then move to the next day
-                if(today.getDate()-showDate.getDate()>0){
+                if(today-showDate>0){
                   currentDayIndex += 1
                 }
               }
