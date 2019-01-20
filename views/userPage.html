@@ -77,27 +77,46 @@
         //   vex.dialog.confirm({ message: 'Are you absolutely sure you want to destroy the alien planet?', callback: function(value) { console.log("Yes")}
         // })
         // };
-        vex.dialog.alert({ unsafeMessage: 'Here\'s your SXSW schedule for the week, pulled from your top Spotify artists and their related artists. <br /><br />✌🏽✌🏻,<br />- Will + Mathew'})
+        vex.dialog.alert({ unsafeMessage: 'Here\'s your SXSW schedule for the week, pulled from your top Spotify artists and their related artists. <br /><br />✌🏽✌🏻,<br />- Ben + Mathew'})
 
           populateTable(function(){
 
-            var today = new Date().getDate();
-            var currentDayIndex = 0;
-
-
-            // // If date is less than today, hide and show next one
-            // for(var i=0;i<results.length;i++){
-            //   var dayNum = Date.parse(results[i][0].date).getDate();
-
-            //   // If the current day is earlier than today, then move to the next day
-            //   if(today-dayNum>0){
-            //     currentDayIndex += 1
-            //   }
-            // }
-
-            // Hide all days
+            // Hide each day div by default
             for(var i=0;i<days.length;i++){
               $('#'+days[i]).hide();
+            }
+
+            var today = new Date();
+            var currentDayIndex = 0;
+            
+            // get all dates that SX shows are happening
+            // the year isn't stored, so we need to manually add it, otherwise it defaults to 2001
+            // TODO: make this less hacky; store the year somewhere else
+            var allShowDates = [];
+            for(var i=0;i<results.length;i++){
+              var dateWithCorrectYear = new Date(results[i][0].date);
+              dateWithCorrectYear = new Date("2019", dateWithCorrectYear.getMonth(), dateWithCorrectYear.getDate());
+              allShowDates.push(dateWithCorrectYear);
+            }
+
+            // determine date parameters for SX shows
+            var firstShowDate = new Date(allShowDates[0]);
+            var lastShowDate = new Date(allShowDates[allShowDates.length - 1]);
+
+            // If today is not within SXSW dates, just start on day 0
+            if(today<firstShowDate | today>lastShowDate) {
+              console.log("it's not SXSW :(");
+            } else {
+            // If today is within SXSW dates, start on appropriate day
+            // TODO: if no shows are on this day, skip to next day
+              console.log("it's SXSW! :D");
+              for(var i=0;i<results.length;i++){
+                var showDate = allShowDates[i];
+                // If the show day is earlier than today, then move to the next day
+                if(today-showDate>0){
+                  currentDayIndex += 1
+                }
+              }
             }
 
             // Only show current day that was calculated earlier
