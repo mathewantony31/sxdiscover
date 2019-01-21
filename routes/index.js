@@ -33,9 +33,4 @@ router.use('/', require('./userPage'));
 /* Toggle's user's itinerary between public and private. */
 router.use('/', require('./private'));
 
-router.post('/loader', function (req, res) {
-    console.log(req.body.number);
-    res.send('Number submitted');
-});
-
 module.exports = router;
