@@ -1,0 +1,22 @@
+body {
+  background: #f5f5f5;
+  font-family: 'Raleway', sans-serif;
+}
+
+.title{
+    font-weight: 800;
+    font-size: 3em;
+}
+
+.subtitle{
+    font-weight: 400;
+    font-size: 1.25em;
+    margin-top: 0.5em;
+}
+
+.container{
+    /*margin: 0 auto;
+    width: 400px;*/
+    text-align: center;
+    margin-top: 40vh;
+}
