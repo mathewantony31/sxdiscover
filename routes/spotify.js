@@ -178,7 +178,7 @@ router.get('/callback', function(req, res, next) {
             }
           });
 
-          res.render('placeholder', {name:userName});
+          res.redirect('summary?user='+userName);
         })
         });
         });

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" href="/stylesheets/reset.css">
+  <link rel="stylesheet" href="/stylesheets/summary.css">
+  <meta name="viewport" content="width=device-width initial-scale = 1.0
+  maximum-scale=1.0 user-scalable=no" />
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-75031530-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+</head>
+<body>
+  <div class="container">
+    <div class="helper">Based on the artists you love, here’s who’s playing at SXSW this year:</div>
+    <div id="band" class="band">
+      <!-- Using some Handlebars magic to iterate through the bands array that's passed in -->
+      {{#each bands}}
+      <div class="band__name">{{this}}</div>
+      {{/each}}
+    </div>
+    <div id="view-all-results" class="view-all-results">
+      <div class="view-all-results__button-text">View all results</div>
+    </div>
+  </div>
+</div>
+<script>
+  var user = "{{name}}";
+
+  $('#view-all-results').click(function(){
+    $.get( '/pages/'+user, function(data) {
+      console.log("Running /pages function");
+      if (data.hasOwnProperty('errors')){
+        console.log(data);
+        window.location.replace("http://sxdiscover.co/404");
+      }
+      window.location.replace("/pages/"+user);
+    });
+  })
+
+</script>
+</body>
+</html>
