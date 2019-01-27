@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+const {google} = require('googleapis');
 
 var bandSchema = mongoose.Schema({
   name: String,
@@ -18,10 +19,10 @@ exports.fetchBandInfo = function(bandList, callback){
   for(var i=0;i<bandList.length;i++){
     bandNames.push(bandList[i].name.toLowerCase())
   }
-    return Band.find({name_lower: { $in: bandNames}}).exec(function (err, docs){
-        if(err){
-            return "Error fetching bands";
-        } else {
+  return Band.find({name_lower: { $in: bandNames}}).exec(function (err, docs){
+    if(err){
+      return "Error fetching bands";
+    } else {
 
             // For each result, add a property saying the source of that band in the user's Spotify. Source can be "playlist", "top", "album".
             for(var i=0;i<docs.length;i++){
@@ -37,25 +38,44 @@ exports.fetchBandInfo = function(bandList, callback){
               docs[i] = bandDictionary
             }
             callback(docs);
-        }
-    });
+          }
+        });
+}
+
+exports.saveToGoogleCalendar = function(auth, data, callback){
+  // Given Google auth credentials and show data, save a new event to the user's calendar
+  const calendar = google.calendar({version: 'v3', auth});
+  
+  calendar.events.insert({
+    auth: auth,
+    calendarId: 'primary',
+    resource: data,
+  }, function(err, event) {
+    if (err) {
+      console.log('There was an error contacting the Calendar service: ' + err);
+      return;
+    }
+    callback;
+  });
 }
 
 function search(nameKey, myArray){
+
     for (var i=0; i < myArray.length; i++) {
         if (myArray[i].name === nameKey) {
             return myArray[i];
         }
     }
+  }
 
-    return "none"
+  return "none"
 }
 
 function getConcisePriceName(price){
   for (var i=0; i < priceMap.map.length; i++) {
-        if (priceMap.map[i].original === price) {
-            return priceMap.map[i].concise;
-        }
+    if (priceMap.map[i].original === price) {
+      return priceMap.map[i].concise;
     }
+  }
   return ""
 }

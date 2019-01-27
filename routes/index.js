@@ -30,6 +30,9 @@ router.use('/', require('./spotify'));
 /* Load a user's itinerary. */
 router.use('/', require('./userPage'));
 
+/* Testing Google calendar integration. */
+router.use('/', require('./calendar'));
+
 /* Toggle's user's itinerary between public and private. */
 router.use('/', require('./private'));
 
