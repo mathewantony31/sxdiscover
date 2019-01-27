@@ -5,8 +5,7 @@ var userSchema = mongoose.Schema({
   displayName: String,
   email: String,
   uid: String,
-  rawBands: [mongoose.Schema.Types.Mixed],
-  sxswBands: [mongoose.Schema.Types.Mixed],
+  rawBandsFromSpotify: [mongoose.Schema.Types.Mixed],
   public: Boolean
 });
 
