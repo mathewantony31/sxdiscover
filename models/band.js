@@ -66,7 +66,6 @@ function search(nameKey, myArray){
             return myArray[i];
         }
     }
-  }
 
   return "none"
 }
