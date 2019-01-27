@@ -24,7 +24,8 @@ exports.fetchBandInfo = function(bandList, callback){
       return "Error fetching bands";
     } else {
 
-            // For each result, add a property saying the source of that band in the user's Spotify. Source can be "playlist", "top", "album".
+            // For each result, add a property saying the source of that band in the user's Spotify. 
+            // Source can be "playlist", "top", "album".
             for(var i=0;i<docs.length;i++){
               var bandDictionary = {}
               bandDictionary.name = docs[i].name

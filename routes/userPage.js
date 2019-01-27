@@ -5,7 +5,7 @@ var router = express.Router();
 var User = require('../models/user.js');
 var Band = require('../models/band.js');
 
-router.get('/pages/*', function(req, res) {
+router.get('/pages/*', function(req, res){
 
   try{
 
@@ -17,38 +17,28 @@ router.get('/pages/*', function(req, res) {
       } else{
         try{
 
-                // Check to see if current page matches the user's logged in session
-                var requestSession = req.session.id;
-                var userSession = docs[0].uid;
-                var displayName = docs[0].displayName;
-                var public = docs[0].public;
-                var link = "http://sxdiscover.co/pages/"+req.params[0];
-
-                console.log(link);
-
-                var fbShareMessage = "My SXSW 🎉"
-                var displayMessage = "Viewing someone else's itinerary"
-
-                if(displayName != null){
-                  fbShareMessage = displayName+"'s SXSW 🎉";
-                  displayMessage = "Viewing "+displayName+"'s itinerary";
-                }
+          // Check to see if current page matches the user's logged in session
+          var requestSession = req.session.id;
+          var userSession = docs[0].uid;
+          var displayName = docs[0].displayName;
+          var public = docs[0].public;
+          var link = "http://sxdiscover.co/pages/"+req.params[0];
 
                  // Check to see if page is set to public or private, or if user visiting their own page
 
-                 var results = Band.fetchBandInfo(docs[0].rawBands, function(result){
+                 var results = Band.fetchBandInfo(docs[0].rawBandsFromSpotify, function(result){
 
                   var r = JSON.stringify(result);
 
                   if(public==true){
                     if(requestSession==userSession){
                       // If user is visiting their own page, show the delete button
-                      res.render('userPage', {displayMessage:displayMessage, bands:r, canDelete:'y', public:'y', status:"public", link:link, fbShareMessage:fbShareMessage});
+                      res.render('userPage', {bands:r, canDelete:'y', public:'y', status:"public", link:link});
                     } else {
-                      res.render('userPage', {displayMessage:displayMessage, bands:r, canDelete:'n', public:'y', status:"public", link:link, fbShareMessage:fbShareMessage});
+                      res.render('userPage', {bands:r, canDelete:'n', public:'y', status:"public", link:link});
                     }
-                  } else if(requestSession==userSession) {
-                    res.render('userPage', {displayMessage:displayMessage, bands:r, canDelete:'y', public:'n', status:"private"});
+                  } else if(requestSession==userSession){
+                    res.render('userPage', {bands:r, canDelete:'y', public:'n', status:"private"});
                   } else {
                     return res.render('privateUser');
                   }
@@ -64,7 +54,7 @@ router.get('/pages/*', function(req, res) {
   }
 });
 
-router.get('/summary', function(req, res) {
+router.get('/summary', function(req, res){
   var user = req.query.user;
 
   fetchBandSummary(user, function(result){
@@ -73,23 +63,20 @@ router.get('/summary', function(req, res) {
 });
 
 function fetchBandSummary(user, callback){
-  User.
-  find({name: user}).
-  exec(function(err, docs){
+  User.find({name: user}).exec(function(err, docs){
     if(err){
       return {errors: "Error connecting to our database"};
     } else {
-      console.log("Docs is:");
-      console.log(docs);
       try{
-        var results = Band.fetchBandInfo(docs[0].rawBands, function(result){
+        var results = Band.fetchBandInfo(docs[0].rawBandsFromSpotify, function(result){
 
           var bandList = []
           var resultsJson = JSON.parse(JSON.stringify(result));
 
-          for (var i=0; i < resultsJson.length; i++) {
+          for (var i=0; i < resultsJson.length; i++){
             // Check if top artists
-            if(resultsJson[i].source[0].source=='top'){
+            // TODO: actually clean this up
+            if(resultsJson[i].source[0].source=='top' || resultsJson[i].source[0].source=='saved' || resultsJson[i].source[0].source=='playlist'){
               // Check if we've already added this artist to bandList
               if(bandList.indexOf(resultsJson[i].name)==-1){
                 bandList.push(resultsJson[i].name)

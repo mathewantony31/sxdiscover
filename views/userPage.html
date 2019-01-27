@@ -1,53 +1,53 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>SXDiscover</title>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/userpage-style.css">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/userPage-grid.css">
-    <link rel="stylesheet" href="/stylesheets/vex.css" />
-    <link rel="stylesheet" href="/stylesheets/vex-theme-wireframe.css" />
+<head>
+  <title>SXDiscover</title>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/userpage-style.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/userPage-grid.css">
+  <link rel="stylesheet" href="/stylesheets/vex.css" />
+  <link rel="stylesheet" href="/stylesheets/vex-theme-wireframe.css" />
 
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- <meta name="viewport" content="width=device-width initial-scale = 1.0 maximum-scale=1.0 user-scalable=no" /> -->
-    <link rel="shortcut icon" href="http://sxdiscover.co/favicon.ico?v=2">
+  <!-- <meta name="viewport" content="width=device-width initial-scale = 1.0 maximum-scale=1.0 user-scalable=no" /> -->
+  <link rel="shortcut icon" href="http://sxdiscover.co/favicon.ico?v=2">
 
-    <!-- Facebook link previews -->
+  <!-- Facebook link previews -->
     <!-- You can use Open Graph tags to customize link previews.
       Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
-    <meta property="fb:app_id"        content="618293678380263" />
-    <meta property="og:url"           content="{{link}}" />
-    <meta property="og:type"          content="website" />
-    <meta property="og:title"         content="{{fbShareMessage}}" />
-    <meta property="og:description"   content="Log in with Spotify to find out if your favorite bands are playing SXSW." />
-    <meta property="og:image"         content="http://sxdiscover.co/images/sxd.png" />
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-75031530-1', 'auto');
-      ga('send', 'pageview');
-    </script>
-  </head>
-  <body class="site">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script src="/javascripts/global.js"></script>
-    <script src="/javascripts/date.js"></script>
-    <script src="/javascripts/moment.js"></script>
-    <script src="/javascripts/vex.combined.min.js"></script>
-    <script>vex.defaultOptions.className = 'vex-theme-wireframe';</script>
+      <meta property="fb:app_id"        content="618293678380263" />
+      <meta property="og:url"           content="{{link}}" />
+      <meta property="og:type"          content="website" />
+      <meta property="og:title"         content="{{fbShareMessage}}" />
+      <meta property="og:description"   content="Log in with Spotify to find out if your favorite bands are playing SXSW." />
+      <meta property="og:image"         content="http://sxdiscover.co/images/sxd.png" />
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-75031530-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+    </head>
+    <body class="site">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+      <script src="/javascripts/global.js"></script>
+      <script src="/javascripts/date.js"></script>
+      <script src="/javascripts/moment.js"></script>
+      <script src="/javascripts/vex.combined.min.js"></script>
+      <script>vex.defaultOptions.className = 'vex-theme-wireframe';</script>
 
-    <!-- UPDATE: 2017 Facebook SDK code for share button -->
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=618293678380263";
-      fjs.parentNode.insertBefore(js, fjs);
+      <!-- UPDATE: 2017 Facebook SDK code for share button -->
+      <div id="fb-root"></div>
+      <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=618293678380263";
+        fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     </script>
     <script>
@@ -79,7 +79,7 @@
         // };
         vex.dialog.alert({ unsafeMessage: 'Here\'s your SXSW schedule for the week, pulled from your top Spotify artists and their related artists. <br /><br />✌🏽✌🏻,<br />- Ben + Mathew'})
 
-          populateTable(function(){
+        populateTable(function(){
 
             // Hide each day div by default
             for(var i=0;i<days.length;i++){
@@ -109,9 +109,9 @@
             } else {
             // If today is within SXSW dates, start on appropriate day
             // TODO: if no shows are on this day, skip to next day
-              console.log("it's SXSW! :D");
-              for(var i=0;i<results.length;i++){
-                var showDate = allShowDates[i];
+            console.log("it's SXSW! :D");
+            for(var i=0;i<results.length;i++){
+              var showDate = allShowDates[i];
                 // If the show day is earlier than today, then move to the next day
                 if(today-showDate>0){
                   currentDayIndex += 1
@@ -124,7 +124,7 @@
 
             $('#current-day').html(results[currentDayIndex][0].dayString);
             $('#'+days[currentDayIndex]).show();
-        });
+          });
       });
 
       function convertBandInfoToDiv(bandData){
@@ -138,7 +138,7 @@
           if(bandData[i][5]!="none"){
             hasSource=true
             if(bandData[i][6]!=""){
-            isPlaylist = true
+              isPlaylist = true
             }
           }
 
@@ -152,14 +152,14 @@
             var sourceText = ""
             switch(source){
               case "top":
-                sourceText = "Recently played";
-                break;
+              sourceText = "Recently played";
+              break;
               case "related":
-                var relatedToBand = bandData[i][6]
-                sourceText = "Because you like "+relatedToBand;
-                break;
+              var relatedToBand = bandData[i][6]
+              sourceText = "Because you like "+relatedToBand;
+              break;
               default:
-                break;
+              break;
             }
             html += '<h3 class="source">'+sourceText+'</h3>'
           }
@@ -188,16 +188,16 @@
         // 1st, 2nd, 3rd, 4th, 21st, 22nd, 23rd
         switch(secondDigit){
           case 1:
-            return "st"
-            break;
+          return "st"
+          break;
           case 2:
-            return "nd"
-            break;
+          return "nd"
+          break;
           case 3:
-            return "rd"
-            break;
+          return "rd"
+          break;
           default:
-            return "th"
+          return "th"
         }
       }
 
@@ -205,18 +205,18 @@
         return function(){
           switch(type){
             case "previous":
-              if(currentDay==0){
-                currentDay = days.length-1
-              } else {
-                currentDay-=1
-              }
-              break;
+            if(currentDay==0){
+              currentDay = days.length-1
+            } else {
+              currentDay-=1
+            }
+            break;
             default:
-              if(currentDay==days.length-1){
-                currentDay=0
-              } else {
-                currentDay+=1
-              }
+            if(currentDay==days.length-1){
+              currentDay=0
+            } else {
+              currentDay+=1
+            }
           }
 
           $('#'+days[currentDay]).show();
@@ -228,7 +228,7 @@
               $('#'+days[i]).hide();
             }
           }
-        window.scrollTo(0, 0);
+          window.scrollTo(0, 0);
         }
       }
       // Store day names for day divs
@@ -248,15 +248,15 @@
 
                 // "source":[{"source":"top","name":"Max Richter"}]
 
-                  try{
-                      var n = this.name;
-                      var d = this.date;
-                      var t = "tbd.";
-                      var v = this.venue + ".";
-                      var l = this.link;
-                      var p = this.price;
-                      var s = this.source;
-                      var s_n = "";
+                try{
+                  var n = this.name;
+                  var d = this.date;
+                  var t = "tbd.";
+                  var v = this.venue + ".";
+                  var l = this.link;
+                  var p = this.price;
+                  var s = this.source;
+                  var s_n = "";
 
                       // If there's no source, do nothing.
                       if(s=="none"){
@@ -268,7 +268,7 @@
                         if(s=="related"){
                           s_n = this.source[0].relatedTo
                         }
-                    }
+                      }
 
                       if(this.time != "TBD"){
                         t = moment(Date.parse(this.time)).format("h:mm a") + ".";
@@ -278,8 +278,8 @@
                   for(var i=0;i<results.length; i++){
                     if (results[i][0].date == d){
                       // If a date already exists in the results array, add a new band's info to that date
-                    results[i][0].bands.push([n, v, t, l, p, s, s_n]);
-                    break;
+                      results[i][0].bands.push([n, v, t, l, p, s, s_n]);
+                      break;
                     // If a date doesn't exist, add it to the results array
                   } else if (i==results.length-1) {
 
@@ -293,15 +293,15 @@
                       bands: [[n, v, t, l, p, s, s_n]],
                       dayText:dayText,
                       dayString:dayString
-                      }]);
+                    }]);
                     break;
-                    }
                   }
-                } catch (e){
-                  console.log("Error: Couldn't access bands from /bands response");
-                  console.log(e.message);
                 }
-              });
+              } catch (e){
+                console.log("Error: Couldn't access bands from /bands response");
+                console.log(e.message);
+              }
+            });
                 //Remove first element
                 // need: 2018 update: remove first day's results
                 results = results.slice(1);
@@ -310,18 +310,18 @@
 
           // Create div for each day and add bands to each div
           for(var i=0;i<results.length;i++){
-                var day;
-                var date = Date.parse(results[i][0].date).getDate();
-                var dateString = results[i][0].dayText;
+            var day;
+            var date = Date.parse(results[i][0].date).getDate();
+            var dateString = results[i][0].dayText;
 
-                if(dateString=="TBD"){
-                  day="TBD"
-                } else {
-                  day = dateString+date
-                }
-                $('#bandList').append("<div class='bandcards' id='"+day+"''></div>");
-                days.push(day);
-                $('#'+day).html(convertBandInfoToDiv(results[i][0].bands));
+            if(dateString=="TBD"){
+              day="TBD"
+            } else {
+              day = dateString+date
+            }
+            $('#bandList').append("<div class='bandcards' id='"+day+"''></div>");
+            days.push(day);
+            $('#'+day).html(convertBandInfoToDiv(results[i][0].bands));
           }
 
           var buttonHtml = '<button type="button" name="previous" id="previous-day">Previous</button><button type="button" name="next" id="next-day">Next</button>'
@@ -334,56 +334,56 @@
           $('body').addClass('siteloaded');
 
           callback();
-      };
-    </script>
+        };
+      </script>
 
 
-<!-- header and article (non-nav content) -->
-<div class="viewable">
-  <div class="daycard">
-    <h3>bands playing on</h3>
-    <h2 class="currentday" id="current-day"></h2>
-  </div>
-  <article id="bandList">
-  </article>
-</div>
-<!-- navigation -->
-  <footer id="footer">
-  </footer>
-
-
-<script>
-    $('#next-day').click(function(){
-      console.log("CLICKED!")
-    });
-
-    $('#changeStatus').click(function(){
-      $.get("/private", function(data) {
-        location.reload();
-      }); return false;
-    });
-
-    $('#changeStatus1').click(function(){
-      $.get("/private", function(data) {
-        location.reload();
-      }); return false;
-    });
-
-    if("{{canDelete}}"=='y'){
-      $(".friendPage").hide();
-      if("{{public}}"=='y'){
-        $(".public").show();
-        $(".private").hide();
-      } else {
-        $(".public").hide();
-        $(".private").show();
-      }
-    } else {
-        $(".friendPage").show();
-        $(".public").hide();
-        $(".private").hide();
-      }
-</script>
+      <!-- header and article (non-nav content) -->
+      <div class="viewable">
+        <div class="daycard">
+          <h3>bands playing on</h3>
+          <h2 class="currentday" id="current-day"></h2>
+        </div>
+        <article id="bandList">
+        </article>
       </div>
-</body>
-</html>
+      <!-- navigation -->
+      <footer id="footer">
+      </footer>
+
+
+      <script>
+        $('#next-day').click(function(){
+          console.log("CLICKED!")
+        });
+
+        $('#changeStatus').click(function(){
+          $.get("/private", function(data) {
+            location.reload();
+          }); return false;
+        });
+
+        $('#changeStatus1').click(function(){
+          $.get("/private", function(data) {
+            location.reload();
+          }); return false;
+        });
+
+        if("{{canDelete}}"=='y'){
+          $(".friendPage").hide();
+          if("{{public}}"=='y'){
+            $(".public").show();
+            $(".private").hide();
+          } else {
+            $(".public").hide();
+            $(".private").show();
+          }
+        } else {
+          $(".friendPage").show();
+          $(".public").hide();
+          $(".private").hide();
+        }
+      </script>
+    </div>
+  </body>
+  </html>
