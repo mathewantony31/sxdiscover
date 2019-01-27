@@ -60,10 +60,11 @@ exports.saveToGoogleCalendar = function(auth, data, callback){
 }
 
 function search(nameKey, myArray){
-  for (var i=0; i < myArray.length; i++) {
-    if (myArray[i].name === nameKey) {
-      console.log("RETURNING "+myArray[i])
-      return myArray[i];
+
+    for (var i=0; i < myArray.length; i++) {
+        if (myArray[i].name === nameKey) {
+            return myArray[i];
+        }
     }
   }
 

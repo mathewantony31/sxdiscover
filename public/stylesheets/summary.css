@@ -1,0 +1,47 @@
+body {
+  background: #383838;
+  font-family: 'Raleway', sans-serif;
+  color: white;
+}
+
+.band{
+    font-weight: 800;
+    font-size: 3em;
+}
+
+.band__name{
+    margin-bottom: 0.7em;
+}
+
+.helper{
+    font-weight: 400;
+    font-size: 1.25em;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+}
+
+.container{
+    margin: 0 auto;
+    width: 400px;
+    margin-top: 25vh;
+}
+
+/* Setting it up as a table so I can get vertically center the button text */
+.view-all-results{
+    display: table;
+    text-align: center;
+    width: 100%;
+    background-color: #32ABB7;
+    height: 4em;
+}
+
+.view-all-results:hover{
+    background-color: #FFFFFF;
+    color: #383838;
+    cursor: pointer;
+}
+
+.view-all-results__button-text{
+    display: table-cell;
+    vertical-align: middle;
+}
