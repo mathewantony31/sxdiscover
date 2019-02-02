@@ -24,7 +24,7 @@ router.get('/privateUser', function(req, res, next){
 /* Load itinerary for a specific venue. */
 router.use('/', require('./venues'));
 
-/* Spotify login. */
+/* Spotify login and API calls. */
 router.use('/', require('./spotify'));
 
 /* Load a user's itinerary. */
