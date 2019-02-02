@@ -1,11 +1,14 @@
 var express = require('express');
 var router = express.Router();
-var querystring = require('querystring'),
-request = require('request');
+var request = require('request');
+var querystring = require('querystring')
 var async = require('async');
 
-
 var redirect_uri;
+var username;
+var displayName;
+var email;
+var spotifyBands = [];
 
 var User = require('../models/user.js');
 
@@ -51,210 +54,331 @@ router.get('/login', function(req, res, next){
     }));
 });
 
-/***********
-  Spotify hits the /callback endpoint once a user has successfully authorized.
-  The req includes a code that we include in a POST request to get an
-  access token so we can make our API calls.
+router.get('/callback', function(req, res, next){
+  // Get access token from Spotify
+  var code = req.query.code || null;
+  var state = req.query.state || null;
 
-  The purpose of this route is to fetch all Spotify bands for a user
-  (based on their top tracks, saved albums, and related artists)
-  and push a new User object to the database including that info.
-  ***********/
-  router.get('/callback', function(req, res, next){
+  if (state === null){
+    res.redirect('/#' +
+      querystring.stringify({
+        error: 'state_mismatch'
+      }));
+  } else {
+    res.clearCookie(stateKey);
+    var authOptions = {
+      url: 'https://accounts.spotify.com/api/token',
+      form: {
+        code: code,
+        redirect_uri: redirect_uri,
+        grant_type: 'authorization_code'
+      },
+      headers: {
+        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+      },
+      json: true
+    };
 
-    var code = req.query.code || null;
-    var state = req.query.state || null;
+    // POST request to get access token from Spotify
+    request.post(authOptions, function(error, response, body){
+      if (!error && response.statusCode === 200){
+        var accessToken = body.access_token
 
-    if (state === null){
-      res.redirect('/#' +
-        querystring.stringify({
-          error: 'state_mismatch'
-        }));
-    } else {
-      res.clearCookie(stateKey);
-      var authOptions = {
-        url: 'https://accounts.spotify.com/api/token',
-        form: {
-          code: code,
-          redirect_uri: redirect_uri,
-          grant_type: 'authorization_code'
-        },
-        headers: {
-          'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
-        },
-        json: true
-      };
+        // Fetch Spotify profile info which we'll need when pulling all user-created playlists. 
+        fetchSpotifyProfileInfo(accessToken).then(function(spotifyProfileInfo){
+          username = spotifyProfileInfo.id;
+          displayName = spotifyProfileInfo.display_name;
+          email = spotifyProfileInfo.email;
 
-      // start collecting user data from Spotify
-      // store in array spotifyBands
-      request.post(authOptions, function(error, response, body){
-
-        var spotifyBands = [];
-        var userName = "No username.";
-        var displayName = "No display name.";
-        var email = "no email";
-        var bandName = "";
-
-        if (!error && response.statusCode === 200){
-
-          var access_token = body.access_token,
-          refresh_token = body.refresh_token;
-
-          var getEmailOptions = {
-            url: 'https://api.spotify.com/v1/me',
-            headers: { 'Authorization': 'Bearer ' + access_token },
-            json: true
-          };
-
-          request.get(getEmailOptions, function(error, response, body){
-            userName = body.id;
-            email = body.email;
-            displayName = body.display_name;
-     
-          // Info required to get user's top tracks
-          var topTracksOptions = {
-            url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=50',
-            headers: { 'Authorization': 'Bearer ' + access_token },
-            json: true
-          };
-
-          // Call to get top tracks
-          request.get(topTracksOptions, function(topError, topResponse, topBody){
-            for(var i=0; i <topBody.items.length; i++){
-              bandName = topBody.items[i].name;
-              bandId = topBody.items[i].id;
-              spotifyBands.push({
-                "name": bandName,
-                "source":"top",
-                "id":bandId});
-              console.log("Bandname: " + bandName + " - source: top");
-            }
-
-            // Info required to get user's saved albums
-            var savedAlbumOptions = {
-              url: 'https://api.spotify.com/v1/me/albums?limit=50',
-              headers: { 'Authorization': 'Bearer ' + access_token },
-              json: true
-            };   
-
-            // Call to get saved albums
-            request.get(savedAlbumOptions, function(savedError, savedResponse, savedBody){
-              for(var i=0; i <savedBody.items.length; i++){
-                // we're assuming that all albums have only 1 artist which is def not true
-                bandName = savedBody.items[i].album.artists[0].name;
-                bandId = savedBody.items[i].album.artists[0].id;
-                spotifyBands.push({
-                  "name": bandName,
-                  "source":"saved",
-                  "id":bandId});
-                console.log("Bandname: " + bandName + " - source: saved");
-              }
-
-            // Info required to get tracks from user's created playlists
-            var playlistOptions = {
-              url: 'https://api.spotify.com/v1/me/playlists?limit=50',
-              headers: { 'Authorization': 'Bearer ' + access_token },
-              json: true
-            };
-
-            // Call to get playlists
-            request.get(playlistOptions, function(playlistError, playlistResponse, playlistBody){
-              for(var i=0; i <playlistBody.items.length; i++){
-                
-                var playlistOwner = playlistBody.items[i].owner.id;
-
-                // only get tracks if user created this playlist
-                if(playlistOwner == userName){
-                  
-                  // get each track from the playlist
-                  var playlistId = playlistBody.items[i].id;
-                  var playlistTrackOptions = {
-                      url: 'https://api.spotify.com/v1/playlists/' + playlistId + '/tracks',
-                      headers: { 'Authorization': 'Bearer ' + access_token },
-                      json: true
-                  };
-
-                  // push each artist to database
-                  request.get(playlistTrackOptions, function(playlistTrackError, playlistTrackResponse, playlistTrackBody){
-                    for(var i=0; i <playlistTrackBody.items.length; i++){
-                      bandName = playlistTrackBody.items[i].track.artists[0].name;
-                      bandId = playlistTrackBody.items[i].track.artists[0].id;
-                      spotifyBands.push({
-                        "name": bandName,
-                        "source":"playlist",
-                        "id":bandId});
-                      console.log("Bandname: " + bandName + " - source: playlist");
-                    }
-                  });
-                }
-              }
-
-
-              var bandsForAsyncLoop = spotifyBands
-
-            // Get related artists: https://api.spotify.com/v1/artists/{id}/related-artists
-            async.each(bandsForAsyncLoop, function(band, callback){
-              var options = {
-                url: 'https://api.spotify.com/v1/artists/'+band.id+'/related-artists',
-                headers: { 'Authorization': 'Bearer ' + access_token },
-                json: true};
-
-                request.get(options, function(error, response, body){
-
-                  try{
-                    for(var j=0; j<body.artists.length; j++){
-                      var bandName = body.artists[j].name;
-                      spotifyBands.push({
-                        "name": bandName,
-                        "source":"related",
-                        "relatedTo":band.name});
-                    }
-                    console.log("Bandname: " + bandName + " - source: related (" + band.name + ")");
-                    callback();
-                  }
-                  catch(e){
-                    console.log("Error is "+e);
-                    console.log("band is " + band.name);
-                  }
-                })
-              }, function(err){
-                if(err){
-                  throw err;
-                }
-                console.log("Related artists pulled for all bands.")
-
-
-                // create new User object w/ band info and push to database
-                var userData = {
-                  name:userName,
-                  displayName:displayName,
-                  email: email,
-                  uid: req.session.id,
-                  rawBandsFromSpotify: spotifyBands,
-                  public: true
-                };
-
-                var newUser = new User(userData);
-
-                var upsertData = newUser.toObject();
-                delete upsertData._id;
-
-                User.update({ "name" : userName }, upsertData, { upsert: true }, function(err, count, status){
-                  console.log("Status of write operation was: "+status)
-                  if(err){
-                    console.log("Error: Failed to save custom bands to database");
-                  }
-                });
-
-                res.redirect('summary?user='+userName);
+          // Now that we've got the Spotify ID, fetch all Spotify artists from the user's top tracks, saved albums, and created playlists.
+          fetchSpotifyArtists(spotifyProfileInfo.id, accessToken).then(function(bandList){
+            // Now that we've got all Spotiy artists, fetch related artists for each one
+            fetchRelatedArtistsFromSpotifyArtists(bandList, accessToken).then(function(result){
+              // Now that we've got a full list of artists, create a new User object in the database with this array of bands
+              console.log("Redirecting to summary page...");
+              saveNewUser(username, displayName, email, req.session.id, spotifyBands, true, function(){
+                res.redirect('summary?user='+username);
               })
+            }, function(error){
+              console.log("Error fetching related artists.")
+            })
+          }, function(error){
+            console.log("Error running then after fetchSpotifyArtists")
           });
+        }, function(error){
+          res.json(error);
+        })
+      }
+    });
+  }
+});
+
+// Function that fetches all Spotify bands from top tracks, saved albums, and user-created playlists
+async function fetchSpotifyArtists(spotifyId, accessToken){
+
+  await fetchArtistsFromTopTracks(accessToken);
+  await fetchArtistsFromSavedAlbums(accessToken);
+  await fetchArtistsFromPlaylists(spotifyId, accessToken);
+
+  return spotifyBands
+}
+
+function fetchArtistsFromTopTracks(accessToken){
+
+  console.log("Fetching artists from top tracks...")
+
+  // Get request options to get top tracks
+  var options = {
+    url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=50',
+    headers: { 'Authorization': 'Bearer ' + accessToken },
+    json: true
+  };
+
+  return new Promise(function(resolve, reject){
+    var bandList = []
+    request.get(options, function(error, response, body){
+      if(error){
+        reject(error);
+        console.log("Error fetching artists from top tracks. Error is "+error);
+      } else {
+        for(var i=0; i <body.items.length; i++){
+          spotifyBands.push({
+            "name":body.items[i].name,
+            "id":body.items[i].id,
+            "source":"top"
           });
+        }
+        console.log("Success! Fetched "+body.items.length+" artists from top tracks.")
+        resolve(bandList);
+      }
+    });
+  });
+}
+
+function fetchArtistsFromSavedAlbums(accessToken){
+
+  console.log("Fetching artists from saved albums...")
+
+  // Get request options for saved albums
+  var options = {
+    url: 'https://api.spotify.com/v1/me/albums?limit=50',
+    headers: { 'Authorization': 'Bearer ' + accessToken },
+    json: true
+  };
+
+  return new Promise(function(resolve, reject){
+    var bandList = []
+    request.get(options, function(error, response, body){
+      if(error){
+        reject(error);
+        console.log("Error fetching artists from saved albums. Error is "+error);
+      } else {
+        for(var i=0; i <body.items.length; i++){
+          spotifyBands.push({
+            "name":body.items[i].album.artists[0].name,
+            "id":body.items[i].album.artists[0].id,
+            "source":"album"
           });
-        });
+        }
+        console.log("Success! Fetched "+body.items.length+" artists from saved albums.")
+        resolve(bandList);
+      }
+    });
+  });
+}
+
+function fetchArtistsFromPlaylists(spotifyId, accessToken){
+  console.log("Fetching artists from playlists...")
+
+  var bandList = []
+  var promises = []
+
+  return new Promise(function(resolve, reject){
+    fetchPlaylistIds(spotifyId, accessToken).then(function(result){
+      for(var i=0;i<result.length;i++){
+        promises.push(fetchArtistsFromPlaylistId(result[i], accessToken))
+      }
+      Promise.all(promises).then(function(data){
+        for(var i=0;i<data.length;i++){
+          for(var j=0;j<data[i].length;j++){
+            bandList.push(data[i][j])
+          }
+        }
+        resolve(bandList)
+        console.log("Success! Fetched "+bandList.length+" artists from playlists.")
+      }, function(error){
+        reject(error)
+      });
+    });
+  })
+}
+
+function fetchPlaylistIds(spotifyId, accessToken){
+
+  // Get request options for created playlists
+  var options = {
+    url: 'https://api.spotify.com/v1/me/playlists?limit=50',
+    headers: { 'Authorization': 'Bearer ' + accessToken },
+    json: true
+  };
+
+  return new Promise(function(resolve, reject){
+    request.get(options, function(error, response, body){
+      if(error){
+        reject(error);
+        console.log("Error fetching playlist IDs. Error is "+error);
+      } else {
+        var listOfPlaylistIds = []
+        for(var i=0; i <body.items.length; i++){
+          var playlistOwner = body.items[i].owner.id;
+          if(playlistOwner == spotifyId){
+            listOfPlaylistIds.push(body.items[i].id);
+          }
+        }
+        resolve(listOfPlaylistIds);
+      }
+    });
+  });
+}
+
+function fetchArtistsFromPlaylistId(playlistId, accessToken){
+  // Get request options for tracks from playlists
+  var options = {
+    url: 'https://api.spotify.com/v1/playlists/' + playlistId + '/tracks',
+    headers: { 'Authorization': 'Bearer ' + accessToken },
+    json: true
+  };
+
+  return new Promise(function(resolve, reject){
+    request.get(options, function(error, response, body){
+      if(error){
+        reject(error);
+        console.log("Error fetching artists from playlist. Error is "+error);
+      } else {
+        var bandList = []
+        for(var i=0; i <body.items.length; i++){
+          spotifyBands.push({
+            "name":body.items[i].track.artists[0].name,
+            "id":body.items[i].track.artists[0].id,
+            "source":"playlist"
+          })
+        }
+        resolve(bandList);
+      }
+    });
+  });
+}
+
+function fetchSpotifyProfileInfo(accessToken){
+
+  // Get request options for saved albums
+  var options = {
+    url: 'https://api.spotify.com/v1/me',
+    headers: { 'Authorization': 'Bearer ' + accessToken },
+    json: true
+  };
+
+  return new Promise(function(resolve, reject){
+    request.get(options, function(error, response, body){
+      if(error){
+        reject(error);
+        console.log("Error fetching Spotify ID. Error is "+error);
+      } else {
+        resolve(body);
+      }
+    });
+  });
+}
+
+function fetchRelatedArtistsFromSpotifyArtists(spotifyBands, accessToken){
+  console.log("Fetching related artists for "+spotifyBands.length+" bands...")
+  var promises =[]
+  var list = []
+
+  // For now, just pulling related from top artists
+  for(var i=0;i<spotifyBands.length;i++){
+    // Get request options for related artists
+    var options = {
+      url: 'https://api.spotify.com/v1/artists/'+spotifyBands[i].id+'/related-artists',
+      headers: { 'Authorization': 'Bearer ' + accessToken },
+      json: true
+    };
+
+    var bandName = spotifyBands[i].name;
+
+    // Add all promises to the promises array
+    promises.push(new Promise(function(resolve, reject){
+
+      // Get request to get related artist for specific artist
+      request.get(options, function(error, response, body){
+        var bandList = [];
+        if(error){
+          resolve(error);
+          console.log("Error making get request to fetch related artist. Error is "+error);
+        } else if(body.hasOwnProperty('error')){
+          // Resolving so that Promise.all will resolve
+          resolve(body.error)
+          console.log("Error making get request to fetch related artist. Error is "+body.error);
+        } else {
+          for(var j=0; j<body.artists.length; j++){
+            try{
+              bandList.push({
+                "name": body.artists[j].name,
+                "id": body.artists[j].id,
+                "source":"related",
+                "relatedTo":bandName
+              });
+            } catch(e){
+              resolve(e);
+              console.log("Error! "+e)
+            }
+          }
+          resolve(bandList);
         }
       });
+    }));
+  }
+
+  return new Promise(function(resolve, reject){
+    var itemsAdded = 0
+    Promise.all(promises).then(function(result){
+      for(var i=0;i<result.length;i++){
+        for(var j=0; j<result[i].length;j++){
+          spotifyBands.push(result[i][j]);
+          itemsAdded += 1
+        }
+      }
+      resolve(list);
+      console.log("Success! Fetched "+itemsAdded+" related artists.")
+    }, function(error){
+      reject(error);
+      console.log("Error fetching related artists.");
+    })
+  })
 }
-});
+
+function saveNewUser(username, displayName, email, sessionId, spotifyBands, public, callback){
+  // create new User object w/ band info and push to database
+  var userData = {
+    name:username,
+    displayName:displayName,
+    email: email,
+    uid: sessionId,
+    rawBandsFromSpotify: spotifyBands,
+    public: true
+  };
+
+  var newUser = new User(userData);
+
+  var upsertData = newUser.toObject();
+  delete upsertData._id;
+
+  User.update({ "name" : username }, upsertData, { upsert: true }, function(err, count, status){
+    if(err){
+      console.log("Error: Failed to save user to database");
+    }
+    callback();
+  });
+}
 
 module.exports = router;
