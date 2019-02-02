@@ -54,6 +54,14 @@ router.get('/login', function(req, res, next){
     }));
 });
 
+/***********
+  Spotify hits the /callback endpoint once a user has successfully authorized.
+  The req includes a code that we include in a POST request to get an
+  access token so we can make our API calls.
+  The purpose of this route is to fetch all Spotify bands for a user
+  (based on their top tracks, saved albums, and related artists)
+  and push a new User object to the database including that info.
+  ***********/
 router.get('/callback', function(req, res, next){
   // Get access token from Spotify
   var code = req.query.code || null;
