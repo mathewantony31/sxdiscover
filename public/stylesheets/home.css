@@ -1,137 +1,59 @@
-@import url('https://fonts.googleapis.com/css?family=Archivo+Black|Archivo:400,500,600');
-/* dat new shit */
+@font-face {font-family: SharpGroteskBook20; font-weight: 300; src: url("../fonts/SharpGroteskDBBook20.ttf");}
+@font-face {font-family: SharpGroteskBook22; font-weight: 300; src: url("../fonts/SharpGroteskDBBook22.ttf");}
+@font-face {font-family: SharpGroteskMedium20; font-weight: 500; src: url("../fonts/SharpGroteskDBMedium20.ttf");}
+@font-face {font-family: SharpGroteskMedium22; font-weight: 500; src: url("../fonts/SharpGroteskDBMedium22.ttf");}
+@font-face {font-family: SharpGroteskSemiBold20; font-weight: 500; src: url("../fonts/SharpGroteskDBSmBold20.ttf");}
+@font-face {font-family: SharpGroteskSemiBold22; font-weight: 500; src: url("../fonts/SharpGroteskDBSmBold22.ttf");}
 
 body {
-	background: black;
+	background: #383838;
 }
-.splashlogo {
-	font-family: 'Archivo', sans-serif;
-	font-size: 3.4em;
-	font-weight: 700;
+
+.container{
+    color: white;
+    margin-top: 35vh;
+    padding-left: 3em;
+    padding-right: 3em;
+}
+
+.title {
+	font-family: SharpGroteskSemiBold22;
+	font-size: 2.8em;
 	letter-spacing: -2px;
-	color: #FFFFFF;
 	vertical-align: middle;
 	display: block;
 	margin: 0 auto;
 	margin-bottom:0.2em;
 }
-.hero {
-	font-family: "Archivo", sans-serif;
-	font-size: 1em;
-	color: #FFFFFF;
-	letter-spacing: .9px;
-	display: block;
-	margin: auto 15vw;
-	margin-bottom: .3em;
-	font-weight: 400;
-}
-.whisper {
-	font-family: "Archivo Narrow", sans-serif;
-	font-size: .8em;
-	color: #484848;
-	letter-spacing: 0px;
-	display: block;
-	margin: auto 15vw;
-	font-style: italic;
+
+.subtitle{
+    font-family: SharpGroteskBook20;
+    font-size: 1.2em;
+    line-height: 1.5em;
 }
 
-
-/* coloring text */
-#s {
-	color: #F5D76E
-}
-#x {
-	color: #4B4A4A;
-}
-.discover {
-	color: white;
+.spotify-button{
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 2em;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-
-#mid-loader {
-	padding-top: 10vh;
-	margin: 0 auto;
-	text-align: center;
-}
-
-#footer a {
-	font-family: "OpenSans", sans-serif;
-	font-style: italic;
-	font-weight: 300;
-	font-size: .75em;
-	color: #FFFFFF;
-	letter-spacing: 0px;
-}
-#mid a {
-	display: inline-block;
-}
-/* Spotify Login button fix for phones */
+/* Mobile */
 @media only screen
-  and (min-device-width: 320px)
-  and (max-device-width: 550px) {
-		#spotify {
-			width: 80vw;
-		}
+and (min-device-width: 320px)
+and (max-device-width: 550px) {
+
 }
 /* Desktop size for login button */
 @media only screen
-  and (min-device-width: 550px) {
-		#spotify {
-			height: 3em;
-            margin-top: 1em;
-		}
-	}
-#info {
-		font-family: "OpenSans", sans-serif;
-    font-style: italic;
-    font-weight: 300;
-    color: #fff;
-    margin: 0 auto;
-    letter-spacing: 0px;
-    vertical-align: middle;
-    display: inline-block;
-    padding-bottom: 3vh;
-}
+and (min-device-width: 550px) {
+    .container{
+        width: 400px;
+        margin: 0 auto;
+        margin-top: 35vh;
+        text-align: center;
+    }
 
-#comingsoon{
-    height: 20vh;
-    padding-top: 15vh;
-    display: inherit;
-    vertical-align: middle;
-    border-style: solid;
-	/*border-width: thick;*/
-	/*border-color: white;*/
-	position: relative;
-	margin: 3vh auto;
-}
-#fourfourimage{
-    display: inherit;
-    vertical-align: middle;
-    border-style: solid;
-	/*border-width: thick;*/
-	/*border-color: white;*/
-	position: relative;
-	margin: 3vh auto;
-}
-.four {
-	display: block;
-	font-family: "OpenSans", sans-serif;
-	font-weight: 300;
-	color: #fff;
-	font-size: 1em;
-	margin: 0 auto;
-    letter-spacing: 0px;
-    vertical-align: middle;
-		padding: 5px;
-}
-.fourlink {
-	font-family: "OpenSans", sans-serif;
-	font-weight: 300;
-	font-style: italic;
-	font-size: 1em;
-	vertical-align: top;
-	color: #4ECDC4;
-	letter-spacing: 0px;
-	vertical-align: middle;
-	display: inline;
 }

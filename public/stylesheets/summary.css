@@ -1,33 +1,41 @@
+@font-face {font-family: SharpGroteskMedium20; font-weight: 500; src: url("../fonts/SharpGroteskDBMedium20.ttf");}
+@font-face {font-family: SharpGroteskSemiBold22; font-weight: 500; src: url("../fonts/SharpGroteskDBSmBold22.ttf");}
+
 body {
   background: #383838;
   font-family: 'Raleway', sans-serif;
   color: white;
 }
 
+.container{
+    margin: 0 auto;
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+.helper{
+    font-family: SharpGroteskMedium20;
+    line-height: 1.4em;
+    font-size: 1.2em;
+    margin-top: 2.5em;
+    margin-bottom: 1.5em;
+}
+
 .band{
-    font-weight: 800;
-    font-size: 3em;
+    font-size: 2em;
+    font-family: SharpGroteskSemiBold22;
 }
 
 .band__name{
     margin-bottom: 0.7em;
 }
 
-.helper{
-    font-weight: 400;
-    font-size: 1.25em;
-    margin-top: 0.5em;
-    margin-bottom: 1em;
-}
-
-.container{
-    margin: 0 auto;
-    width: 400px;
-    margin-top: 25vh;
-}
-
 /* Setting it up as a table so I can get vertically center the button text */
 .view-all-results{
+    position: fixed;
+    bottom: 0;
+    font-family: SharpGroteskSemiBold22;
+    font-size: 1.5em;
     display: table;
     text-align: center;
     width: 100%;
@@ -44,4 +52,26 @@ body {
 .view-all-results__button-text{
     display: table-cell;
     vertical-align: middle;
+}
+
+/* Desktop */
+@media only screen
+and (min-device-width: 550px) {
+    .container{
+        margin-top: 25vh;
+        width: 400px;
+    }
+
+    .view-all-results{
+        width: 400px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+/* Mobile */
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 550px) {
+
 }

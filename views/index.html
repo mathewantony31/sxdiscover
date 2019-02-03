@@ -6,7 +6,7 @@
   <!-- link to our css pages here  -->
   <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
   <link rel="stylesheet" type="text/css" href="/stylesheets/home.css">
-  <link rel="stylesheet" type="text/css" href="/stylesheets/home-grid.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/stylesheets/home-grid.css"> -->
 
   <!-- link to favicon for desktop browsers -->
   <link rel="shortcut icon" href="http://sxdiscover.co/favicon.ico?v=2">
@@ -115,41 +115,15 @@
     <script src="/javascripts/global.js"></script>
     <script src="/javascripts/date.js"></script>
 
-    <!-- Mid div of the site -->
-    <div id="mid">
-      <h1 class="splashlogo">SXDiscover</h1>
-      <h2 class="hero">Gameplan your SXSW.</h2>
-      <h2 class="hero">Catch your favorite shows.</h2>
-      <h2 class="whisper">(conquer fomo)</h2>
-      <!-- OR img src="link to spotify button"-->
+    <div class="container">
+      <!-- Mid div of the site -->
+      <div id="mid">
+        <div class="title">SXDiscover</div>
+        <div class="subtitle">Create a custom SXSW schedule from your Spotify music</div>
+      </div>
+      <a href="/login" class="spotify-button"><img id="spotify" src="images/spotify-button.svg"></a>
     </div>
-    <!-- Spotify login button -->
-    <a href="/login" class="login"><img id="spotify" src="images/svg/log_in-desktop.svg"></a>
-    <!-- <a href="/about" alt="about us" class="info">more info →</a> -->
 
     <br />
-    <div id="calendar-button" class="discover login"><h1>TEST: Save to calendar</h1></div>
-
-    <script>
-      var eventData = {
-        'summary': 'SXSW: Michael Kiwanuka',
-        'location': 'Cheer up charlies',
-        'description': 'https://2019.do512.com/events/2019/3/15/panache-booking-official-sxsw-showcase',
-        'start': '2019-01-20T09:00:00',
-        'end': '2019-01-20T10:00:00'
-      }
-
-      $("#calendar-button").click(function(e){
-        console.log("Button clicked!")
-        e.preventDefault();
-        $.ajax({
-          type: 'POST',
-          url: 'http://localhost:5000/calendar',
-          data: eventData,
-          success: console.log("Saved!")
-        });
-      })
-      
-    </script>
   </body>
   </html>
