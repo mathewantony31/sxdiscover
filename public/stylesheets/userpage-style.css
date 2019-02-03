@@ -154,6 +154,11 @@ article {
 	margin: auto;
 	text-align: center;
 }
+
+.calendar-button{
+	color: white;
+}
+
 p{
 	display: inline-block;
 	font-family: 'Archivo Black', sans-serif;
