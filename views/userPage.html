@@ -52,338 +52,113 @@
     </script>
     <script>
 
-      var results = ['SX'];
-      var bands = "{{bands}}";
-      var days = [];
-      var currentDay = 0;
-
-      // Remove &quot; and replace with actual quotes
-      bands = JSON.parse(bands.replace(/&quot;/g,'"'));
-
-      // Convert date and time into milliseconds to sort by date
-      bands.sort(function(a,b){
-        if(a["time"]=='TBD'){
-          a["time"] = '00:00'
-        }
-        if(b["time"]=='TBD'){
-          b["time"] = '00:00'
-        }
-
-        return Date.parse(a["date"]+" 2018 "+a["time"])-Date.parse(b["date"]+" 2018 "+b["time"]);
-      });
-
       $(document).ready(function() {
-        // function(){
-        //   vex.dialog.confirm({ message: 'Are you absolutely sure you want to destroy the alien planet?', callback: function(value) { console.log("Yes")}
-        // })
-        // };
         vex.dialog.alert({ unsafeMessage: 'Here\'s your SXSW schedule for the week, pulled from your top Spotify artists and their related artists. <br /><br />✌🏽✌🏻,<br />- Ben + Mathew'})
-
-        populateTable(function(){
-
-            // Hide each day div by default
-            for(var i=0;i<days.length;i++){
-              $('#'+days[i]).hide();
-            }
-
-            var today = new Date();
-            var currentDayIndex = 0;
-            
-            // get all dates that SX shows are happening
-            // the year isn't stored, so we need to manually add it, otherwise it defaults to 2001
-            // TODO: make this less hacky; store the year somewhere else
-            var allShowDates = [];
-            for(var i=0;i<results.length;i++){
-              var dateWithCorrectYear = new Date(results[i][0].date);
-              dateWithCorrectYear = new Date("2019", dateWithCorrectYear.getMonth(), dateWithCorrectYear.getDate());
-              allShowDates.push(dateWithCorrectYear);
-            }
-
-            // determine date parameters for SX shows
-            var firstShowDate = new Date(allShowDates[0]);
-            var lastShowDate = new Date(allShowDates[allShowDates.length - 1]);
-
-            // If today is not within SXSW dates, just start on day 0
-            if(today<firstShowDate | today>lastShowDate) {
-              console.log("it's not SXSW :(");
-            } else {
-            // If today is within SXSW dates, start on appropriate day
-            // TODO: if no shows are on this day, skip to next day
-            console.log("it's SXSW! :D");
-            for(var i=0;i<results.length;i++){
-              var showDate = allShowDates[i];
-                // If the show day is earlier than today, then move to the next day
-                if(today-showDate>0){
-                  currentDayIndex += 1
-                }
-              }
-            }
-
-            // Only show current day that was calculated earlier
-            // Set currentDay to the index value (the day button functions use this value)
-
-            $('#current-day').html(results[currentDayIndex][0].dayString);
-            $('#'+days[currentDayIndex]).show();
-          });
       });
 
-      function convertBandInfoToDiv(bandData){
-
-        var html = '';
-        for(var i=0;i<bandData.length;i++){
-
-          var isPlaylist = false
-          var hasSource = false
-
-          if(bandData[i][5]!="none"){
-            hasSource=true
-            if(bandData[i][6]!=""){
-              isPlaylist = true
-            }
-          }
-
-          // Adding link and band name
-          html += '<a class="card" href=\''+bandData[i][3]+'\' target="_blank">';
-          html += '<h2 class="artist">'+bandData[i][0]+'</h2>'
-
-          // Checking if there's a source and adding it
-          if(hasSource){
-            var source = bandData[i][5]
-            var sourceText = ""
-            switch(source){
-              case "top":
-              sourceText = "Recently played";
-              break;
-              case "related":
-              var relatedToBand = bandData[i][6]
-              sourceText = "Because you like "+relatedToBand;
-              break;
-              default:
-              break;
-            }
-            html += '<h3 class="source">'+sourceText+'</h3>'
-          }
-
-          // Adding venue and time
-          html += '<h3 class="venue">'+bandData[i][1]+ ' '+bandData[i][2]+'</h3>';
-
-          // Adding price
-          html += '<h3 class="price">'+bandData[i][4]+'</h3>'
-
-          html += '</a>';
-        }
-        return html;
-      }
-
-      // Function that returns the correct suffix for a given date, e.g. if you input 22, it will return "nd" to form "22nd". The approach here is to extract the second digit from the date (e.g. if you input 23, it'll just look at 3), and return a string based on the value of the second digit: 1 = "st", 2 = "nd", 3 = "rd", everything else = "th".
-
-      function getDateSuffix(date){
-        // Pull the second digit
-        var secondDigit = date % 10
-
-        // Special cases: 11, 12 and 13 are treated as "th"
-        if(date==11 || date==12 || date==13){
-          return "th"
-        }
-        // 1st, 2nd, 3rd, 4th, 21st, 22nd, 23rd
-        switch(secondDigit){
-          case 1:
-          return "st"
-          break;
-          case 2:
-          return "nd"
-          break;
-          case 3:
-          return "rd"
-          break;
-          default:
-          return "th"
-        }
-      }
-
-      function dayButtonClicked(type){
-        return function(){
-          switch(type){
-            case "previous":
-            if(currentDay==0){
-              currentDay = days.length-1
-            } else {
-              currentDay-=1
-            }
-            break;
-            default:
-            if(currentDay==days.length-1){
-              currentDay=0
-            } else {
-              currentDay+=1
-            }
-          }
-
-          $('#'+days[currentDay]).show();
-          $('#current-day').html(results[currentDay][0].dayString);
-          for(var i=0;i<days.length;i++){
-            if(i==currentDay){
-              // Do nothing
-            } else {
-              $('#'+days[i]).hide();
-            }
-          }
-          window.scrollTo(0, 0);
-        }
-      }
-      // Store day names for day divs
-      var weekdays = new Array(7);
-      weekdays[0] = "Sunday";
-      weekdays[1] = "Monday";
-      weekdays[2] = "Tuesday";
-      weekdays[3] = "Wednesday";
-      weekdays[4] = "Thursday";
-      weekdays[5] = "Friday";
-      weekdays[6] = "Saturday";
-
-      function populateTable(callback) {
-
-              // For each item in our JSON, extract the useful info and add it to the results array
-              $.each(bands, function(){
-
-                // "source":[{"source":"top","name":"Max Richter"}]
-
-                try{
-                  var n = this.name;
-                  var d = this.date;
-                  var t = "tbd.";
-                  var v = this.venue + ".";
-                  var l = this.link;
-                  var p = this.price;
-                  var s = this.source;
-                  var s_n = "";
-
-                      // If there's no source, do nothing.
-                      if(s=="none"){
-                      } else {
-                        s = this.source[0].source
-                        if(s=="playlist"){
-                          s_n = this.source[0].playlistName
-                        }
-                        if(s=="related"){
-                          s_n = this.source[0].relatedTo
-                        }
-                      }
-
-                      if(this.time != "TBD"){
-                        t = moment(Date.parse(this.time)).format("h:mm a") + ".";
-                      }
-
-                  // Add unique dates as a dictionary to the results array, and each band's info as an array under each date
-                  for(var i=0;i<results.length; i++){
-                    if (results[i][0].date == d){
-                      // If a date already exists in the results array, add a new band's info to that date
-                      results[i][0].bands.push([n, v, t, l, p, s, s_n]);
-                      break;
-                    // If a date doesn't exist, add it to the results array
-                  } else if (i==results.length-1) {
-
-                    // Get day name
-                    var dayNum = Date.parse(this.date).getDay();
-                    var date = Date.parse(this.date).getDate();
-                    var dayText = weekdays[dayNum];
-                    var dayString = dayText+" the "+date+getDateSuffix(date)
-                    results.push([{
-                      date:d,
-                      bands: [[n, v, t, l, p, s, s_n]],
-                      dayText:dayText,
-                      dayString:dayString
-                    }]);
-                    break;
-                  }
-                }
-              } catch (e){
-                console.log("Error: Couldn't access bands from /bands response");
-                console.log(e.message);
-              }
-            });
-                //Remove first element
-                // need: 2018 update: remove first day's results
-                results = results.slice(1);
-                console.log("Results are:")
-                console.log(results);
-
-          // Create div for each day and add bands to each div
-          for(var i=0;i<results.length;i++){
-            var day;
-            var date = Date.parse(results[i][0].date).getDate();
-            var dateString = results[i][0].dayText;
-
-            if(dateString=="TBD"){
-              day="TBD"
-            } else {
-              day = dateString+date
-            }
-            $('#bandList').append("<div class='bandcards' id='"+day+"''></div>");
-            days.push(day);
-            $('#'+day).html(convertBandInfoToDiv(results[i][0].bands));
-          }
-
-          var buttonHtml = '<button type="button" name="previous" id="previous-day">Previous</button><button type="button" name="next" id="next-day">Next</button>'
-
-          // Add buttons to footer
-          $('#footer').append(buttonHtml)
-          $('#previous-day').on('click', dayButtonClicked("previous"));
-          $('#next-day').on('click', dayButtonClicked("next"));
-          $('#publicLink').html(document.location.href);
-          $('body').addClass('siteloaded');
-
-          callback();
-        };
-      </script>
-
-
-      <!-- header and article (non-nav content) -->
-      <div class="viewable">
-        <div class="daycard">
-          <h3>bands playing on</h3>
-          <h2 class="currentday" id="current-day"></h2>
-        </div>
-        <article id="bandList">
-        </article>
-      </div>
-      <!-- navigation -->
-      <footer id="footer">
-      </footer>
-
-
-      <script>
-        $('#next-day').click(function(){
-          console.log("CLICKED!")
-        });
-
-        $('#changeStatus').click(function(){
-          $.get("/private", function(data) {
-            location.reload();
-          }); return false;
-        });
-
-        $('#changeStatus1').click(function(){
-          $.get("/private", function(data) {
-            location.reload();
-          }); return false;
-        });
-
-        if("{{canDelete}}"=='y'){
-          $(".friendPage").hide();
-          if("{{public}}"=='y'){
-            $(".public").show();
-            $(".private").hide();
-          } else {
-            $(".public").hide();
-            $(".private").show();
-          }
+      // Function that adds an event handler for each "Save to calendar button". index tells us which date and show the "Save to calendar" button was clicked for.
+      function addCalendarButtonEventHandler(index, name, venue, date, time, link){
+        var fullDate = Date.parse(date)
+        var year = fullDate.getFullYear()
+        var month = fullDate.getMonth()+1
+        var date = fullDate.getDate()
+        var hour = Date.parse(time).getHours()
+        var min = Date.parse(time).getMinutes()
+        var endHour;
+        if(hour==23){
+          endHour = 0
         } else {
-          $(".friendPage").show();
-          $(".public").hide();
-          $(".private").hide();
+          endHour = hour+1
         }
-      </script>
+
+        var startDateTime = year+"-"+month+"-"+date+"T"+hour+":"+min+":00"
+        var endDateTime = year+"-"+month+"-"+date+"T"+endHour+":"+min+":00"
+
+        var eventData = {
+          'summary': 'SXSW: '+name,
+          'location': venue,
+          'description': link,
+          'start': startDateTime,
+          'end': endDateTime
+        }
+
+        $("#saveToCalendar-"+index).click(function(e){
+          console.log("Save to calendar button clicked!")
+          console.log("Saving an event at:\n"+eventData.start)
+          e.preventDefault();
+          $.ajax({
+            type: 'POST',
+            url: 'http://localhost:5000/calendar',
+            data: eventData,
+            success: console.log("Saved!"),
+            error: function(a,b,c){
+              console.log(b)
+            }
+          });
+        })
+      }
+
+    </script>
+
+    <div class="viewable">
+      <article id="bandList">
+        {{#each shows}}
+        <div class="currentday">{{this.date}}</div>
+          {{#each shows}}
+        <div class="bandcards">
+          <a class="card" href="{{this.link}}" target="_blank">
+            <h2 class="artist">{{this.name}}</h2>
+            <h3 class="source">Test</h3>
+            <h3 class="venue">{{this.venue}}</h3>
+            <h3 class="price">{{this.price}}</h3>
+          </a>
+          <div id="saveToCalendar-{{@../index}}-{{@index}}" class="calendar-button">Save to calendar</div>
+          <script>
+            var name = "{{this.name}}"
+            var venue = "{{this.venue}}"
+            var date = "{{../this.date}}"
+            var time = "{{this.time}}"
+            var link = "{{this.link}}"
+            addCalendarButtonEventHandler("{{@../index}}-{{@index}}",name,venue,date,time,link)
+          </script>     
+        </div>
+          {{/each}}
+        {{/each}}
+      </article>
     </div>
-  </body>
-  </html>
+    <!-- navigation -->
+    <footer id="footer">
+    </footer>
+
+    <script>
+
+      $('#changeStatus').click(function(){
+        $.get("/private", function(data) {
+          location.reload();
+        }); return false;
+      });
+
+      $('#changeStatus1').click(function(){
+        $.get("/private", function(data) {
+          location.reload();
+        }); return false;
+      });
+
+      if("{{canDelete}}"=='y'){
+        $(".friendPage").hide();
+        if("{{public}}"=='y'){
+          $(".public").show();
+          $(".private").hide();
+        } else {
+          $(".public").hide();
+          $(".private").show();
+        }
+      } else {
+        $(".friendPage").show();
+        $(".public").hide();
+        $(".private").hide();
+      }
+    </script>
+  </div>
+</body>
+</html>

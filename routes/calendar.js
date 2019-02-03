@@ -56,7 +56,7 @@ router.post('/calendar', function(req, res) {
       // Token exists. Set credentials so we can make API calls.
       oAuth2Client.setCredentials(JSON.parse(token));
       // Band.saveToGoogleCalendar(oAuth2Client, req.body.data, res.redirect('https://calendar.google.com/calendar/r'))
-      Band.saveToGoogleCalendar(oAuth2Client, event, console.log("DONE!"))
+      Band.saveToGoogleCalendar(oAuth2Client, event)
     }
   })
 });
