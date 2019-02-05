@@ -21,6 +21,11 @@ router.get('/privateUser', function(req, res, next){
   res.render('privateUser');
 });
 
+/* Load privacy policy page. */
+router.get('/privacy-policy', function(req, res, next){
+  res.render('privacy-policy');
+});
+
 /* Load itinerary for a specific venue. */
 router.use('/', require('./venues'));
 

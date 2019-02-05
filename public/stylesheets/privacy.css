@@ -1,0 +1,53 @@
+@font-face {font-family: SharpGroteskMedium20; font-weight: 500; src: url("../fonts/SharpGroteskDBMedium20.ttf");}
+@font-face {font-family: SharpGroteskSemiBold22; font-weight: 500; src: url("../fonts/SharpGroteskDBSmBold22.ttf");}
+
+body{
+    background: #383838;
+    color: white;
+}
+
+.container{
+    font-family: SharpGroteskBook20;
+    margin: 0 auto;
+    margin-top: 23vh;
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+.title{
+    font-family: SharpGroteskSemiBold22;
+    font-size: 2em;
+}
+
+.description{
+    margin-top: 1em;
+    line-height: 1.3em;
+    font-size: 1.3em;
+}
+
+.dismiss-button{
+    position: fixed;
+    bottom: 0;
+    display: table;
+    text-align: center;
+    width: 100%;
+    background-color: #32ABB7;
+    height: 5em;
+}
+
+.dismiss-button__text{
+    font-family: SharpGroteskSemiBold22;
+    font-size: 1.5em;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+/* Desktop */
+@media only screen
+and (min-device-width: 550px) {
+
+    .container{
+        margin-top: 25vh;
+        width: 400px;
+    }
+}
