@@ -39,6 +39,7 @@ var stateKey = 'spotify_auth_state';
 
 /* Login page. */
 router.get('/login', function(req, res, next){
+  console.log("Getting /login. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
 
@@ -62,7 +63,8 @@ router.get('/login', function(req, res, next){
   (based on their top tracks, saved albums, and related artists)
   and push a new User object to the database including that info.
   ***********/
-router.get('/callback', function(req, res, next){
+  router.get('/callback', function(req, res, next){
+    console.log("Getting /callback. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
   // Get access token from Spotify
   var code = req.query.code || null;
   var state = req.query.state || null;
@@ -92,16 +94,22 @@ router.get('/callback', function(req, res, next){
       if (!error && response.statusCode === 200){
         var accessToken = body.access_token
 
+        console.log("Fetching Spotify Profile info. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
+
         // Fetch Spotify profile info which we'll need when pulling all user-created playlists. 
         fetchSpotifyProfileInfo(accessToken).then(function(spotifyProfileInfo){
           username = spotifyProfileInfo.id;
           displayName = spotifyProfileInfo.display_name;
           email = spotifyProfileInfo.email;
 
+          console.log("Fetching Spotify Artists. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
+
           // Now that we've got the Spotify ID, fetch all Spotify artists from the user's top tracks, saved albums, and created playlists.
           fetchSpotifyArtists(spotifyProfileInfo.id, accessToken).then(function(bandList){
+            console.log("Fetching related artists. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
             // Now that we've got all Spotiy artists, fetch related artists for each one
             fetchRelatedArtistsFromSpotifyArtists(bandList, accessToken).then(function(result){
+              console.log("Saving new user to database. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
               // Now that we've got a full list of artists, create a new User object in the database with this array of bands
               console.log("Redirecting to summary page...");
               saveNewUser(username, displayName, email, req.session.id, spotifyBands, true, function(){
@@ -134,6 +142,7 @@ async function fetchSpotifyArtists(spotifyId, accessToken){
 function fetchArtistsFromTopTracks(accessToken){
 
   console.log("Fetching artists from top tracks...")
+  console.log("   Fetching artists from top tracks. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
 
   // Get request options to get top tracks
   var options = {
@@ -166,6 +175,7 @@ function fetchArtistsFromTopTracks(accessToken){
 function fetchArtistsFromSavedAlbums(accessToken){
 
   console.log("Fetching artists from saved albums...")
+  console.log("   Fetching artists from saved albums. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
 
   // Get request options for saved albums
   var options = {
@@ -197,6 +207,7 @@ function fetchArtistsFromSavedAlbums(accessToken){
 
 function fetchArtistsFromPlaylists(spotifyId, accessToken){
   console.log("Fetching artists from playlists...")
+  console.log("   Fetching artists from saved playlists. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
 
   var bandList = []
   var promises = []

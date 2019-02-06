@@ -79,7 +79,6 @@ function fetchBandSummary(user, callback){
       return {errors: "Error connecting to our database"};
     } else {
       try{
-        console.log("Result from fetching user is "+JSON.stringify(docs))
         var results = Band.fetchBandInfo(docs[0].rawBandsFromSpotify, function(result){
 
           var bandList = []
