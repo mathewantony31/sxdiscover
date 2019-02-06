@@ -9,6 +9,7 @@ router.get('/', function(req, res, next) {
 /* Get home page. */
 router.get('/secretentrypoint', function(req, res, next) {
   res.render('index');
+  console.log("Fetching homepage. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
 });
 
 /* Get about page. */
@@ -24,6 +25,7 @@ router.get('/privateUser', function(req, res, next){
 /* Load privacy policy page. */
 router.get('/privacy-policy', function(req, res, next){
   res.render('privacy-policy');
+  console.log("Fetching privacy page. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
 });
 
 /* Load itinerary for a specific venue. */
