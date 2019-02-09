@@ -119,7 +119,8 @@ function parseShowData(shows){
       time:shows[i].time,
       link:shows[i].link,
       venue:shows[i].venue,
-      price:shows[i].price
+      price:shows[i].price,
+      source:getSource(shows[i].source[0])
     }
 
     // For each element in dateList, check if the element.date equals an integer
@@ -145,6 +146,23 @@ function parseShowData(shows){
 
   return dateList
   // Create an array of objects, where each item is a day with an array of show data, e.g. [{'2019-03-12':[{show1},{show2},{show3}]}]. Each show contains the properties defined in the Band schema
+}
+
+// Function that takes in the source of a band (top, saved, related) and returns the string that we should show in the itinerary (e.g. "Because you like Hatchie", or "From your library")
+function getSource(sourceData){
+  switch(sourceData.source){
+    case "top":
+      return "Recently played"
+      break;
+    case "album":
+      return "From your library"
+      break;
+    case "related":
+      return "Because you like "+sourceData.relatedTo
+      break;
+    default:
+      return ""
+  }
 }
 
 // Function that returns the correct suffix for a given date, e.g. if you input 22, it will return "nd" to form "22nd". The approach here is to extract the second digit from the date (e.g. if you input 23, it'll just look at 3), and return a string based on the value of the second digit: 1 = "st", 2 = "nd", 3 = "rd", everything else = "th".
