@@ -4,6 +4,7 @@ var router = express.Router();
 /* Get comingSoon page. */
 router.get('/', function(req, res, next) {
   res.render('comingSoon');
+  console.log("Getting comingsoon. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
 });
 
 /* Get home page. */
