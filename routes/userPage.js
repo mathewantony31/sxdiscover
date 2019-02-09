@@ -107,6 +107,8 @@ function fetchBandSummary(user, callback){
 
 function parseShowData(shows){
 
+  // no dups yet
+
   var dateList = [1];
 
   for(var i=0;i<shows.length;i++){
@@ -133,6 +135,7 @@ function parseShowData(shows){
           date:showDate,
           shows:[showInfo]
         })
+        break;
       }
     }
   }

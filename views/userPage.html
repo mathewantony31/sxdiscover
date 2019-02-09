@@ -98,34 +98,64 @@
         })
       }
 
+      function addCheckboxEventHandler(index){
+        $("#checkbox-"+index).click(function(e){
+          console.log("checkbox " + index + " clicked!");
+        })
+      }
+
     </script>
 
     <div class="viewable">
+      <form name="showsForm">
       <article id="bandList">
         {{#each shows}}
         <div class="currentday">{{this.date}}</div>
           {{#each shows}}
-        <div class="bandcards">
-          <a class="card" href="{{this.link}}" target="_blank">
-            <h2 class="artist">{{this.name}}</h2>
-            <h3 class="source">Test</h3>
-            <h3 class="venue">{{this.venue}}</h3>
-            <h3 class="price">{{this.price}}</h3>
-          </a>
-          <div id="saveToCalendar-{{@../index}}-{{@index}}" class="calendar-button">Save to calendar</div>
-          <script>
-            var name = "{{this.name}}"
-            var venue = "{{this.venue}}"
-            var date = "{{../this.date}}"
-            var time = "{{this.time}}"
-            var link = "{{this.link}}"
-            addCalendarButtonEventHandler("{{@../index}}-{{@index}}",name,venue,date,time,link)
-          </script>     
-        </div>
+          <div class="bandcards">
+            <a class="card" href="{{this.link}}" target="_blank">
+              <h2 class="artist">{{this.name}}</h2>
+              <h3 class="source">Test</h3>
+              <h3 class="venue">{{this.venue}}</h3>
+              <h3 class="price">{{this.price}}</h3>
+            </a>
+            <input type="checkbox" id="checkbox-{{@../index}}-{{@index}}">+</input>
+            <div id="saveToCalendar-{{@../index}}-{{@index}}" class="calendar-button">Save to calendar</div>
+            <script>
+              var name = "{{this.name}}"
+              var venue = "{{this.venue}}"
+              var date = "{{../this.date}}"
+              var time = "{{this.time}}"
+              var link = "{{this.link}}"
+              addCalendarButtonEventHandler("{{@../index}}-{{@index}}",name,venue,date,time,link)
+              addCheckboxEventHandler("{{@../index}}-{{@index}}")
+            </script>
+          </div>
           {{/each}}
         {{/each}}
       </article>
+      </form>
+      <div>
+        <button id="goToSchedule" onclick="getCheckedShows(document.showsForm)">Go to schedule</button>
+      </div>
+
+      <script>
+        function getCheckedShows(form){
+          console.log("clicked goToSchedule!");
+          var savedShows = [];
+
+          for (var i = 0; i < form.elements.length; i++ ) {
+              if (form.elements[i].checked == true) {
+                  savedShows.push(form.elements[i].id);
+              }
+          }
+          console.log(savedShows);
+        }
+      </script>  
+
+
     </div>
+
     <!-- navigation -->
     <footer id="footer">
     </footer>
@@ -158,6 +188,7 @@
         $(".public").hide();
         $(".private").hide();
       }
+
     </script>
   </div>
 </body>
