@@ -6,7 +6,7 @@
   <!-- link to our css pages here  -->
   <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
   <link rel="stylesheet" type="text/css" href="/stylesheets/home.css">
-  <!-- <link rel="stylesheet" type="text/css" href="/stylesheets/home-grid.css"> -->
+  <link rel="stylesheet" type="text/css" href="/stylesheets/loader.css">
 
   <!-- link to favicon for desktop browsers -->
   <link rel="shortcut icon" href="http://sxdiscover.co/favicon.ico?v=2">
@@ -121,8 +121,20 @@
         <div class="title">SXDiscover</div>
         <div class="subtitle">Create a custom SXSW schedule from your Spotify music</div>
       </div>
-      <a href="/login" class="spotify-button"><img id="spotify" src="images/spotify-button.svg"></a>
+      
+      <a href="/login" class="spotify-button">
+        <img id="spotify" src="images/spotify-button.svg">
+      </a>
+      <div id="green-button-no-text" style="visibility: hidden;" class="spotify-button no-text">
+        <div class="lds-ellipsis" id="loader"><div></div><div></div><div></div><div></div></div>
+      </div>
     </div>
+    <script>
+      $('#spotify').click(function(){
+        // Show loading animation
+        document.getElementById("green-button-no-text").style.visibility = "visible"
+      });
+    </script>
 
     <br />
   </body>
