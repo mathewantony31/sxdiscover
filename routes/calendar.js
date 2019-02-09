@@ -47,18 +47,21 @@ router.post('/calendar', function(req, res) {
     'end': {'dateTime':req.body.end, 'timeZone':'America/Chicago'}
   }
 
+  // Temporarily forcing AUTH-ing
+  res.redirect(authUrl)
+
   // Check if we previously stored a token
-  fs.readFile(TOKEN_PATH, (err, token) => {
-    if(err){
-      // No previous token. Redirect to authURL to get code
-      res.redirect(authUrl)
-    } else {
-      // Token exists. Set credentials so we can make API calls.
-      oAuth2Client.setCredentials(JSON.parse(token));
-      // Band.saveToGoogleCalendar(oAuth2Client, req.body.data, res.redirect('https://calendar.google.com/calendar/r'))
-      Band.saveToGoogleCalendar(oAuth2Client, event)
-    }
-  })
+  // fs.readFile(TOKEN_PATH, (err, token) => {
+  //   if(err){
+  //     // No previous token. Redirect to authURL to get code
+  //     res.redirect(authUrl)
+  //   } else {
+  //     // Token exists. Set credentials so we can make API calls.
+  //     oAuth2Client.setCredentials(JSON.parse(token));
+  //     // Band.saveToGoogleCalendar(oAuth2Client, req.body.data, res.redirect('https://calendar.google.com/calendar/r'))
+  //     Band.saveToGoogleCalendar(oAuth2Client, event)
+  //   }
+  // })
 });
 
 // After successfully signing in to Google, you're redirected back to this route.
