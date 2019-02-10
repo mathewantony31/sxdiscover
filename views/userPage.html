@@ -3,8 +3,7 @@
 <head>
   <title>SXDiscover</title>
   <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
-  <link rel="stylesheet" type="text/css" href="/stylesheets/userpage-style.css">
-  <link rel="stylesheet" type="text/css" href="/stylesheets/userPage-grid.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/userpage.css">
   <link rel="stylesheet" href="/stylesheets/vex.css" />
   <link rel="stylesheet" href="/stylesheets/vex-theme-wireframe.css" />
 
@@ -105,91 +104,105 @@
       }
 
     </script>
-
-    <div class="viewable">
-      <form name="showsForm">
-      <article id="bandList">
-        {{#each shows}}
-        <div class="currentday">{{this.date}}</div>
-          {{#each shows}}
-          <div class="bandcards">
-            <a class="card" href="{{this.link}}" target="_blank">
-              <h2 class="artist">{{this.name}}</h2>
-              <h3 class="source">{{this.source}}</h3>
-              <h3 class="venue">{{this.venue}}</h3>
-              <h3 class="price">{{this.price}}</h3>
-            </a>
-            <input type="checkbox" id="checkbox-{{@../index}}-{{@index}}">+</input>
-            <div id="saveToCalendar-{{@../index}}-{{@index}}" class="calendar-button">Save to calendar</div>
-            <script>
-              var name = "{{this.name}}"
-              var venue = "{{this.venue}}"
-              var date = "{{../this.date}}"
-              var time = "{{this.time}}"
-              var link = "{{this.link}}"
-              addCalendarButtonEventHandler("{{@../index}}-{{@index}}",name,venue,date,time,link)
-              addCheckboxEventHandler("{{@../index}}-{{@index}}")
-            </script>
-          </div>
-          {{/each}}
-        {{/each}}
-      </article>
-      </form>
-      <div>
-        <button id="goToSchedule" onclick="getCheckedShows(document.showsForm)">Go to schedule</button>
-      </div>
-
-      <script>
-        function getCheckedShows(form){
-          console.log("clicked goToSchedule!");
-          var savedShows = [];
-
-          for (var i = 0; i < form.elements.length; i++ ) {
-              if (form.elements[i].checked == true) {
-                  savedShows.push(form.elements[i].id);
-              }
-          }
-          console.log(savedShows);
-        }
-      </script>  
-
-
+    <div class="add-shows-tooltip">
+      <div class="add-shows-tooltip__text">Add shows to your schedule</div>
     </div>
 
-    <!-- navigation -->
-    <footer id="footer">
-    </footer>
+    <div class="showlist">
+      <form name="showsForm">
+        {{#each shows}}
+        <div class="show__day">{{this.day}}, March {{this.date}}</div>
+        {{#each shows}}
+        <div class="show">
+          <div class="show__time-wrapper">
+            <div class="show__time">{{this.time}}</div>
+          </div>
+          <div class="show__info">
+              <a href="{{this.link}}" target="_blank"><div class="show__band">{{this.name}}</div></a>
+              <h3 class="show__source">Test</h3>
+              <h3 class="show__venue">{{this.venue}}</h3>
+              <h3 class="show__price">{{this.price}}</h3>
+            <div id="saveToCalendar-{{@../index}}-{{@index}}" class="calendar-button">Save to calendar</div>
+          </div>
+          <script>
+            var name = "{{this.name}}"
+            var venue = "{{this.venue}}"
+            var date = "{{../this.date}}"
+            var time = "{{this.time}}"
+            var link = "{{this.link}}"
+            addCalendarButtonEventHandler("{{@../index}}-{{@index}}",name,venue,date,time,link)
+            addCheckboxEventHandler("{{@../index}}-{{@index}}")
+          </script>
+          <div class="show__add-button">
+            <input type="checkbox" id="checkbox-{{@../index}}-{{@index}}" class="show__add-button-hide-radio">
+            <img src="/images/add-button.svg" class="show__add-button__image"></input>
+          </div>
+        </div>
+        {{/each}}
+        {{/each}}
+      </form>
+    </div>
+    <div class="go-to-schedule" id="go-to-schedule">
+      <div class="go-to-schedule__button-text">
+        Go to schedule
+      </div>
+    </div>
 
     <script>
+      function getCheckedShows(form){
+        console.log("clicked goToSchedule!");
+        var savedShows = [];
 
-      $('#changeStatus').click(function(){
-        $.get("/private", function(data) {
-          location.reload();
-        }); return false;
-      });
-
-      $('#changeStatus1').click(function(){
-        $.get("/private", function(data) {
-          location.reload();
-        }); return false;
-      });
-
-      if("{{canDelete}}"=='y'){
-        $(".friendPage").hide();
-        if("{{public}}"=='y'){
-          $(".public").show();
-          $(".private").hide();
-        } else {
-          $(".public").hide();
-          $(".private").show();
+        for (var i = 0; i < form.elements.length; i++ ) {
+          if (form.elements[i].checked == true) {
+            savedShows.push(form.elements[i].id);
+          }
         }
-      } else {
-        $(".friendPage").show();
-        $(".public").hide();
-        $(".private").hide();
+        console.log(savedShows);
       }
 
-    </script>
+      $("#go-to-schedule").click(function(e){
+        getCheckedShows(document.showsForm);
+      });
+    </script>  
+
+
   </div>
+
+  <!-- navigation -->
+  <footer id="footer">
+  </footer>
+
+  <script>
+
+    $('#changeStatus').click(function(){
+      $.get("/private", function(data) {
+        location.reload();
+      }); return false;
+    });
+
+    $('#changeStatus1').click(function(){
+      $.get("/private", function(data) {
+        location.reload();
+      }); return false;
+    });
+
+    if("{{canDelete}}"=='y'){
+      $(".friendPage").hide();
+      if("{{public}}"=='y'){
+        $(".public").show();
+        $(".private").hide();
+      } else {
+        $(".public").hide();
+        $(".private").show();
+      }
+    } else {
+      $(".friendPage").show();
+      $(".public").hide();
+      $(".private").hide();
+    }
+
+  </script>
+</div>
 </body>
 </html>

@@ -114,9 +114,11 @@ function parseShowData(shows){
   for(var i=0;i<shows.length;i++){
 
     var showDate = Date.parse(shows[i].date).getDate();
+    var showDay = getDayName(Date.parse(shows[i].date).getDay());
+    var showTime = formatAMPM(Date.parse(shows[i].time));
     var showInfo = {
       name:shows[i].name,
-      time:shows[i].time,
+      time:showTime,
       link:shows[i].link,
       venue:shows[i].venue,
       price:shows[i].price,
@@ -134,7 +136,8 @@ function parseShowData(shows){
       if(j==dateList.length-1){
         dateList.push({
           date:showDate,
-          shows:[showInfo]
+          shows:[showInfo],
+          day:showDay
         })
         break;
       }
@@ -189,6 +192,44 @@ if(date==11 || date==12 || date==13){
     default:
     return "th"
   }
+}
+
+function getDayName(index){
+  switch(index){
+    case 0:
+    return "Sunday"
+    break;
+    case 1:
+    return "Monday"
+    break;
+    case 2:
+    return "Tuesday"
+    break;
+    case 3:
+    return "Wednesday"
+    break;
+    case 4:
+    return "Thursday"
+    break;
+    case 5:
+    return "Friday"
+    break;
+    case 6:
+    return "Saturday"
+    break;
+  }
+}
+
+function formatAMPM(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  minutes = '00' ? '' : ':'+minutes; // if minutes is 00, remove it
+  var strTime = hours + minutes + ' ' + ampm;
+  return strTime;
 }
 
 module.exports = router;
