@@ -51,8 +51,9 @@
     </script>
     <script>
 
+
       $(document).ready(function() {
-        vex.dialog.alert({ unsafeMessage: 'Here\'s your SXSW schedule for the week, pulled from your top Spotify artists and their related artists. <br /><br />✌🏽✌🏻,<br />- Ben + Mathew'})
+        vex.dialog.alert({ unsafeMessage: 'Here\'s your SXSW schedule for the week, pulled from your top Spotify artists and their related artists. <br /><br />✌🏽✌🏻,<br />- Mathew + Ben'})
       });
 
       // Function that adds an event handler for each "Save to calendar button". index tells us which date and show the "Save to calendar" button was clicked for.
@@ -109,6 +110,7 @@
     </div>
 
     <div class="showlist">
+      {{#if shows}}
       <form name="showsForm">
         {{#each shows}}
         <div class="show__day">{{this.day}}, March {{this.date}}</div>
@@ -141,6 +143,12 @@
         {{/each}}
         {{/each}}
       </form>
+      {{else}}
+    </div> 
+      <br /><br />
+      <div class="no-shows-placeholder">No shows found yet 😞</div>
+      <div class="no-shows-placeholder">Don't worry – new shows are added every day. Check back soon!</div>
+      {{/if}}
     </div>
     <div class="go-to-schedule" id="go-to-schedule">
       <div class="go-to-schedule__button-text">

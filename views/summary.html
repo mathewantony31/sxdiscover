@@ -19,11 +19,17 @@
 </head>
 <body>
   <div class="container">
+    {{#if bands}}
     <div class="helper">Based on the artists you love, here’s who’s playing at SXSW this year:</div>
+    {{/if}}
     <div id="band" class="band">
       <!-- Using some Handlebars magic to iterate through the bands array that's passed in -->
       {{#each bands}}
       <div class="band__name">{{this}}</div>
+      {{else}}
+      <!-- show placehodler text if no bands in the list-->
+      <div class="helper" align="center">No shows found yet 😞</div><p><p>
+      <div class="no-shows-placeholder">Don't worry – new shows are added every day. Check back soon!</div>
       {{/each}}
     </div>
   </div>

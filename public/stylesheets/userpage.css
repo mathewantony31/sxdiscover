@@ -19,6 +19,16 @@ body {
     height: 4em;
 }
 
+.no-shows-placeholder{
+    font-family: SharpGroteskMedium20;
+    line-height: 1.2em;
+    font-size: 1.5em;
+    margin-top: 3em;
+    margin-bottom: 3em;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
 .add-shows-tooltip__text{
     display: table-cell;
     vertical-align: middle;
