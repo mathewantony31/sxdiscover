@@ -6,6 +6,7 @@
   <link rel="stylesheet" type="text/css" href="/stylesheets/userpage-style.css">
   <link rel="stylesheet" type="text/css" href="/stylesheets/userPage-grid.css">
   <link rel="stylesheet" href="/stylesheets/vex.css" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/snackbar.css">
   <link rel="stylesheet" href="/stylesheets/vex-theme-wireframe.css" />
 
 
@@ -33,6 +34,7 @@
       </script>
     </head>
     <body class="site">
+      <div id="snackbar"></div>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
       <script src="/javascripts/global.js"></script>
       <script src="/javascripts/date.js"></script>
@@ -56,12 +58,24 @@
         vex.dialog.alert({ unsafeMessage: 'Here\'s your SXSW schedule for the week, pulled from your top Spotify artists and their related artists. <br /><br />✌🏽✌🏻,<br />- Ben + Mathew'})
       });
 
+      // Function to show toast at the top. Borrowed from https://www.w3schools.com/howto/howto_js_snackbar.asp
+      function showToast(text) {
+      // Get the snackbar DIV
+      var x = document.getElementById("snackbar");
+      x.innerHTML = text;
+
+      // Add the "show" class to DIV
+      x.className = "show";
+
+      // After 3 seconds, remove the show class from DIV
+      setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2500);
+      }
+
+
       // Function that adds an event handler for each "Save to calendar button". index tells us which date and show the "Save to calendar" button was clicked for.
       function addCalendarButtonEventHandler(index, name, venue, date, time, link){
-        var fullDate = Date.parse(date)
-        var year = fullDate.getFullYear()
-        var month = fullDate.getMonth()+1
-        var date = fullDate.getDate()
+        var year = (new Date()).getFullYear() // Get current year
+        var month = 3 // Assuming all shows are in March
         var hour = Date.parse(time).getHours()
         var min = Date.parse(time).getMinutes()
         var endHour;
@@ -84,17 +98,22 @@
 
         $("#saveToCalendar-"+index).click(function(e){
           console.log("Save to calendar button clicked!")
-          console.log("Saving an event at:\n"+eventData.start)
           e.preventDefault();
           $.ajax({
+            datatype:"json",
             type: 'POST',
             url: '/calendar',
             data: eventData,
-            success: console.log("Saved!"),
-            error: function(a,b,c){
-              console.log(b)
+            success: function(result){
+              if(result.status==200){
+                showToast("Show added to calendar.");
+                // some UI indication that the calendar event was added
+              } else {
+                // some UI indication that the calendar event was not added
+                showToast("Error adding show to calendar.");
+              }
             }
-          });
+          })
         })
       }
 
@@ -108,9 +127,9 @@
 
     <div class="viewable">
       <form name="showsForm">
-      <article id="bandList">
-        {{#each shows}}
-        <div class="currentday">{{this.date}}</div>
+        <article id="bandList">
+          {{#each shows}}
+          <div class="currentday">{{this.date}}</div>
           {{#each shows}}
           <div class="bandcards">
             <a class="card" href="{{this.link}}" target="_blank">
@@ -132,8 +151,8 @@
             </script>
           </div>
           {{/each}}
-        {{/each}}
-      </article>
+          {{/each}}
+        </article>
       </form>
       <div>
         <button id="goToSchedule" onclick="getCheckedShows(document.showsForm)">Go to schedule</button>
@@ -145,9 +164,9 @@
           var savedShows = [];
 
           for (var i = 0; i < form.elements.length; i++ ) {
-              if (form.elements[i].checked == true) {
-                  savedShows.push(form.elements[i].id);
-              }
+            if (form.elements[i].checked == true) {
+              savedShows.push(form.elements[i].id);
+            }
           }
           console.log(savedShows);
         }
