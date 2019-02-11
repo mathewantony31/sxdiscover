@@ -51,10 +51,13 @@ body {
 
 .show__day{
     margin-top: 3em;
-    margin-left: 18.2vw;
+    margin-left: 17.2vw;
     margin-bottom: 1em;
     font-family: SharpGroteskSmBold22;
-    font-size: 12px;
+    font-size: 1em;
+    text-transform: uppercase;
+    border-bottom: 2px solid white;
+    padding-bottom: 0.2em;
 }
 
 .show__time{
@@ -78,13 +81,17 @@ body {
     font-size: 25px;
 }
 
-.show__venue, .show__price, .show__source{
+.show__venue, .show__price{
     font-family: SharpGroteskBook20;
     font-size: 13px;
 }
 
-.show__add-button{
+.show_source{
+    margin-bottom: 1em;
+}
 
+.show__add-button{
+    margin-right: 1em;
 }
 
 .show__add-button-hide-radio{
