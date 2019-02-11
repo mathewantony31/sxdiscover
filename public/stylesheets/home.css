@@ -33,11 +33,23 @@ body {
 }
 
 .spotify-button{
+    width: 299px;
+    height: 49px;
     position: fixed;
+    cursor: pointer;
     bottom: 0;
     margin-bottom: 2em;
     left: 50%;
     transform: translateX(-50%);
+}
+
+.spotify-button.no-text{
+    cursor: default;
+    background: #1DB954;
+    border-radius: 35px;
+    font-family: SharpGroteskBook20;
+    font-size: 17px;
+    color: #FFFFFF;
 }
 
 /* Mobile */

@@ -3,8 +3,7 @@
 <head>
   <title>SXDiscover</title>
   <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
-  <link rel="stylesheet" type="text/css" href="/stylesheets/userpage-style.css">
-  <link rel="stylesheet" type="text/css" href="/stylesheets/userPage-grid.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/userpage.css">
   <link rel="stylesheet" href="/stylesheets/vex.css" />
   <link rel="stylesheet" type="text/css" href="/stylesheets/snackbar.css">
   <link rel="stylesheet" href="/stylesheets/vex-theme-wireframe.css" />
@@ -124,9 +123,12 @@
       }
 
     </script>
+    <div class="add-shows-tooltip">
+      <div class="add-shows-tooltip__text">Add shows to your schedule</div>
+    </div>
 
-    <div class="viewable">
-      <form name="showsForm">
+    <div class="showlist">
+     <form name="showsForm">
         <article id="bandList">
           {{#each shows}}
           <div class="currentday">{{this.date}}</div>
@@ -154,11 +156,14 @@
           {{/each}}
         </article>
       </form>
-      <div>
-        <button id="goToSchedule" onclick="getCheckedShows(document.showsForm)">Go to schedule</button>
+    </div>
+    <div class="go-to-schedule" id="go-to-schedule">
+      <div class="go-to-schedule__button-text">
+        Go to schedule
       </div>
+    </div>
 
-      <script>
+<script>
         function getCheckedShows(form){
           console.log("clicked goToSchedule!");
           var savedShows = [];
@@ -170,45 +175,45 @@
           }
           console.log(savedShows);
         }
-      </script>  
+      </script> 
 
 
-    </div>
-
-    <!-- navigation -->
-    <footer id="footer">
-    </footer>
-
-    <script>
-
-      $('#changeStatus').click(function(){
-        $.get("/private", function(data) {
-          location.reload();
-        }); return false;
-      });
-
-      $('#changeStatus1').click(function(){
-        $.get("/private", function(data) {
-          location.reload();
-        }); return false;
-      });
-
-      if("{{canDelete}}"=='y'){
-        $(".friendPage").hide();
-        if("{{public}}"=='y'){
-          $(".public").show();
-          $(".private").hide();
-        } else {
-          $(".public").hide();
-          $(".private").show();
-        }
-      } else {
-        $(".friendPage").show();
-        $(".public").hide();
-        $(".private").hide();
-      }
-
-    </script>
   </div>
+
+  <!-- navigation -->
+  <footer id="footer">
+  </footer>
+
+  <script>
+
+    $('#changeStatus').click(function(){
+      $.get("/private", function(data) {
+        location.reload();
+      }); return false;
+    });
+
+    $('#changeStatus1').click(function(){
+      $.get("/private", function(data) {
+        location.reload();
+      }); return false;
+    });
+
+    if("{{canDelete}}"=='y'){
+      $(".friendPage").hide();
+      if("{{public}}"=='y'){
+        $(".public").show();
+        $(".private").hide();
+      } else {
+        $(".public").hide();
+        $(".private").show();
+      }
+    } else {
+      $(".friendPage").show();
+      $(".public").hide();
+      $(".private").hide();
+    }
+
+  </script>
+</div>
 </body>
 </html>

@@ -114,12 +114,15 @@ function parseShowData(shows){
   for(var i=0;i<shows.length;i++){
 
     var showDate = Date.parse(shows[i].date).getDate();
+    var showDay = getDayName(Date.parse(shows[i].date).getDay());
+    var showTime = formatAMPM(Date.parse(shows[i].time));
     var showInfo = {
       name:shows[i].name,
-      time:shows[i].time,
+      time:showTime,
       link:shows[i].link,
       venue:shows[i].venue,
-      price:shows[i].price
+      price:shows[i].price,
+      source:getSource(shows[i].source[0])
     }
 
     // For each element in dateList, check if the element.date equals an integer
@@ -133,7 +136,8 @@ function parseShowData(shows){
       if(j==dateList.length-1){
         dateList.push({
           date:showDate,
-          shows:[showInfo]
+          shows:[showInfo],
+          day:showDay
         })
         break;
       }
@@ -145,6 +149,23 @@ function parseShowData(shows){
 
   return dateList
   // Create an array of objects, where each item is a day with an array of show data, e.g. [{'2019-03-12':[{show1},{show2},{show3}]}]. Each show contains the properties defined in the Band schema
+}
+
+// Function that takes in the source of a band (top, saved, related) and returns the string that we should show in the itinerary (e.g. "Because you like Hatchie", or "From your library")
+function getSource(sourceData){
+  switch(sourceData.source){
+    case "top":
+      return "Recently played"
+      break;
+    case "album":
+      return "From your library"
+      break;
+    case "related":
+      return "Because you like "+sourceData.relatedTo
+      break;
+    default:
+      return ""
+  }
 }
 
 // Function that returns the correct suffix for a given date, e.g. if you input 22, it will return "nd" to form "22nd". The approach here is to extract the second digit from the date (e.g. if you input 23, it'll just look at 3), and return a string based on the value of the second digit: 1 = "st", 2 = "nd", 3 = "rd", everything else = "th".
@@ -171,6 +192,44 @@ if(date==11 || date==12 || date==13){
     default:
     return "th"
   }
+}
+
+function getDayName(index){
+  switch(index){
+    case 0:
+    return "Sunday"
+    break;
+    case 1:
+    return "Monday"
+    break;
+    case 2:
+    return "Tuesday"
+    break;
+    case 3:
+    return "Wednesday"
+    break;
+    case 4:
+    return "Thursday"
+    break;
+    case 5:
+    return "Friday"
+    break;
+    case 6:
+    return "Saturday"
+    break;
+  }
+}
+
+function formatAMPM(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  minutes = '00' ? '' : ':'+minutes; // if minutes is 00, remove it
+  var strTime = hours + minutes + ' ' + ampm;
+  return strTime;
 }
 
 module.exports = router;
