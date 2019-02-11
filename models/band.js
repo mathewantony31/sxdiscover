@@ -44,7 +44,8 @@ exports.fetchBandInfo = function(bandList, callback){
         });
 }
 
-exports.saveToGoogleCalendar = function(auth, data){
+exports.saveToGoogleCalendar = function(auth, data, callback){
+  console.log("Saving "+data.summary+" to calendar, on date "+data.start.dateTime);
   // Given Google auth credentials and show data, save a new event to the user's calendar
   const calendar = google.calendar({version: 'v3', auth});
   
@@ -55,7 +56,10 @@ exports.saveToGoogleCalendar = function(auth, data){
   }, function(err, event) {
     if (err) {
       console.log(err);
+      callback(false);
       return;
+    } else {
+      callback(true);
     }
   });
 }

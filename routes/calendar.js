@@ -20,6 +20,7 @@ client_id = process.env.GCAL_CLIENT_ID;
 const TOKEN_PATH = 'token.json';
 
 var redirect_uri;
+var event;
 
 if(!isProduction){
   redirect_uri = 'http://localhost:5000/calendar-callback';
@@ -39,7 +40,7 @@ const authUrl = oAuth2Client.generateAuthUrl({
 router.post('/calendar', function(req, res) {
 
   // Ideally, we wouldn't need to recreate the event dictionary, but, for some reason, the start and end key/value pairs are not getting passed into the request body if they're in a dictionary. Hacky workaround for now is to change the value of start and end to be a string when making the POST request. I'm recreating the event dictionary with the correct formatting before making the API call.
-  var event = {
+  event = {
     'summary': req.body.summary,
     'location': req.body.location,
     'description': req.body.description,
@@ -47,21 +48,24 @@ router.post('/calendar', function(req, res) {
     'end': {'dateTime':req.body.end, 'timeZone':'America/Chicago'}
   }
 
-  // Temporarily forcing AUTH-ing
-  res.redirect(authUrl)
-
   // Check if we previously stored a token
-  // fs.readFile(TOKEN_PATH, (err, token) => {
-  //   if(err){
-  //     // No previous token. Redirect to authURL to get code
-  //     res.redirect(authUrl)
-  //   } else {
-  //     // Token exists. Set credentials so we can make API calls.
-  //     oAuth2Client.setCredentials(JSON.parse(token));
-  //     // Band.saveToGoogleCalendar(oAuth2Client, req.body.data, res.redirect('https://calendar.google.com/calendar/r'))
-  //     Band.saveToGoogleCalendar(oAuth2Client, event)
-  //   }
-  // })
+  fs.readFile(TOKEN_PATH, (err, token) => {
+    if(err){
+      // No previous token. Redirect to authURL to get code
+      res.redirect(authUrl);
+    } else {
+      // Token exists. Set credentials so we can make API calls.
+      oAuth2Client.setCredentials(JSON.parse(token));
+      Band.saveToGoogleCalendar(oAuth2Client, event, function(status){
+        console.log("Status IS "+status)
+        if(status==false){
+          res.send({"error" : "Calendar event not added", "status" : 500});
+        } else {
+          res.send({"success" : "Calendar event added successfully", "status" : 200});
+        }
+      })
+    }
+  })
 });
 
 // After successfully signing in to Google, you're redirected back to this route.
@@ -85,40 +89,9 @@ router.get('/calendar-callback', function(req, res, next) {
   });
 
   // Save event to calendar
-  saveEvent(oAuth2Client, res.redirect('https://calendar.google.com/calendar/r'));
+  Band.saveToGoogleCalendar(oAuth2Client, event)
 }
 });
 });
-
-function saveEvent(auth, callback){
-  const calendar = google.calendar({version: 'v3', auth});
-
-  var event = {
-    'summary': 'SXSW: Hatchie',
-    'location': 'Cheer up charlies',
-    'description': 'A chance to hear more about Google\'s developer products.',
-    'start': {
-      'dateTime': '2019-01-20T09:00:00',
-      'timeZone': 'America/Chicago',
-    },
-    'end': {
-      'dateTime': '2019-01-20T10:00:00',
-      'timeZone': 'America/Chicago',
-    }
-  };
-
-  calendar.events.insert({
-    auth: auth,
-    calendarId: 'primary',
-    resource: event,
-  }, function(err, event) {
-    if (err) {
-      console.log('There was an error contacting the Calendar service: ' + err);
-      return;
-    }
-    callback;
-  });
-
-}
 
 module.exports = router;
