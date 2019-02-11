@@ -15,10 +15,19 @@ body {
 
 .helper{
     font-family: SharpGroteskMedium20;
-    line-height: 1.4em;
+    line-height: 1.2em;
     font-size: 1.2em;
-    margin-top: 2.5em;
+    margin-top: 2em;
     margin-bottom: 1.5em;
+}
+
+.no-shows-placeholder{
+    font-family: SharpGroteskMedium20;
+    line-height: 1.2em;
+    font-size: 0.8em;
+    margin-top: 1.1em;
+    margin-bottom: 1.1em;
+    text-align: center;
 }
 
 .band{
