@@ -37,7 +37,7 @@ body {
     height: 49px;
     position: fixed;
     cursor: pointer;
-    bottom: 0;
+    bottom: 0.5em;
     margin-bottom: 2em;
     left: 50%;
     transform: translateX(-50%);
@@ -50,6 +50,16 @@ body {
     font-family: SharpGroteskBook20;
     font-size: 17px;
     color: #FFFFFF;
+}
+
+.privacy-policy{
+    font-family: SharpGroteskMedium22;
+    position: fixed;
+    bottom: 1em;
+    font-size: 0.8em;
+    left: 50%;
+    transform: translateX(-50%);
+    text-transform: uppercase;
 }
 
 /* Mobile */
