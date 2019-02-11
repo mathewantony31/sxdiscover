@@ -129,36 +129,40 @@
     </div>
 
     <div class="showlist">
-            {{#if shows}}
-     <form name="showsForm">
-        <article id="bandList">
-          {{#each shows}}
-          <div class="currentday">{{this.date}}</div>
-          {{#each shows}}
-          <div class="bandcards">
-            <a class="card" href="{{this.link}}" target="_blank">
-              <h2 class="artist">{{this.name}}</h2>
-              <h3 class="source">Test</h3>
-              <h3 class="venue">{{this.venue}}</h3>
-              <h3 class="price">{{this.price}}</h3>
-            </a>
-            <input type="checkbox" id="checkbox-{{@../index}}-{{@index}}">+</input>
-            <div id="saveToCalendar-{{@../index}}-{{@index}}" class="calendar-button">Save to calendar</div>
-            <script>
-              var name = "{{this.name}}"
-              var venue = "{{this.venue}}"
-              var date = "{{../this.date}}"
-              var time = "{{this.time}}"
-              var link = "{{this.link}}"
-              addCalendarButtonEventHandler("{{@../index}}-{{@index}}",name,venue,date,time,link)
-              addCheckboxEventHandler("{{@../index}}-{{@index}}")
-            </script>
-          </div>
-          {{/each}}
-          {{/each}}
-        </article>
-      </form>
-      {{else}}
+    {{#if shows}}
+    <form name="showsForm">
+      {{#each shows}}
+      <div class="show__day">{{this.day}}, March {{this.date}}</div>
+      {{#each shows}}
+      <div class="show">
+        <div class="show__time-wrapper">
+          <div class="show__time">{{this.time}}</div>
+        </div>
+        <div class="show__info">
+          <a href="{{this.link}}" target="_blank"><div class="show__band">{{this.name}}</div></a>
+          <h3 class="show__source">Test</h3>
+          <h3 class="show__venue">{{this.venue}}</h3>
+          <h3 class="show__price">{{this.price}}</h3>
+          <div id="saveToCalendar-{{@../index}}-{{@index}}" class="calendar-button">Save to calendar</div>
+        </div>
+        <script>
+          var name = "{{this.name}}"
+          var venue = "{{this.venue}}"
+          var date = "{{../this.date}}"
+          var time = "{{this.time}}"
+          var link = "{{this.link}}"
+          addCalendarButtonEventHandler("{{@../index}}-{{@index}}",name,venue,date,time,link)
+          addCheckboxEventHandler("{{@../index}}-{{@index}}")
+        </script>
+        <div class="show__add-button">
+          <input type="checkbox" id="checkbox-{{@../index}}-{{@index}}" class="show__add-button-hide-radio">
+          <img src="/images/add-button.svg" class="show__add-button__image"></input>
+        </div>
+      </div>
+      {{/each}}
+      {{/each}}
+    </form>
+    {{else}}
     </div> 
       <br /><br />
       <div class="no-shows-placeholder">No shows found yet 😞</div>
