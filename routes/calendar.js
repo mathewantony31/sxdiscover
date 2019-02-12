@@ -27,7 +27,7 @@ if(!isProduction){
   // Load local environment file
   require('dotenv').load();
 } else {
-  redirect_uri = 'http://sxdiscover.co/calendar-callback';
+  redirect_uri = 'http://sxdiscover.com/calendar-callback';
 }
 
 const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uri);
