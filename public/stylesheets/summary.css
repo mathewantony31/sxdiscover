@@ -33,6 +33,7 @@ body {
 .band{
     font-size: 2em;
     font-family: SharpGroteskSemiBold22;
+    margin-bottom: 4em;
 }
 
 .band__name{
