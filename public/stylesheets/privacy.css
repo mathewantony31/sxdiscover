@@ -1,13 +1,10 @@
-@font-face {font-family: SharpGroteskMedium20; font-weight: 500; src: url("../fonts/SharpGroteskDBMedium20.ttf");}
-@font-face {font-family: SharpGroteskSemiBold22; font-weight: 500; src: url("../fonts/SharpGroteskDBSmBold22.ttf");}
-
 body{
     background: #383838;
     color: white;
 }
 
 .container{
-    font-family: SharpGroteskBook20;
+    font-family: Raleway-Medium;
     margin: 0 auto;
     margin-top: 23vh;
     padding-left: 2em;
@@ -15,7 +12,7 @@ body{
 }
 
 .title{
-    font-family: SharpGroteskSemiBold22;
+    font-family: Raleway-ExtraBold;
     font-size: 2em;
 }
 
@@ -36,7 +33,7 @@ body{
 }
 
 .dismiss-button__text{
-    font-family: SharpGroteskSemiBold22;
+    font-family: Raleway-ExtraBold;
     font-size: 1.5em;
     display: table-cell;
     vertical-align: middle;
