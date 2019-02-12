@@ -16,7 +16,7 @@
 }
 
 /* Show the snackbar when clicking on a button (class added with JavaScript) */
-#snackbar.show {
+#snackbar.display {
   visibility: visible; /* Show the snackbar */
   /* Add animation: Take 0.2 seconds to fade in and out the snackbar. 
   However, delay the fade out process for 2.5 seconds */
