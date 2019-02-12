@@ -64,7 +64,7 @@
 
       // After 3 seconds, remove the show class from DIV
       setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2500);
-      }
+    }
 
 
       // Function that adds an event handler for each "Save to calendar button". index tells us which date and show the "Save to calendar" button was clicked for.
@@ -103,62 +103,65 @@
               if(result.status==200){
                 showToast("Show added to calendar.");
                 // some UI indication that the calendar event was added
-              } else {
+              }
+              if(result.status==500){
                 // some UI indication that the calendar event was not added
                 showToast("Error adding show to calendar.");
               }
-            }
+              if(result.status==403){
+                 window.location.assign(redirectURI);
+              }
+            })
+            })
+        }
+
+        function addCheckboxEventHandler(index){
+          $("#checkbox-"+index).click(function(e){
+            console.log("checkbox " + index + " clicked!");
           })
-        })
-      }
+        }
 
-      function addCheckboxEventHandler(index){
-        $("#checkbox-"+index).click(function(e){
-          console.log("checkbox " + index + " clicked!");
-        })
-      }
-
-    </script>
-    <div class="add-shows-tooltip">
-      <div class="add-shows-tooltip__text">Add shows to your schedule</div>
-    </div>
-
-    <div class="showlist">
-    {{#if shows}}
-    <form name="showsForm">
-      {{#each shows}}
-      <div class="show__day">{{this.day}}, March {{this.date}}</div>
-      {{#each shows}}
-      <div class="show">
-        <div class="show__time-wrapper">
-          <div class="show__time">{{this.time}}</div>
-        </div>
-        <div class="show__info">
-          <a href="{{this.link}}" target="_blank"><div class="show__band">{{this.name}}</div></a>
-          <h3 class="show__source">{{this.source}}</h3>
-          <h3 class="show__venue">{{this.venue}}</h3>
-          <h3 class="show__price">{{this.price}}</h3>
-          <div id="saveToCalendar-{{@../index}}-{{@index}}" class="calendar-button">Save to calendar</div>
-        </div>
-        <script>
-          var name = "{{this.name}}"
-          var venue = "{{this.venue}}"
-          var date = "{{../this.date}}"
-          var time = "{{this.time}}"
-          var link = "{{this.link}}"
-          addCalendarButtonEventHandler("{{@../index}}-{{@index}}",name,venue,date,time,link)
-          addCheckboxEventHandler("{{@../index}}-{{@index}}")
-        </script>
-        <div class="show__add-button">
-          <input type="checkbox" id="checkbox-{{@../index}}-{{@index}}" class="show__add-button-hide-radio">
-          <img src="/images/add-button.svg" class="show__add-button__image"></input>
-        </div>
+      </script>
+      <div class="add-shows-tooltip">
+        <div class="add-shows-tooltip__text">Add shows to your schedule</div>
       </div>
-      {{/each}}
-      {{/each}}
-    </form>
-    {{else}}
-    </div> 
+
+      <div class="showlist">
+        {{#if shows}}
+        <form name="showsForm">
+          {{#each shows}}
+          <div class="show__day">{{this.day}}, March {{this.date}}</div>
+          {{#each shows}}
+          <div class="show">
+            <div class="show__time-wrapper">
+              <div class="show__time">{{this.time}}</div>
+            </div>
+            <div class="show__info">
+              <a href="{{this.link}}" target="_blank"><div class="show__band">{{this.name}}</div></a>
+              <h3 class="show__source">{{this.source}}</h3>
+              <h3 class="show__venue">{{this.venue}}</h3>
+              <h3 class="show__price">{{this.price}}</h3>
+              <div id="saveToCalendar-{{@../index}}-{{@index}}" class="calendar-button">Save to calendar</div>
+            </div>
+            <script>
+              var name = "{{this.name}}"
+              var venue = "{{this.venue}}"
+              var date = "{{../this.date}}"
+              var time = "{{this.time}}"
+              var link = "{{this.link}}"
+              addCalendarButtonEventHandler("{{@../index}}-{{@index}}",name,venue,date,time,link)
+              addCheckboxEventHandler("{{@../index}}-{{@index}}")
+            </script>
+            <div class="show__add-button">
+              <input type="checkbox" id="checkbox-{{@../index}}-{{@index}}" class="show__add-button-hide-radio">
+              <img src="/images/add-button.svg" class="show__add-button__image"></input>
+            </div>
+          </div>
+          {{/each}}
+          {{/each}}
+        </form>
+        {{else}}
+      </div> 
       <br /><br />
       <div class="no-shows-placeholder">No shows found yet 😞</div>
       <div class="no-shows-placeholder">Don't worry – new shows are added every day. Check back soon!</div>
@@ -170,19 +173,19 @@
       </div>
     </div>
 
-<script>
-        function getCheckedShows(form){
-          console.log("clicked goToSchedule!");
-          var savedShows = [];
+    <script>
+      function getCheckedShows(form){
+        console.log("clicked goToSchedule!");
+        var savedShows = [];
 
-          for (var i = 0; i < form.elements.length; i++ ) {
-            if (form.elements[i].checked == true) {
-              savedShows.push(form.elements[i].id);
-            }
+        for (var i = 0; i < form.elements.length; i++ ) {
+          if (form.elements[i].checked == true) {
+            savedShows.push(form.elements[i].id);
           }
-          console.log(savedShows);
         }
-      </script> 
+        console.log(savedShows);
+      }
+    </script> 
 
 
   </div>

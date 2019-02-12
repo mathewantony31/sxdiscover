@@ -52,7 +52,7 @@ router.post('/calendar', function(req, res) {
   fs.readFile(TOKEN_PATH, (err, token) => {
     if(err){
       // No previous token. Redirect to authURL to get code
-      res.redirect(authUrl);
+      res.send({"error" : "Not authenticated to Google", "status" : 403, "redirectURI":authUrl});
     } else {
       // Token exists. Set credentials so we can make API calls.
       oAuth2Client.setCredentials(JSON.parse(token));
