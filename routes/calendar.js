@@ -56,6 +56,7 @@ router.post('/calendar', function(req, res) {
     } else {
       // Token exists. Set credentials so we can make API calls.
       oAuth2Client.setCredentials(JSON.parse(token));
+
       Band.saveToGoogleCalendar(oAuth2Client, event, function(status){
         console.log("Status IS "+status)
         if(status==false){

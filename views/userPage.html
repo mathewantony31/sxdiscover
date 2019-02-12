@@ -109,7 +109,7 @@
                 showToast("Error adding show to calendar.");
               }
               if(result.status==403){
-                 window.location.assign(redirectURI);
+                 window.location.assign(result.redirectURI);
               }
             }
             });
