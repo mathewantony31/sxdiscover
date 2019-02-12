@@ -21,7 +21,7 @@ router.get('/pages/*', function(req, res){
         var userSession = docs[0].uid;
         var displayName = docs[0].displayName;
         var public = docs[0].public;
-        var link = "http://sxdiscover.co/pages/"+req.params[0];
+        var link = "https://www.sxdiscover.com/pages/"+req.params[0];
 
         // Check to see if page is set to public or private, or if user visiting their own page
 

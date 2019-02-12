@@ -16,7 +16,7 @@ if(!isProduction){
   // Load local environment file
   require('dotenv').load();
 } else {
-  redirect_uri = 'http://sxdiscover.co/callback';
+  redirect_uri = 'https://www.sxdiscover.com/callback';
 }
 
 var client_id = process.env.CLIENT_ID,
