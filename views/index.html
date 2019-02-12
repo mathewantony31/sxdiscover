@@ -129,11 +129,18 @@
       <div id="green-button-no-text" style="visibility: hidden;" class="spotify-button no-text">
         <div class="lds-ellipsis" id="loader"><div></div><div></div><div></div><div></div></div>
       </div>
+      <div class="privacy-policy" id="privacy">
+        View privacy policy
+      </div>
     </div>
     <script>
       $('#spotify').click(function(){
         // Show loading animation
         document.getElementById("green-button-no-text").style.visibility = "visible"
+      });
+
+      $('#privacy').click(function(){
+        window.location.replace("/privacy-policy");
       });
     </script>
 

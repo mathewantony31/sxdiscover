@@ -30,6 +30,7 @@ body {
 .band{
     font-size: 2em;
     font-family: Raleway-ExtraBold;
+    margin-bottom: 4em;
 }
 
 .band__name{

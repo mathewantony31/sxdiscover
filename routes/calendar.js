@@ -21,13 +21,14 @@ const TOKEN_PATH = 'token.json';
 
 var redirect_uri;
 var event;
+var sourceURL;
 
 if(!isProduction){
   redirect_uri = 'http://localhost:5000/calendar-callback';
   // Load local environment file
   require('dotenv').load();
 } else {
-  redirect_uri = 'http://sxdiscover.co/calendar-callback';
+  redirect_uri = 'https://www.sxdiscover.com/calendar-callback';
 }
 
 const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uri);
@@ -47,6 +48,8 @@ router.post('/calendar', function(req, res) {
     'start': {'dateTime':req.body.start, 'timeZone':'America/Chicago'},
     'end': {'dateTime':req.body.end, 'timeZone':'America/Chicago'}
   }
+
+  sourceURL = req.body.currentURL;
 
   // Check if we previously stored a token
   fs.readFile(TOKEN_PATH, (err, token) => {
@@ -91,6 +94,7 @@ router.get('/calendar-callback', function(req, res, next) {
 
   // Save event to calendar
   Band.saveToGoogleCalendar(oAuth2Client, event)
+  res.redirect(sourceURL)
 }
 });
 });
