@@ -1,7 +1,6 @@
 // Required modules
 var bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
-    cors = require('cors'),
     express = require('express'),
     favicon = require('serve-favicon'),
     hbs = require('hbs'),
@@ -73,8 +72,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
-
-app.use(cors())
 
 app.use('/', require('./routes/index'));
 
