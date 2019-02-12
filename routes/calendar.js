@@ -49,7 +49,7 @@ router.post('/calendar', function(req, res) {
     'end': {'dateTime':req.body.end, 'timeZone':'America/Chicago'}
   }
 
-  console.log("CURRENT URL IS "+req.body.currentURL)
+  sourceURL = req.body.currentURL;
 
   // Check if we previously stored a token
   fs.readFile(TOKEN_PATH, (err, token) => {
