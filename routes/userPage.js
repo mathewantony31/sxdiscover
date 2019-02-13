@@ -131,6 +131,8 @@ function parseShowData(shows){
       source:getSource(shows[i].source[0])
     }
 
+    console.log("show time is " + showTime);
+
     // For each element in dateList, check if the element.date equals an integer
     for(var j=0;j<dateList.length;j++){
       if(dateList[j].date==showDate){
@@ -227,13 +229,18 @@ function getDayName(index){
 }
 
 function formatAMPM(date) {
+  console.log("date is " + date);
   var hours = date.getHours();
   var minutes = date.getMinutes();
   var ampm = hours >= 12 ? 'pm' : 'am';
   hours = hours % 12;
   hours = hours ? hours : 12; // the hour '0' should be '12'
   minutes = minutes < 10 ? '0'+minutes : minutes;
-  minutes = '00' ? '' : ':'+minutes; // if minutes is 00, remove it
+  if(minutes == '00') {
+    minutes = '';
+  } else {
+    minutes = ':' + minutes.toString()
+  } // if minutes is 00, remove it
   var strTime = hours + minutes + ' ' + ampm;
   return strTime;
 }

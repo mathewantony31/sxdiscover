@@ -109,8 +109,6 @@ router.get('/login', function(req, res, next){
 
           request.get(getEmailOptions, function(error, response, body){
 
-            console.log("Getting top artists. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
-
             userName = body.id;
             email = body.email;
             displayName = body.display_name;
@@ -143,7 +141,6 @@ router.get('/login', function(req, res, next){
 
             // Call to get saved albums
             request.get(savedAlbumOptions, function(savedError, savedResponse, savedBody){
-              console.log("Getting saved albums. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
               for(var i=0; i <savedBody.items.length; i++){
                 // we're assuming that all albums have only 1 artist which is def not true
                 bandName = savedBody.items[i].album.artists[0].name;
@@ -156,8 +153,6 @@ router.get('/login', function(req, res, next){
               }
 
               var bandsForAsyncLoop = spotifyBands
-
-              console.log("Getting related artists for each band. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
 
             // Get related artists: https://api.spotify.com/v1/artists/{id}/related-artists
             async.each(bandsForAsyncLoop, function(band, callback){
