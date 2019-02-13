@@ -1,5 +1,6 @@
 body {
 	background: #383838;
+    font-family: 'Raleway', sans-serif;
 }
 
 .container{
@@ -10,8 +11,8 @@ body {
 }
 
 .title {
-	font-family: Raleway-ExtraBold;
 	font-size: 2.8em;
+    font-weight: 800;
 	letter-spacing: -2px;
 	vertical-align: middle;
 	display: block;
@@ -20,7 +21,7 @@ body {
 }
 
 .subtitle{
-    font-family: Raleway-Medium;
+    font-weight: 500;
     font-size: 1.2em;
     line-height: 1.5em;
 }
@@ -40,13 +41,14 @@ body {
     cursor: default;
     background: #1DB954;
     border-radius: 35px;
-    font-family: Raleway-Medium;
+    font-weight: 500;
     font-size: 17px;
     color: #FFFFFF;
 }
 
 .privacy-policy{
-    font-family: SharpGroteskMedium22;
+    cursor: pointer;
+    font-weight: 800;
     position: fixed;
     bottom: 1em;
     font-size: 0.8em;

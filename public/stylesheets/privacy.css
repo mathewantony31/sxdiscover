@@ -1,10 +1,11 @@
 body{
     background: #383838;
     color: white;
+    font-family: 'Raleway', sans-serif;
 }
 
 .container{
-    font-family: Raleway-Medium;
+    font-weight: 500;
     margin: 0 auto;
     margin-top: 23vh;
     padding-left: 2em;
@@ -12,7 +13,7 @@ body{
 }
 
 .title{
-    font-family: Raleway-ExtraBold;
+    font-weight: 800;
     font-size: 2em;
 }
 
@@ -33,7 +34,8 @@ body{
 }
 
 .dismiss-button__text{
-    font-family: Raleway-ExtraBold;
+    cursor: pointer;
+    font-weight: 800;
     font-size: 1.5em;
     display: table-cell;
     vertical-align: middle;

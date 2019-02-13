@@ -11,7 +11,7 @@ body {
 }
 
 .helper{
-    font-family: Raleway-SemiBold;
+    font-weight: 600;
     line-height: 1.2em;
     font-size: 1.2em;
     margin-top: 2em;
@@ -19,7 +19,7 @@ body {
 }
 
 .no-shows-placeholder{
-    font-family: Raleway-SemiBold;
+    font-weight: 600;
     line-height: 1.2em;
     font-size: 0.8em;
     margin-top: 1.1em;
@@ -29,7 +29,7 @@ body {
 
 .band{
     font-size: 2em;
-    font-family: Raleway-ExtraBold;
+    font-weight: 800;
     margin-bottom: 4em;
 }
 
@@ -41,7 +41,7 @@ body {
 .view-all-results{
     position: fixed;
     bottom: 0;
-    font-family: Raleway-ExtraBold;
+    font-weight: 800;
     font-size: 1.5em;
     display: table;
     text-align: center;

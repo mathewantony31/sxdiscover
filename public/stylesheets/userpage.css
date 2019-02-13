@@ -7,7 +7,7 @@ body {
 .add-shows-tooltip{
     position: fixed;
     top: 0;
-    font-family: Raleway-ExtraBold;
+    font-weight: 800;
     font-size: 1.2em;
     display: table;
     text-align: center;
@@ -17,7 +17,7 @@ body {
 }
 
 .no-shows-placeholder{
-    font-family: Raleway-SemiBold;
+    font-weight: 600;
     line-height: 1.2em;
     font-size: 1.5em;
     margin-top: 3em;
@@ -51,7 +51,7 @@ body {
     margin-top: 3em;
     margin-left: 17.2vw;
     margin-bottom: 1em;
-    font-family: Raleway-ExtraBold;
+    font-weight: 800;
     font-size: 1em;
     text-transform: uppercase;
     border-bottom: 2px solid white;
@@ -60,7 +60,7 @@ body {
 
 .show__time{
     display: table-cell;
-    font-family: Raleway-ExtraBold;
+    font-weight: 800;
     font-size: 0.8em;
     text-align: center;
     vertical-align: middle;
@@ -75,12 +75,12 @@ body {
 }
 
 .show__band{
-    font-family: Raleway-ExtraBold;
+    font-weight: 800;
     font-size: 25px;
 }
 
 .show__venue, .show__price{
-    font-family: Raleway-Medium;
+    font-weight: 500;
     font-size: 13px;
 }
 
@@ -99,7 +99,7 @@ body {
 .go-to-schedule{
     position: fixed;
     bottom: 0;
-    font-family: Raleway-ExtraBold;
+    font-weight: 800;
     font-size: 1.5em;
     display: table;
     text-align: center;
