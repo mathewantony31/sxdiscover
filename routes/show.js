@@ -6,7 +6,6 @@ var Band = require('../models/band.js');
 
 router.get('/show/*', function(req, res, next){
   try{
-    console.log("Show ID is "+req.params[0])
     Band.model.find({showId: { $in: req.params[0]}}).exec(function (err, docs){
       if(err){
         // Error fetching anything from the database.
@@ -14,15 +13,13 @@ router.get('/show/*', function(req, res, next){
         res.sendStatus(404);
       } else {
         try{
-          console.log(docs)
           var results = JSON.stringify(docs)
-          console.log(results);
           var name = docs[0].name
           var venue = docs[0].venue
           var date = docs[0].date
           var time = docs[0].time
 
-          res.render('show', {name:name, venue: venue, date:date, time:time})
+          res.render('show', {name:name, venue:venue, date:date, time:time})
         } catch(e){
           // Error: We fetched something from the database but hit an error trying to parse it.
           console.log("We fetched something from the database but hit an error trying to parse it.")

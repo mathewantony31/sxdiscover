@@ -3,7 +3,7 @@
 <head>
   <title></title>
   <link rel="stylesheet" href="/stylesheets/reset.css">
-  <link rel="stylesheet" href="/stylesheets/show.css">
+  <link rel="stylesheet" href="/stylesheets/summary.css">
   <meta name="viewport" content="width=device-width initial-scale = 1.0
   maximum-scale=1.0 user-scalable=no" />
   <script>
@@ -19,10 +19,50 @@
 </head>
 <body>
   <div class="container">
+    <!-- if top or saved, show those -->
+    {{#if topOrSaved}}
+    <div class="helper">Woohoo! Check out these artists from your Spotify who are playing at SXSW this year:</div>
+    <div id="band" class="band">
+      {{#each topOrSaved}}
+      <div class="band__name">{{this}}</div>
+      {{/each}}
+    </div>
 
-  </div>
-  <div id="view-all-results" class="view-all-results">
-    <div class="view-all-results__button-text">VIEW ALL RESULTS</div>
-  </div>
-</body>
-</html>
+    {{else}}
+    <!-- if no top or saved, default to related  -->
+    {{#if related}}
+    <div class="helper">Based on the artists you love, here’s are some related artists playing at SXSW this year:</div>
+    <div id="band" class="band">
+      {{#each related}}
+      <div class="band__name">{{this}}</div>
+      {{/each}}
+    </div>
+
+    {{else}}
+    <!-- show placehodler text if no bands at all-->
+    <div class="helper" align="center">No shows found yet 😞</div><p><p>
+      <div class="no-shows-placeholder">Don't worry – new shows are added every day. Check back soon!</div>
+      {{/if}}
+      {{/if}}
+
+    </div>
+    <div id="view-all-results" class="view-all-results">
+      <div class="view-all-results__button-text">VIEW ALL RESULTS</div>
+    </div>
+    <script>
+      var user = "{{name}}";
+
+      $('#view-all-results').click(function(){
+        $.get( '/pages/'+user, function(data) {
+          console.log("Running /pages function");
+          if (data.hasOwnProperty('errors')){
+            console.log(data);
+            window.location.replace("https://www.sxdiscover.com/404");
+          }
+          window.location.replace("/pages/"+user);
+        });
+      })
+
+    </script>
+  </body>
+  </html>

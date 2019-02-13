@@ -4,6 +4,7 @@
   <title></title>
   <link rel="stylesheet" href="/stylesheets/reset.css">
   <link rel="stylesheet" href="/stylesheets/show.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/loader.css">
   <meta name="viewport" content="width=device-width initial-scale = 1.0
   maximum-scale=1.0 user-scalable=no" />
   <script>
@@ -24,13 +25,18 @@
       <div class="container__content__show-info">is playing {{venue}} on {{date}} at {{time}}.</div>
     </div>
   </div>
-  <div id="view-your-schedule" class="view-your-schedule">
-    <div class="view-your-schedule__button-text">GET YOUR OWN SCHEDULE</div>
+  <div class="subtitle">Want to see your own SXSW schedule?</div>
+  <a href="/login" class="spotify-button">
+    <img id="spotify" src="../images/spotify-button.svg">
+  </a>
+  <div id="green-button-no-text" style="visibility: hidden;" class="spotify-button no-text">
+    <div class="lds-ellipsis" id="loader"><div></div><div></div><div></div><div></div></div>
   </div>
   <script>
-    $('#view-your-schedule').click(function(){
-      window.location.replace("https://www.sxdiscover.com");
-    })
+    $('#spotify').click(function(){
+       // Show loading animation     
+      document.getElementById("green-button-no-text").style.visibility = "visible"
+    });
   </script>
 </body>
 </html>

@@ -28,26 +28,34 @@ body {
     line-height: 1.3em;
 }
 
-/* Setting it up as a table so I can get vertically center the button text */
-.view-your-schedule{
+.subtitle{
     position: fixed;
-    bottom: 0;
-    font-family: Raleway-ExtraBold;
-    font-size: 1.5em;
-    display: table;
     text-align: center;
+    font-weight: 600;
+    font-size: 1em;
+    bottom: 6.5em;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
-    background-color: #32ABB7;
-    height: 4em;
+    padding: 0 2em;
 }
 
-.view-your-schedule:hover{
-    background-color: #FFFFFF;
-    color: #383838;
+.spotify-button{
+    width: 299px;
+    height: 49px;
+    position: fixed;
     cursor: pointer;
+    bottom: 0.5em;
+    margin-bottom: 2em;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.view-your-schedule__button-text{
-    display: table-cell;
-    vertical-align: middle;
+.spotify-button.no-text{
+    cursor: default;
+    background: #1DB954;
+    border-radius: 35px;
+    font-family: Raleway-Medium;
+    font-size: 17px;
+    color: #FFFFFF;
 }

@@ -9,9 +9,8 @@ router.get('/', function(req, res, next) {
 });
 
 /* Get home page. */
-router.get('/secretentrypoint', function(req, res, next) {
+router.get('/s', function(req, res, next) {
   res.render('index');
-  console.log("Fetching homepage. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
 });
 
 /* Get about page. */
