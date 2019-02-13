@@ -1,0 +1,53 @@
+body {
+  background: #383838;
+  font-family: 'Raleway', sans-serif;
+  color: white;
+}
+
+.container{
+    display: table;
+    margin: 0 auto;
+    padding-left: 2em;
+    padding-right: 2em;
+    height: 80vh;
+}
+
+.container__content{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.container__content__band-name{
+    font-weight: 800;
+    font-size: 3em;
+}
+
+.container__content__show-info{
+    font-weight: 600;
+    font-size: 1.6em;
+    line-height: 1.3em;
+}
+
+/* Setting it up as a table so I can get vertically center the button text */
+.view-your-schedule{
+    position: fixed;
+    bottom: 0;
+    font-family: Raleway-ExtraBold;
+    font-size: 1.5em;
+    display: table;
+    text-align: center;
+    width: 100%;
+    background-color: #32ABB7;
+    height: 4em;
+}
+
+.view-your-schedule:hover{
+    background-color: #FFFFFF;
+    color: #383838;
+    cursor: pointer;
+}
+
+.view-your-schedule__button-text{
+    display: table-cell;
+    vertical-align: middle;
+}

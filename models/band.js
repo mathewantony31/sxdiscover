@@ -12,7 +12,7 @@ var bandSchema = mongoose.Schema({
   showId: String
 });
 
-var Band = exports.model = mongoose.model('_2019-02-10', bandSchema);
+var Band = exports.model = mongoose.model('_2019-02-11', bandSchema);
 var priceMap = require('../public/javascripts/priceMapping.js')
 
 exports.fetchBandInfo = function(bandList, callback){

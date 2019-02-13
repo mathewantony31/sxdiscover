@@ -19,10 +19,18 @@
 </head>
 <body>
   <div class="container">
-
+    <div class="container__content">
+      <div class="container__content__band-name">{{name}}</div>
+      <div class="container__content__show-info">is playing {{venue}} on {{date}} at {{time}}.</div>
+    </div>
   </div>
-  <div id="view-all-results" class="view-all-results">
-    <div class="view-all-results__button-text">VIEW ALL RESULTS</div>
+  <div id="view-your-schedule" class="view-your-schedule">
+    <div class="view-your-schedule__button-text">GET YOUR OWN SCHEDULE</div>
   </div>
+  <script>
+    $('#view-your-schedule').click(function(){
+      window.location.replace("https://www.sxdiscover.com");
+    })
+  </script>
 </body>
 </html>
