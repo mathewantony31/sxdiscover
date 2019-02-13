@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* Get home page. */
-router.get('/s', function(req, res, next) {
+router.get('/x', function(req, res, next) {
   res.render('index');
 });
 
