@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" href="/stylesheets/reset.css">
+  <link rel="stylesheet" href="/stylesheets/show.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/loader.css">
+  <meta name="viewport" content="width=device-width initial-scale = 1.0
+  maximum-scale=1.0 user-scalable=no" />
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-75031530-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+</head>
+<body>
+  <div class="container">
+    <div class="container__content">
+      <div class="container__content__band-name">{{name}}</div>
+      <div class="container__content__show-info">is playing {{venue}} on {{date}} at {{time}}.</div>
+    </div>
+  </div>
+  <div class="subtitle">Want to see your own SXSW schedule?</div>
+  <a href="/login" class="spotify-button">
+    <img id="spotify" src="../images/spotify-button.svg">
+  </a>
+  <div id="green-button-no-text" style="visibility: hidden;" class="spotify-button no-text">
+    <div class="lds-ellipsis" id="loader"><div></div><div></div><div></div><div></div></div>
+  </div>
+  <script>
+    $('#spotify').click(function(){
+       // Show loading animation     
+      document.getElementById("green-button-no-text").style.visibility = "visible"
+    });
+  </script>
+</body>
+</html>

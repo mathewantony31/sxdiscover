@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var Band = require('../models/band.js'); // Get Show info
 
 /* Get comingSoon page. */
 router.get('/', function(req, res, next) {
@@ -8,9 +9,8 @@ router.get('/', function(req, res, next) {
 });
 
 /* Get home page. */
-router.get('/secretentrypoint', function(req, res, next) {
+router.get('/s', function(req, res, next) {
   res.render('index');
-  console.log("Fetching homepage. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
 });
 
 /* Get about page. */
@@ -28,6 +28,9 @@ router.get('/privacy-policy', function(req, res, next){
   res.render('privacy-policy');
   console.log("Fetching privacy page. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
 });
+
+/* Load page for a specific show ID. */
+router.use('/', require('./show'));
 
 /* Load itinerary for a specific venue. */
 router.use('/', require('./venues'));

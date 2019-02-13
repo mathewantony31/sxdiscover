@@ -1,0 +1,61 @@
+body {
+  background: #383838;
+  font-family: 'Raleway', sans-serif;
+  color: white;
+}
+
+.container{
+    display: table;
+    margin: 0 auto;
+    padding-left: 2em;
+    padding-right: 2em;
+    height: 80vh;
+}
+
+.container__content{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.container__content__band-name{
+    font-weight: 800;
+    font-size: 3em;
+}
+
+.container__content__show-info{
+    font-weight: 600;
+    font-size: 1.6em;
+    line-height: 1.3em;
+}
+
+.subtitle{
+    position: fixed;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1em;
+    bottom: 6.5em;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    padding: 0 2em;
+}
+
+.spotify-button{
+    width: 299px;
+    height: 49px;
+    position: fixed;
+    cursor: pointer;
+    bottom: 0.5em;
+    margin-bottom: 2em;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.spotify-button.no-text{
+    cursor: default;
+    background: #1DB954;
+    border-radius: 35px;
+    font-family: Raleway-Medium;
+    font-size: 17px;
+    color: #FFFFFF;
+}
