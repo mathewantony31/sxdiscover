@@ -68,8 +68,8 @@ router.get('/pages/*', function(req, res){
 router.get('/summary', function(req, res){
   var user = req.query.user;
 
-  fetchBandSummary(user, function(result){
-    res.render('summary', {name:user, bands:result});
+  fetchBandSummary(user, function(topOrSaved, related){
+    res.render('summary', {name:user, topOrSaved:topOrSaved, related:related});
   });
 });
 
@@ -81,21 +81,27 @@ function fetchBandSummary(user, callback){
       try{
         var results = Band.fetchBandInfo(docs[0].rawBandsFromSpotify, function(result){
 
-          var bandList = []
+          var topOrSavedBandList = [];
+          var relatedBandList = [];
+
           var resultsJson = JSON.parse(JSON.stringify(result));
 
           for (var i=0; i < resultsJson.length; i++){
             // Check if top artists
             // TODO: actually clean this up
-            if(resultsJson[i].source[0].source=='top' || resultsJson[i].source[0].source=='saved' || resultsJson[i].source[0].source=='playlist'){
-              // Check if we've already added this artist to bandList
-              if(bandList.indexOf(resultsJson[i].name)==-1){
-                bandList.push(resultsJson[i].name)
+            if(resultsJson[i].source[0].source=='top' || resultsJson[i].source[0].source=='saved'){
+              // Check if we've already added this artist
+              if(topOrSavedBandList.indexOf(resultsJson[i].name)==-1){
+                topOrSavedBandList.push(resultsJson[i].name)
+              }
+            } else if(resultsJson[i].source[0].source=='related'){
+              if(relatedBandList.indexOf(resultsJson[i].name)==-1){
+                relatedBandList.push(resultsJson[i].name)
               }
             }
           }
 
-          callback(bandList);
+          callback(topOrSavedBandList, relatedBandList);
         });
       } catch(e){
         console.log("! Error is " + e);
