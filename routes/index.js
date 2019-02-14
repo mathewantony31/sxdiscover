@@ -41,6 +41,9 @@ router.use('/', require('./spotify'));
 /* Load a user's itinerary. */
 router.use('/', require('./userPage'));
 
+/* Load test sandbox for schedule. */
+router.use('/', require('./schedule-sandbox'));
+
 /* Testing Google calendar integration. */
 router.use('/', require('./calendar'));
 
