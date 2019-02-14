@@ -46,6 +46,10 @@ body {
     color: #FFFFFF;
 }
 
+.spotify-button-image{
+    width: 100%;
+}
+
 .privacy-policy{
     cursor: pointer;
     font-weight: 800;
