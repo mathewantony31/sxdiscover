@@ -18,8 +18,9 @@ router.get('/show/*', function(req, res, next){
           var venue = docs[0].venue
           var date = docs[0].date
           var time = docs[0].time
+          var image = docs[0].image
 
-          res.render('show', {name:name, venue:venue, date:date, time:time})
+          res.render('show', {name:name, venue:venue, date:date, time:time, image:image})
         } catch(e){
           // Error: We fetched something from the database but hit an error trying to parse it.
           console.log("We fetched something from the database but hit an error trying to parse it.")
