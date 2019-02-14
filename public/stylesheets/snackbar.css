@@ -1,6 +1,7 @@
 /* The snackbar - position it at the top and in the middle of the screen */
 #snackbar {
-  font-family: Raleway-SemiBold;
+  font-family: Raleway;
+  font-weight: 600;
   visibility: hidden; /* Hidden by default. Visible on click */
   min-width: 250px; /* Set a default minimum width */
   background-color: #37D135; /* Black background color */
