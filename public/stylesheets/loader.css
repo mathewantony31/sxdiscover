@@ -6,6 +6,14 @@
   z-index: 1;
   transform: translate(-50%, -15%);
 }
+
+.lds-ellipsis.summary {
+  position: fixed;
+  visibility: hidden;
+  height: 4.4em;
+  bottom: 0;
+}
+
 .lds-ellipsis div {
   position: absolute;
   top: 27px;

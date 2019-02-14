@@ -5,6 +5,7 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800" rel="stylesheet">
   <link rel="stylesheet" href="/stylesheets/reset.css">
   <link rel="stylesheet" href="/stylesheets/summary.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/loader.css">
   <meta name="viewport" content="width=device-width initial-scale = 1.0
   maximum-scale=1.0 user-scalable=no" />
   <script>
@@ -47,13 +48,19 @@
       {{/if}}
 
     </div>
+    <div class="lds-ellipsis summary" id="loader"><div></div><div></div><div></div><div></div></div>
+    <div class="view-all-results hidden" id="button-no-text">
+    </div>
     <div id="view-all-results" class="view-all-results">
-      <div class="view-all-results__button-text">VIEW ALL RESULTS</div>
+      <div id="text" class="view-all-results__button-text">VIEW ALL RESULTS</div>
     </div>
     <script>
       var user = "{{name}}";
 
       $('#view-all-results').click(function(){
+        document.getElementById("button-no-text").style.visibility = "visible"
+        document.getElementById("loader").style.visibility = "visible"
+        document.getElementById("view-all-results").style.visibility = "hidden"
         $.get( '/pages/'+user, function(data) {
           console.log("Running /pages function");
           if (data.hasOwnProperty('errors')){
