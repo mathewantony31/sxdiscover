@@ -16,11 +16,14 @@ router.get('/show/*', function(req, res, next){
           var results = JSON.stringify(docs)
           var name = docs[0].name
           var venue = docs[0].venue
-          var date = docs[0].date
-          var time = docs[0].time
           var image = docs[0].image
 
-          res.render('show', {name:name, venue:venue, date:date, time:time, image:image})
+          var fullDate = new Date("2019-"+docs[0].date)
+          var date = fullDate.getDate()
+          var day = getDayName(fullDate.getDay())
+          var time = formatAMPM(Date.parse(docs[0].time));
+
+          res.render('show', {name:name, venue:venue, day:day, date:date, time:time, image:image})
         } catch(e){
           // Error: We fetched something from the database but hit an error trying to parse it.
           console.log("We fetched something from the database but hit an error trying to parse it.")
@@ -37,3 +40,45 @@ router.get('/show/*', function(req, res, next){
 });
 
 module.exports = router;
+
+function getDayName(index){
+  switch(index){
+    case 0:
+    return "Sunday"
+    break;
+    case 1:
+    return "Monday"
+    break;
+    case 2:
+    return "Tuesday"
+    break;
+    case 3:
+    return "Wednesday"
+    break;
+    case 4:
+    return "Thursday"
+    break;
+    case 5:
+    return "Friday"
+    break;
+    case 6:
+    return "Saturday"
+    break;
+  }
+}
+
+function formatAMPM(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  if(minutes == '00') {
+    minutes = '';
+  } else {
+    minutes = ':' + minutes.toString()
+  } // if minutes is 00, remove it
+  var strTime = hours + minutes + ' ' + ampm;
+  return strTime;
+}
