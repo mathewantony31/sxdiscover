@@ -53,6 +53,14 @@
       }(document, 'script', 'facebook-jssdk'));
     </script>
     <script>
+      window.onload = function(){
+        // If we're redirected to this page from a Google Auth, we add ?auth=true to the URL. We should check if "auth=true" exists and show a success toast that the calendar event was added.
+        var param = window.location.search.substring(1) 
+        // Check if URL param contains auth
+        if(param.includes("auth")){
+          showToast("Show added to calendar.");
+        }
+      }
 
       // Function to show toast at the top. Borrowed from https://www.w3schools.com/howto/howto_js_snackbar.asp
       function showToast(text) {
@@ -111,18 +119,18 @@
                 showToast("Error adding show to calendar.");
               }
               if(result.status==403){
-                 window.location.assign(result.redirectURI);
-              }
-            }
-            });
+               window.location.assign(result.redirectURI);
+             }
+           }
+         });
         })
       }
 
-        function addCheckboxEventHandler(index){
-          $("#checkbox-"+index).click(function(e){
-            console.log("checkbox " + index + " clicked!");
-          })
-        }
+      function addCheckboxEventHandler(index){
+        $("#checkbox-"+index).click(function(e){
+          console.log("checkbox " + index + " clicked!");
+        })
+      }
 
       </script>
       <div class="add-shows-tooltip">
