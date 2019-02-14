@@ -61,6 +61,11 @@ body {
     vertical-align: middle;
 }
 
+.view-all-results.hidden{
+    display: table;
+    visibility: hidden;
+}
+
 /* Desktop */
 @media only screen
 and (min-device-width: 550px) {
