@@ -37,6 +37,7 @@ exports.fetchBandInfo = function(bandList, callback){
               bandDictionary.link = docs[i].link
               bandDictionary.time = docs[i].time
               bandDictionary.date = docs[i].date
+              bandDictionary.showId = docs[i].showId
               bandDictionary.source = [search(docs[i].name, bandList)]
               docs[i] = bandDictionary
             }

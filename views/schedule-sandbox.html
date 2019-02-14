@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MATHEW'S TEST SCHEDULE PAGE</title>
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/userpage.css">
+  <link rel="stylesheet" href="/stylesheets/vex.css" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/snackbar.css">
+  <link rel="stylesheet" href="/stylesheets/vex-theme-wireframe.css" />
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- <meta name="viewport" content="width=device-width initial-scale = 1.0 maximum-scale=1.0 user-scalable=no" /> -->
+  <link rel="shortcut icon" href="https://www.sxdiscover.com/favicon.ico?v=2">
+
+  <!-- Facebook link previews -->
+    <!-- You can use Open Graph tags to customize link previews.
+      Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
+      <meta property="fb:app_id"        content="618293678380263" />
+      <meta property="og:url"           content="{{link}}" />
+      <meta property="og:type"          content="website" />
+      <meta property="og:title"         content="{{fbShareMessage}}" />
+      <meta property="og:description"   content="Log in with Spotify to find out if your favorite bands are playing SXSW." />
+      <meta property="og:image"         content="https://www.sxdiscover.com/images/sxd.png" />
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-75031530-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+    </head>
+    <body class="site">
+      <div id="snackbar"></div>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+      <script src="/javascripts/global.js"></script>
+      <script src="/javascripts/date.js"></script>
+      <script src="/javascripts/moment.js"></script>
+      <script src="/javascripts/vex.combined.min.js"></script>
+      <script>vex.defaultOptions.className = 'vex-theme-wireframe';</script>
+
+      <!-- UPDATE: 2017 Facebook SDK code for share button -->
+      <div id="fb-root"></div>
+      <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=618293678380263";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script>
+      window.onload = function(){
+        // If we're redirected to this page from a Google Auth, we add ?auth=true to the URL. We should check if "auth=true" exists and show a success toast that the calendar event was added.
+        var param = window.location.search.substring(1) 
+        // Check if URL param contains auth
+        if(param.includes("auth")){
+          showToast("Show added to calendar.");
+        }
+      }
+
+      // Function to show toast at the top. Borrowed from https://www.w3schools.com/howto/howto_js_snackbar.asp
+      function showToast(text) {
+      // Get the snackbar DIV
+      var x = document.getElementById("snackbar");
+      x.innerHTML = text;
+
+      // Add the "show" class to DIV
+      x.className = "display";
+
+      // After 3 seconds, remove the show class from DIV
+      // setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2500);
+    }
+
+     // Copy to clipboard function borrowed from https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
+     function copyTextToClipboard(text) {
+      var textArea = document.createElement("textarea");
+        // Place in top-left corner of screen regardless of scroll position.
+        textArea.style.position = 'fixed';
+        textArea.style.top = 0;
+        textArea.style.left = 0;
+
+        // Ensure it has a small width and height. Setting to 1px / 1em
+        // doesn't work as this gives a negative w/h on some browsers.
+        textArea.style.width = '2em';
+        textArea.style.height = '2em';
+
+        // We don't need padding, reducing the size if it does flash render.
+        textArea.style.padding = 0;
+
+        // Clean up any borders.
+        textArea.style.border = 'none';
+        textArea.style.outline = 'none';
+        textArea.style.boxShadow = 'none';
+
+        // Avoid flash of white box if rendered for any reason.
+        textArea.style.background = 'transparent';
+
+        textArea.value = text;
+
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+          var successful = document.execCommand('copy');
+          var msg = successful ? 'successful' : 'unsuccessful';
+          console.log('Copying text command was ' + msg);
+        } catch (err) {
+          console.log('Oops, unable to copy');
+        }
+
+        document.body.removeChild(textArea);
+      }
+
+
+      // Function that adds an event handler for each "Save to calendar button". index tells us which date and show the "Save to calendar" button was clicked for.
+      function addCalendarButtonEventHandler(index, name, venue, date, time, link){
+        var year = (new Date()).getFullYear() // Get current year
+        var month = 3 // Assuming all shows are in March
+        var hour = Date.parse(time).getHours()
+        var min = Date.parse(time).getMinutes()
+        var endHour;
+        if(hour==23){
+          endHour = 0
+        } else {
+          endHour = hour+1
+        }
+
+        var startDateTime = year+"-"+month+"-"+date+"T"+hour+":"+min+":00"
+        var endDateTime = year+"-"+month+"-"+date+"T"+endHour+":"+min+":00"
+
+        var eventData = {
+          'summary': 'SXSW: '+name,
+          'location': venue,
+          'description': link,
+          'start': startDateTime,
+          'end': endDateTime,
+          'currentURL':window.location.href
+        }
+
+        $("#saveToCalendar-"+index).click(function(e){
+          console.log("Save to calendar button clicked!")
+          e.preventDefault();
+          $.ajax({
+            datatype:"json",
+            type: 'POST',
+            url: '/calendar',
+            data: eventData,
+            success: function(result){
+              if(result.status==200){
+                showToast("Show added to calendar.");
+                // some UI indication that the calendar event was added
+              }
+              if(result.status==500){
+                // some UI indication that the calendar event was not added
+                showToast("Error adding show to calendar.");
+              }
+              if(result.status==403){
+               window.location.assign(result.redirectURI);
+             }
+           }
+         });
+        })
+      }
+
+      function addCheckboxEventHandler(index){
+        $("#checkbox-"+index).click(function(e){
+          console.log("checkbox " + index + " clicked!");
+        })
+      }
+
+      function shareShowEventHandler(index, showId){
+        $("#share-"+index).click(function(e){
+          copyTextToClipboard('https://www.sxdiscover.com/show/'+showId)
+          showToast("We've copied a link to this show to share with your friends!")
+        })
+      }
+
+    </script>
+
+    <div class="showlist">
+      {{#if shows}}
+      <form name="showsForm">
+        {{#each shows}}
+        <div class="show__day">{{this.day}}, March {{this.date}}</div>
+        {{#each shows}}
+        <div class="show">
+          <div class="show__time-wrapper">
+            <div class="show__time">{{this.time}}</div>
+          </div>
+          <div class="show__info">
+            <a href="{{this.link}}" target="_blank"><div class="show__band">{{this.name}}</div></a>
+            <h3 class="show__source">{{this.source}}</h3>
+            <h3 class="show__venue">{{this.venue}}</h3>
+            <h3 class="show__price">{{this.price}}</h3>
+            <div id="saveToCalendar-{{@../index}}-{{@index}}" class="calendar-button">Save to calendar</div>
+            <div id="share-{{@../index}}-{{@index}}">Share show</div>
+          </div>
+          <script>
+            var name = "{{this.name}}"
+            var venue = "{{this.venue}}"
+            var date = "{{../this.date}}"
+            var time = "{{this.time}}"
+            var link = "{{this.link}}"
+            var showId = "{{this.showId}}"
+            addCalendarButtonEventHandler("{{@../index}}-{{@index}}",name,venue,date,time,link)
+            addCheckboxEventHandler("{{@../index}}-{{@index}}")
+            shareShowEventHandler("{{@../index}}-{{@index}}", showId)
+          </script>
+          <div class="show__add-button">
+            <input type="checkbox" id="checkbox-{{@../index}}-{{@index}}" class="show__add-button-hide-radio">
+            <img src="/images/add-button.svg" class="show__add-button__image"></input>
+          </div>
+        </div>
+        {{/each}}
+        {{/each}}
+      </form>
+      {{else}}
+    </div> 
+    <br /><br />
+    <div class="no-shows-placeholder">No shows found yet 😞</div>
+    <div class="no-shows-placeholder">Don't worry – new shows are added every day. Check back soon!</div>
+    {{/if}}
+  </div>
+  <div class="go-to-schedule" id="go-to-schedule">
+    <div class="go-to-schedule__button-text">
+      Go to schedule
+    </div>
+  </div>
+
+  <script>
+    function getCheckedShows(form){
+      console.log("clicked goToSchedule!");
+      var savedShows = [];
+
+      for (var i = 0; i < form.elements.length; i++ ) {
+        if (form.elements[i].checked == true) {
+          savedShows.push(form.elements[i].id);
+        }
+      }
+      console.log(savedShows);
+    }
+  </script> 
+
+
+</div>
+
+<!-- navigation -->
+<footer id="footer">
+</footer>
+
+<script>
+
+  $('#changeStatus').click(function(){
+    $.get("/private", function(data) {
+      location.reload();
+    }); return false;
+  });
+
+  $('#changeStatus1').click(function(){
+    $.get("/private", function(data) {
+      location.reload();
+    }); return false;
+  });
+
+  if("{{canDelete}}"=='y'){
+    $(".friendPage").hide();
+    if("{{public}}"=='y'){
+      $(".public").show();
+      $(".private").hide();
+    } else {
+      $(".public").hide();
+      $(".private").show();
+    }
+  } else {
+    $(".friendPage").show();
+    $(".public").hide();
+    $(".private").hide();
+  }
+
+</script>
+</div>
+</body>
+</html>
