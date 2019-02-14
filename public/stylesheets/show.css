@@ -1,5 +1,7 @@
 body {
   background: #383838;
+  background-blend-mode: multiply;
+  background-position-x: center;
   font-family: 'Raleway', sans-serif;
   color: white;
 }

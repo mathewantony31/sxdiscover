@@ -18,11 +18,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 </head>
-<body>
+<body onload="setBackgroundImage();">
   <div class="container">
     <div class="container__content">
       <div class="container__content__band-name">{{name}}</div>
-      <div class="container__content__show-info">is playing {{venue}} on {{date}} at {{time}}.</div>
+      <div class="container__content__show-info">is playing {{venue}} on {{day}}, March {{date}} at {{time}}.</div>
     </div>
   </div>
   <div class="subtitle">Want to see your own SXSW schedule?</div>
@@ -37,6 +37,11 @@
        // Show loading animation     
       document.getElementById("green-button-no-text").style.visibility = "visible"
     });
+
+    // Update body background image to artist image
+    function setBackgroundImage(){
+      document.body.style.backgroundImage = "url("+"{{image}}"+")"
+    }
   </script>
 </body>
 </html>
