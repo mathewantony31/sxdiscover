@@ -94,7 +94,7 @@ router.get('/calendar-callback', function(req, res, next) {
 
   // Save event to calendar
   Band.saveToGoogleCalendar(oAuth2Client, event)
-  res.redirect(sourceURL)
+  res.redirect(sourceURL+'?auth=true')
 }
 });
 });
