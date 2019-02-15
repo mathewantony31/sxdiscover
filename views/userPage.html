@@ -53,6 +53,13 @@
       }(document, 'script', 'facebook-jssdk'));
     </script>
     <script>
+      /* this page receives an object called `shows` with this format
+       * 
+       *
+      */
+
+
+
       window.onload = function(){
         // If we're redirected to this page from a Google Auth, we add ?auth=true to the URL. We should check if "auth=true" exists and show a success toast that the calendar event was added.
         var param = window.location.search.substring(1) 
@@ -62,19 +69,14 @@
         }
       }
 
-      // Function to show toast at the top. Borrowed from https://www.w3schools.com/howto/howto_js_snackbar.asp
+      // Function to show toast at the top
       function showToast(text) {
-      // Get the snackbar DIV
       var x = document.getElementById("snackbar");
       x.innerHTML = text;
-
-      // Add the "show" class to DIV
       x.className = "display";
-
       // After 3 seconds, remove the show class from DIV
       setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2500);
     }
-
 
       // Function that adds an event handler for each "Save to calendar button". index tells us which date and show the "Save to calendar" button was clicked for.
       function addCalendarButtonEventHandler(index, name, venue, date, time, link){
@@ -125,13 +127,6 @@
          });
         })
       }
-
-      function addCheckboxEventHandler(index){
-        $("#checkbox-"+index).click(function(e){
-          console.log("checkbox " + index + " clicked!");
-        })
-      }
-
       </script>
       <div class="add-shows-tooltip">
         <div class="add-shows-tooltip__text">Add shows to your schedule</div>
@@ -154,6 +149,7 @@
               <h3 class="show__price">{{this.price}}</h3>
               <div id="saveToCalendar-{{@../index}}-{{@index}}" class="calendar-button">Save to calendar</div>
             </div>
+
             <script>
               var name = "{{this.name}}"
               var venue = "{{this.venue}}"
@@ -161,12 +157,20 @@
               var time = "{{this.time}}"
               var link = "{{this.link}}"
               addCalendarButtonEventHandler("{{@../index}}-{{@index}}",name,venue,date,time,link)
-              addCheckboxEventHandler("{{@../index}}-{{@index}}")
             </script>
-            <div class="show__add-button">
-              <input type="checkbox" id="checkbox-{{@../index}}-{{@index}}" class="show__add-button-hide-radio">
-              <img src="/images/add-button.svg" class="show__add-button__image"></input>
-            </div>
+            
+            <!-- generate plus buttons for each show -->
+            <input type="checkbox" id="checkbox-{{this.showId}}" class="show__add-button" onclick="checkBox({{this.showId}})" />
+              <label for="checkbox-{{this.showId}}" />
+
+            <script>
+              function checkBox(showId) {
+                console.log(showId + " clicked!");
+                // update database
+              }
+
+            </script>
+
           </div>
           {{/each}}
           {{/each}}
@@ -178,6 +182,7 @@
       <div class="no-shows-placeholder">Don't worry – new shows are added every day. Check back soon!</div>
       {{/if}}
     </div>
+    <button>test</button>
     <div class="go-to-schedule" id="go-to-schedule">
       <div class="go-to-schedule__button-text">
         Go to schedule

@@ -39,7 +39,8 @@ router.get('/pages/*', function(req, res){
           })
 
           var r = parseShowData(result);
-          console.log(r);
+
+          // console.log(r[1].shows[0].showId);
 
           if(public==true){
             if(requestSession==userSession){
@@ -128,10 +129,9 @@ function parseShowData(shows){
       link:shows[i].link,
       venue:shows[i].venue,
       price:shows[i].price,
-      source:getSource(shows[i].source[0])
+      source:getSource(shows[i].source[0]),
+      showId:shows[i].showId
     }
-
-    console.log("show time is " + showTime);
 
     // For each element in dateList, check if the element.date equals an integer
     for(var j=0;j<dateList.length;j++){
@@ -229,7 +229,6 @@ function getDayName(index){
 }
 
 function formatAMPM(date) {
-  console.log("date is " + date);
   var hours = date.getHours();
   var minutes = date.getMinutes();
   var ampm = hours >= 12 ? 'pm' : 'am';
