@@ -23,8 +23,6 @@ router.get('/pages/*', function(req, res){
         var public = docs[0].public;
         var link = "https://www.sxdiscover.com/pages/"+req.params[0];
 
-        // Check to see if page is set to public or private, or if user visiting their own page
-
         var results = Band.fetchBandInfo(docs[0].rawBandsFromSpotify, function(result){
 
           result.sort(function(a,b){
@@ -39,8 +37,6 @@ router.get('/pages/*', function(req, res){
           })
 
           var r = parseShowData(result);
-
-          // console.log(r[1].shows[0].showId);
 
           if(public==true){
             if(requestSession==userSession){
@@ -156,10 +152,14 @@ function parseShowData(shows){
   dateList.shift();
 
   return dateList
-  // Create an array of objects, where each item is a day with an array of show data, e.g. [{'2019-03-12':[{show1},{show2},{show3}]}]. Each show contains the properties defined in the Band schema
+  // Create an array of objects, where each item is a day with an array of show data 
+  // e.g. [{'2019-03-12':[{show1},{show2},{show3}]}]
+  // Each show contains the properties defined in the Band schema
 }
 
-// Function that takes in the source of a band (top, saved, related) and returns the string that we should show in the itinerary (e.g. "Because you like Hatchie", or "From your library")
+// Function that takes in the source of a band (top, saved, related) 
+// and returns the string that we should show in the itinerary 
+// (e.g. "Because you like Hatchie", or "From your library")
 function getSource(sourceData){
   switch(sourceData.source){
     case "top":
@@ -176,7 +176,10 @@ function getSource(sourceData){
   }
 }
 
-// Function that returns the correct suffix for a given date, e.g. if you input 22, it will return "nd" to form "22nd". The approach here is to extract the second digit from the date (e.g. if you input 23, it'll just look at 3), and return a string based on the value of the second digit: 1 = "st", 2 = "nd", 3 = "rd", everything else = "th".
+// Function that returns the correct suffix for a given date e.g. if you input 22, 
+// it will return "nd" to form "22nd". The approach here is to extract the second digit 
+// from the date (e.g. if you input 23, it'll just look at 3), and return a string based 
+// on the value of the second digit: 1 = "st", 2 = "nd", 3 = "rd", everything else = "th".
 
 function getDateSuffix(date){
 // Pull the second digit

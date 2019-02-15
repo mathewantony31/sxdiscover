@@ -6,7 +6,8 @@ var userSchema = mongoose.Schema({
   email: String,
   uid: String,
   rawBandsFromSpotify: [mongoose.Schema.Types.Mixed],
-  public: Boolean
+  public: Boolean,
+  savedToSchedule: [mongoose.Schema.Types.Mixed]
 });
 
 module.exports = mongoose.model('users-2019', userSchema);

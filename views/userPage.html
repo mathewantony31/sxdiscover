@@ -53,17 +53,11 @@
       }(document, 'script', 'facebook-jssdk'));
     </script>
     <script>
-      /* this page receives an object called `shows` with this format
-       * 
-       *
-      */
-
-
-
+      
+      // If we're redirected to this page from a Google Auth, we add ?auth=true to the URL.
+      // Check if "auth=true" exists and show a success toast that the calendar event was added.
       window.onload = function(){
-        // If we're redirected to this page from a Google Auth, we add ?auth=true to the URL. We should check if "auth=true" exists and show a success toast that the calendar event was added.
         var param = window.location.search.substring(1) 
-        // Check if URL param contains auth
         if(param.includes("auth")){
           showToast("Show added to calendar.");
         }
@@ -128,6 +122,7 @@
         })
       }
       </script>
+
       <div class="add-shows-tooltip">
         <div class="add-shows-tooltip__text">Add shows to your schedule</div>
       </div>
@@ -160,14 +155,10 @@
             </script>
             
             <!-- generate plus buttons for each show -->
-            <input type="checkbox" id="checkbox-{{this.showId}}" class="show__add-button" onclick="checkBox({{this.showId}})" />
+            <input type="checkbox" id="checkbox-{{this.showId}}" class="show__add-button" />
               <label for="checkbox-{{this.showId}}" />
 
             <script>
-              function checkBox(showId) {
-                console.log(showId + " clicked!");
-                // update database
-              }
 
             </script>
 
@@ -182,8 +173,7 @@
       <div class="no-shows-placeholder">Don't worry – new shows are added every day. Check back soon!</div>
       {{/if}}
     </div>
-    <button>test</button>
-    <div class="go-to-schedule" id="go-to-schedule">
+    <div class="go-to-schedule" id="go-to-schedule" onclick="getCheckedShows()">
       <div class="go-to-schedule__button-text">
         Go to schedule
       </div>
@@ -191,27 +181,52 @@
 
     <script>
       function getCheckedShows(form){
-        console.log("clicked goToSchedule!");
         var savedShows = [];
 
-        for (var i = 0; i < form.elements.length; i++ ) {
-          if (form.elements[i].checked == true) {
-            savedShows.push(form.elements[i].id);
+        // get all checked checkboxes
+        var checkboxes = document.querySelectorAll("input[type=checkbox]");
+        for(var i = 0; i < checkboxes.length; i++ ){
+          if(checkboxes[i].checked == true){
+            
+            // checkbox ids are formatted as `checkboxes-<showId>`
+            // strip first 11 chars to get just showId
+            var thisShowId = checkboxes[i].id.substr(11,);
+            savedShows.push(thisShowId);
           }
         }
+
+        // make sure at least one box was checked
+        if(savedShows.length < 1){
+          vex.dialog.alert({ message: "Oops, no shows were selected. Try clicking the + icon next to a show!" })
+          return 1;
+        }
+
+        var msgMid;
+        if(savedShows.length == 1){
+          msgMid = "1 show"
+        } else{
+          msgMid = savedShows.length + " shows"
+        }
+        var msg = "Saved " + msgMid + " to your schedule!"
+
+        // show a modal
+        vex.dialog.alert({ 
+          unsafeMessage: msg,
+          callback: function(){
+            sendCheckedShowsToDatabase(savedShows);
+          } });
+      }
+
+      function sendCheckedShowsToDatabase(savedShows){
+        console.log("we got " + savedShows.length + " shows");
         console.log(savedShows);
       }
-    </script> 
 
-
+    </script>
   </div>
 
-  <!-- navigation -->
-  <footer id="footer">
-  </footer>
 
   <script>
-
     $('#changeStatus').click(function(){
       $.get("/private", function(data) {
         location.reload();
@@ -238,7 +253,6 @@
       $(".public").hide();
       $(".private").hide();
     }
-
   </script>
 </div>
 </body>
