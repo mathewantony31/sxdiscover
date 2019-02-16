@@ -50,4 +50,7 @@ router.use('/', require('./calendar'));
 /* Toggle's user's itinerary between public and private. */
 router.use('/', require('./private'));
 
+/* Updates the shows saved to current user's schedule */
+router.use('/', require('./updateSchedule'))
+
 module.exports = router;
