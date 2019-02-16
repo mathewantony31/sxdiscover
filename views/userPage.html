@@ -185,45 +185,67 @@
     function getCheckedShows(form){
       var savedShows = [];
 
-        // get all checked checkboxes
-        var checkboxes = document.querySelectorAll("input[type=checkbox]");
-        for(var i = 0; i < checkboxes.length; i++ ){
-          if(checkboxes[i].checked == true){
+      // get all checked checkboxes
+      var checkboxes = document.querySelectorAll("input[type=checkbox]");
+      for(var i = 0; i < checkboxes.length; i++ ){
+        if(checkboxes[i].checked == true){
 
-            // checkbox ids are formatted as `checkboxes-<showId>`
-            // strip first 11 chars to get just showId
-            var thisShowId = checkboxes[i].id.substr(11,);
-            savedShows.push(thisShowId);
-          }
+          // checkbox ids are formatted as `checkboxes-<showId>`
+          // strip first 11 chars to get just showId
+          var thisShowId = checkboxes[i].id.substr(11,);
+          savedShows.push(thisShowId);
         }
-
-        // make sure at least one box was checked
-        if(savedShows.length < 1){
-          vex.dialog.alert({ message: "Oops, no shows were selected. Try clicking the + icon next to a show!" })
-          return 1;
-        }
-
-        var msgMid;
-        if(savedShows.length == 1){
-          msgMid = "1 show"
-        } else{
-          msgMid = savedShows.length + " shows"
-        }
-        var msg = "Saved " + msgMid + " to your schedule!"
-
-        // show a modal
-        vex.dialog.alert({ 
-          unsafeMessage: msg,
-          callback: function(){
-            sendCheckedShowsToDatabase(savedShows);
-          } });
       }
+
+      // make sure at least one box was checked
+      if(savedShows.length < 1){
+        vex.dialog.alert({ 
+          message: "Oops, no shows were selected. Try clicking the + icon next to a show!" 
+        })
+        return 1;
+      }
+
+      var msgMid;
+      if(savedShows.length == 1){
+        msgMid = "1 show"
+      } else{
+        msgMid = savedShows.length + " shows"
+      }
+      var msg = "Saved " + msgMid + " to your schedule! (not really though)"
+
+      // show a modal
+      vex.dialog.alert({ 
+        unsafeMessage: msg,
+        callback: function(){
+          sendCheckedShowsToDatabase(savedShows);
+        }
+      });
 
       function sendCheckedShowsToDatabase(savedShows){
-        console.log("we got " + savedShows.length + " shows");
+        console.log("View Schedule button clicked");
         console.log(savedShows);
+        var showData = {
+          'savedShows': savedShows
+        }
+        $.ajax({
+          datatype:"json",
+          type: 'POST',
+          url: '/updateSchedule',
+          data: showData,
+          success: function(result){
+            if(result.status==200){
+              showToast("Schedule saved!");
+            }
+            if(result.status==500){
+              showToast("Error saving schedule");
+            }
+           //  if(result.status==403){
+           //   window.location.assign(result.redirectURI);
+           // }
+          }
+        });
       }
-
+    }
     </script>
   </div>
 

@@ -61,8 +61,6 @@ router.get('/login', function(req, res, next){
   ***********/
   router.get('/callback', function(req, res, next){
 
-    console.log("Getting /callback. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
-
     var code = req.query.code || null;
     var state = req.query.state || null;
 
@@ -185,9 +183,6 @@ router.get('/login', function(req, res, next){
                   throw err;
                 }
                 console.log("Related artists pulled for all bands.")
-
-                console.log("Finished getting all bands. Saving user object to database. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
-
 
                 // create new User object w/ band info and push to database
                 var userData = {
