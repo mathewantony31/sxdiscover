@@ -37,7 +37,6 @@ label {
 
 .showlist{
     margin: 0 auto;
-    margin-top: 6em;
     margin-bottom: 10em;
 }
 
@@ -120,13 +119,11 @@ label {
     visibility: hidden;
     position: fixed;
     bottom: 0;
-    font-weight: 800;
-    font-size: 1.5em;
     display: table;
     text-align: center;
     width: 100%;
     background-color: #32ABB7;
-    height: 4em;
+    height: 6em;
 }
 
 .go-to-schedule:hover{
@@ -135,9 +132,20 @@ label {
     cursor: pointer;
 }
 
-.go-to-schedule__button-text{
+.go-to-schedule__cell{
     display: table-cell;
     vertical-align: middle;
+}
+
+.go-to-schedule__button-text{
+    font-weight: 800;
+    font-size: 1.8em;
+}
+
+.go-to-schedule__subtitle-text{
+    font-weight: 500;
+    font-size: 0.8em;
+    margin-top: 0.3em;
 }
 
 a{

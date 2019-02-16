@@ -67,6 +67,10 @@
         $('input[type=checkbox]').click(function(){
           document.getElementById("go-to-schedule").style.visibility = "visible"
         });
+
+        //
+        vex.dialog.buttons.YES.text = 'Got it'
+        vex.dialog.alert({ message: "Here are the SXSW shows you should go to. Click the + button to add a show to your schedule." })
       });
 
       // Function to show toast at the top
@@ -129,10 +133,6 @@
       }
     </script>
 
-    <div class="add-shows-tooltip">
-      <div class="add-shows-tooltip__text">Add shows to your schedule</div>
-    </div>
-
     <div class="showlist">
       {{#if shows}}
       <form name="showsForm">
@@ -176,9 +176,14 @@
     {{/if}}
   </div>
   <div class="go-to-schedule" id="go-to-schedule" onclick="getCheckedShows()">
-    <div id="go-to-schedule" class="go-to-schedule__button-text">
-      Go to schedule
-    </div>
+    <div class="go-to-schedule__cell">
+      <div id="go-to-schedule" class="go-to-schedule__button-text">
+        Go to schedule
+      </div>
+      <div class="go-to-schedule__subtitle-text">
+        Don't worry. You can come back to this list later.
+      </div>
+    </div>  
   </div>
 
   <script>
