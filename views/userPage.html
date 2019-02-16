@@ -52,7 +52,76 @@
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     </script>
+    <script>
+      // If we're redirected to this page from a Google Auth, we add ?auth=true to the URL.
+      // Check if "auth=true" exists and show a success toast that the calendar event was added.
+      window.onload = function(){
+        var param = window.location.search.substring(1) 
+        if(param.includes("auth")){
+          showToast("Show added to calendar.");
+        }
+      }
 
+      // Function to show toast at the top
+      function showToast(text) {
+      var x = document.getElementById("snackbar");
+      x.innerHTML = text;
+      x.className = "display";
+      // After 3 seconds, remove the show class from DIV
+      setTimeout(function(){ x.className = x.className.replace("display", ""); }, 2500);
+    }
+
+      // Function that adds an event handler for each "Save to calendar button". index tells us which date and show the "Save to calendar" button was clicked for.
+      function addCalendarButtonEventHandler(index, name, venue, date, time, link){
+        var year = (new Date()).getFullYear() // Get current year
+        var month = 3 // Assuming all shows are in March
+        var hour = Date.parse(time).getHours()
+        var min = Date.parse(time).getMinutes()
+        var endHour;
+        if(hour==23){
+          endHour = 0
+        } else {
+          endHour = hour+1
+        }
+
+        var startDateTime = year+"-"+month+"-"+date+"T"+hour+":"+min+":00"
+        var endDateTime = year+"-"+month+"-"+date+"T"+endHour+":"+min+":00"
+
+        var eventData = {
+          'summary': 'SXSW: '+name,
+          'location': venue,
+          'description': link,
+          'start': startDateTime,
+          'end': endDateTime,
+          'currentURL':window.location.href
+        }
+
+        $("#saveToCalendar-"+index).click(function(e){
+          console.log("Save to calendar button clicked!")
+          e.preventDefault();
+          $.ajax({
+            datatype:"json",
+            type: 'POST',
+            url: '/calendar',
+            data: eventData,
+            success: function(result){
+              if(result.status==200){
+                showToast("Show added to calendar.");
+                // some UI indication that the calendar event was added
+              }
+              if(result.status==500){
+                // some UI indication that the calendar event was not added
+                showToast("Error adding show to calendar.");
+              }
+              if(result.status==403){
+               window.location.assign(result.redirectURI);
+             }
+           }
+         });
+        })
+      }
+      </script>
+  
   <div class="add-shows-tooltip">
     <div class="add-shows-tooltip__text">Add shows to your schedule</div>
   </div>
