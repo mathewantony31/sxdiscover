@@ -1,0 +1,166 @@
+body {
+    background: #383838;
+    font-family: 'Raleway', sans-serif;
+    color: white;
+}
+
+label {
+    cursor: pointer;
+}
+
+.add-shows-tooltip{
+    position: fixed;
+    top: 0;
+    font-weight: 800;
+    font-size: 1.2em;
+    display: table;
+    text-align: center;
+    width: 100%;
+    background-color: #32ABB7;
+    height: 4em;
+}
+
+.no-shows-placeholder{
+    font-weight: 600;
+    line-height: 1.2em;
+    font-size: 1.5em;
+    margin-top: 3em;
+    margin-bottom: 3em;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.add-shows-tooltip__text{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.showlist{
+    margin: 0 auto;
+    margin-bottom: 10em;
+}
+
+.show{
+    margin-bottom: 2em;
+    display: grid;
+    grid-template-columns: 2fr 8fr 2fr 2fr;
+}
+
+.show__info{
+
+}
+
+.show__save-to-calendar{
+
+}
+
+.show__share{
+
+}
+
+.show__day{
+    margin-top: 3em;
+    margin-left: 14.3vw;
+    margin-bottom: 1em;
+    font-weight: 800;
+    font-size: 1em;
+    text-transform: uppercase;
+    border-bottom: 2px solid white;
+    padding-bottom: 0.2em;
+}
+
+.show__time{
+    display: table-cell;
+    font-weight: 800;
+    font-size: 0.8em;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.show__time-wrapper{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: table;
+}
+
+.show__band{
+    font-weight: 800;
+    font-size: 25px;
+}
+
+.show__venue, .show__price{
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.show_source{
+    margin-bottom: 1em;
+}
+
+
+.show__add-button{
+    display: none;
+
+}
+
+.show__add-button + label{
+    background:url('/images/add-button.svg') no-repeat;
+    height: 40px;
+    width: 40px;
+    display:inline-block;
+    padding: 0 0 0 0px;
+    margin-right: .75em;
+}
+
+.show__add-button:checked + label{
+    background-image: url(/images/checkmark.svg);
+    height: 40px;
+    width: 40px;
+    display:inline-block;
+    padding: 0 0 0 0px;
+    margin-right: .75em;
+}
+
+.show__button{
+    margin: 0 auto;
+    height: 30px;
+    width: 30px;
+}
+
+.show__button.add-to-calendar{
+    background:url('/images/add calendar_1002631.svg') no-repeat;
+    background-size: contain;
+}
+
+.show__button.share-schedule{
+    background:url('/images/share_schedule_670654.svg') no-repeat;
+    background-size: contain;
+}
+
+.footer{
+    position: fixed;
+    bottom: 0;
+}
+
+.footer-button{
+    font-weight: 800;
+    font-size: 1.5em;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    background-color: #32ABB7;
+    height: 4em;
+}
+
+.footer-button:hover{
+    background-color: #FFFFFF;
+    color: #383838;
+    cursor: pointer;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}

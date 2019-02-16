@@ -44,6 +44,9 @@ router.use('/', require('./userPage'));
 /* Load test sandbox for schedule. */
 router.use('/', require('./schedule-sandbox'));
 
+/* Load a user's schedule. */
+router.use('/', require('./schedule'));
+
 /* Testing Google calendar integration. */
 router.use('/', require('./calendar'));
 
