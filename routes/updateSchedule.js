@@ -15,7 +15,6 @@ router.post('/updateSchedule', function(req, res){
     if(err){
       return res.send({errors:"Error finding profile. If issue persists, please message us on Facebook."})
     }
-
     currentUser = req.session.id;
     console.log(currentUser);
 
