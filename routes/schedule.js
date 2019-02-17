@@ -13,7 +13,9 @@ router.get('/schedule/*', function(req, res){
     try{
         User.find({name: req.params[0]}, {"savedToSchedule":true}).exec(function(err, docs){
             // Uncomment the code below once we have saved shows in the database
-            scheduleList = docs[0].savedToSchedule;
+            if(docs[0].savedToSchedule){
+                scheduleList = docs[0].savedToSchedule;
+            }
 
             if(err){
                 return res.json({errors: "Error connecting to our database"});

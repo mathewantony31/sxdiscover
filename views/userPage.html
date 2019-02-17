@@ -239,25 +239,20 @@
           data: showData,
           success: function(result){
             if(result.status==200){
-              showToast("Schedule saved!");
               var url = window.location.href // https://www.sxdiscover.com/pages/mathew.antony31
               var indexOfUserId = url.indexOf("pages") + 6
               var userId = url.substring(indexOfUserId) // mathew.antony31
               window.location.assign('/schedule/'+userId)
             }
-            if(result.status==500){
+            if(result.status!=200){
               showToast("Error saving schedule");
             }
-           //  if(result.status==403){
-           //   window.location.assign(result.redirectURI);
-           // }
           }
         });
       }
     }
     </script>
   </div>
-
 
   <script>
     $('#changeStatus').click(function(){

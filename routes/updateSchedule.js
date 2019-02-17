@@ -23,6 +23,7 @@ router.post('/updateSchedule', function(req, res){
       console.log("Error: Failed save shows to schedule");
       return res.send({errors: "Failed to save schedule!"});
     }
+    return res.send({"success" : "Schedule updated!", "status" : 200})
     });
   });
 });
