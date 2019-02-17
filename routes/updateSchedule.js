@@ -15,8 +15,9 @@ router.post('/updateSchedule', function(req, res){
     if(err){
       return res.send({errors:"Error finding profile. If issue persists, please message us on Facebook."})
     }
-    currentUser = docs[0].name;
-
+    if(docs[0].name){
+      currentUser = docs[0].name;
+    }
     // Update saved shows in database
     User.update({ "name" : currentUser }, {$set: {"savedToSchedule" : savedShows}}, function(err){
     if(err){
