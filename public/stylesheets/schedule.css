@@ -134,6 +134,7 @@ header {
     margin: 0 auto;
     height: 30px;
     width: 30px;
+    cursor: pointer;
 }
 
 .show__button.add-to-calendar{
