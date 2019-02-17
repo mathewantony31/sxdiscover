@@ -142,16 +142,22 @@ label {
 .footer{
     position: fixed;
     bottom: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 .footer-button{
     font-weight: 800;
     font-size: 1.5em;
-    display: table-cell;
-    vertical-align: middle;
     text-align: center;
+    display: table;
     background-color: #32ABB7;
     height: 4em;
+}
+
+.footer-button__text{
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .footer-button:hover{
@@ -163,4 +169,36 @@ label {
 a{
     text-decoration: none;
     color: white;
+}
+
+/* Desktop */
+@media only screen
+and (min-device-width: 550px) {
+    .showlist{
+        width: 45vw;
+    }
+
+    .show{
+        grid-template-columns: 4fr 10fr 1fr 1fr;
+    }
+
+    .show__day{
+        margin-left: 11.25vw;
+    }
+
+    .show__add{
+        text-align: right;
+    }
+
+    .show__time{
+        font-size: 1.1em;
+    }
+
+    .footer-button{
+        margin: 0 0.05em;
+    }
+
+    .footer{
+        position: relative;
+    }
 }
