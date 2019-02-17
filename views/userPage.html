@@ -159,11 +159,11 @@
             var link = "{{this.link}}"
             addCalendarButtonEventHandler("{{@../index}}-{{@index}}",name,venue,date,time,link)
           </script>
-
-          <!-- generate plus buttons for each show -->
-          <input type="checkbox" id="checkbox-{{this.showId}}" class="show__add-button" />
-          <label for="checkbox-{{this.showId}}" />
-
+          <div class="show__add">
+            <!-- generate plus buttons for each show -->
+            <input type="checkbox" id="checkbox-{{this.showId}}" class="show__add-button" />
+            <label for="checkbox-{{this.showId}}" />
+          </div>
         </div>
         {{/each}}
         {{/each}}
@@ -251,37 +251,37 @@
         });
       }
     }
-    </script>
-  </div>
-
-  <script>
-    $('#changeStatus').click(function(){
-      $.get("/private", function(data) {
-        location.reload();
-      }); return false;
-    });
-
-    $('#changeStatus1').click(function(){
-      $.get("/private", function(data) {
-        location.reload();
-      }); return false;
-    });
-
-    if("{{canDelete}}"=='y'){
-      $(".friendPage").hide();
-      if("{{public}}"=='y'){
-        $(".public").show();
-        $(".private").hide();
-      } else {
-        $(".public").hide();
-        $(".private").show();
-      }
-    } else {
-      $(".friendPage").show();
-      $(".public").hide();
-      $(".private").hide();
-    }
   </script>
+</div>
+
+<script>
+  $('#changeStatus').click(function(){
+    $.get("/private", function(data) {
+      location.reload();
+    }); return false;
+  });
+
+  $('#changeStatus1').click(function(){
+    $.get("/private", function(data) {
+      location.reload();
+    }); return false;
+  });
+
+  if("{{canDelete}}"=='y'){
+    $(".friendPage").hide();
+    if("{{public}}"=='y'){
+      $(".public").show();
+      $(".private").hide();
+    } else {
+      $(".public").hide();
+      $(".private").show();
+    }
+  } else {
+    $(".friendPage").show();
+    $(".public").hide();
+    $(".private").hide();
+  }
+</script>
 </div>
 </body>
 </html>

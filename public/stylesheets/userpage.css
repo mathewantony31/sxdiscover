@@ -152,3 +152,27 @@ a{
     text-decoration: none;
     color: white;
 }
+
+/* Desktop */
+@media only screen
+and (min-device-width: 550px) {
+    .showlist{
+        width: 45vw;
+    }
+
+    .show{
+        grid-template-columns: 1fr 2fr 1fr;
+    }
+
+    .show__day{
+        margin-left: 11.25vw;
+    }
+
+    .show__add{
+        text-align: right;
+    }
+
+    .show__time{
+        font-size: 1.1em;
+    }
+}
