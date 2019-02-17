@@ -140,8 +140,8 @@
         }
 
         $("#saveToCalendar-"+index).click(function(e){
-          console.log("Save to calendar button clicked!")
           e.preventDefault();
+          
           $.ajax({
             datatype:"json",
             type: 'POST',
@@ -150,7 +150,8 @@
             success: function(result){
               if(result.status==200){
                 showToast("Show added to calendar.");
-                // some UI indication that the calendar event was added
+                var x = document.getElementById("saveToCalendar-"+index)
+                x.style.backgroundImage = "url('/images/calendar-checked.svg')"
               }
               if(result.status==500){
                 // some UI indication that the calendar event was not added
