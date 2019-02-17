@@ -68,9 +68,9 @@
           document.getElementById("go-to-schedule").style.visibility = "visible"
         });
 
-        //
-        vex.dialog.buttons.YES.text = 'Got it'
-        vex.dialog.alert({ message: "Here are the SXSW shows you should go to. Click the + button to add a show to your schedule." })
+        // helper modal
+        // vex.dialog.buttons.YES.text = 'Got it'
+        // vex.dialog.alert({ message: "Here are all the SXSW shows we think you'll love based on your Spotify profile. Click the + button to add a show to your schedule." })
       });
 
       // Function to show toast at the top
@@ -106,33 +106,12 @@
           'end': endDateTime,
           'currentURL':window.location.href
         }
-
-        $("#saveToCalendar-"+index).click(function(e){
-          console.log("Save to calendar button clicked!")
-          e.preventDefault();
-          $.ajax({
-            datatype:"json",
-            type: 'POST',
-            url: '/calendar',
-            data: eventData,
-            success: function(result){
-              if(result.status==200){
-                showToast("Show added to calendar.");
-                // some UI indication that the calendar event was added
-              }
-              if(result.status==500){
-                // some UI indication that the calendar event was not added
-                showToast("Error adding show to calendar.");
-              }
-              if(result.status==403){
-               window.location.assign(result.redirectURI);
-             }
-           }
-         });
-        })
       }
     </script>
 
+    <!-- page content -->
+
+    <header>Your full show list</header>
     <div class="showlist">
       {{#if shows}}
       <form name="showsForm">
@@ -148,7 +127,6 @@
             <h3 class="show__source">{{this.source}}</h3>
             <h3 class="show__venue">{{this.venue}}</h3>
             <h3 class="show__price">{{this.price}}</h3>
-            <div id="saveToCalendar-{{@../index}}-{{@index}}" class="calendar-button">Save to calendar</div>
           </div>
 
           <script>
@@ -210,25 +188,9 @@
         return 1;
       }
 
-      var msgMid;
-      if(savedShows.length == 1){
-        msgMid = "1 show"
-      } else{
-        msgMid = savedShows.length + " shows"
-      }
-      var msg = "Saved " + msgMid + " to your schedule! (not really though)"
-
-      // show a modal
-      vex.dialog.alert({ 
-        unsafeMessage: msg,
-        callback: function(){
-          sendCheckedShowsToDatabase(savedShows);
-        }
-      });
+      sendCheckedShowsToDatabase(savedShows);
 
       function sendCheckedShowsToDatabase(savedShows){
-        console.log("View Schedule button clicked");
-        console.log(savedShows);
         var showData = {
           'savedShows': savedShows
         }

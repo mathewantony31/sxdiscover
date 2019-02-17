@@ -8,6 +8,13 @@ label {
     cursor: pointer;
 }
 
+header {
+    font-size: 35px;
+    font-weight: 800;
+    margin-left: 14.3vw;
+    margin-top: 5vw;
+}
+
 .add-shows-tooltip{
     position: fixed;
     top: 0;
