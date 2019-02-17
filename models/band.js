@@ -65,7 +65,7 @@ exports.fetchShowInfoFromShowIds = function(showIdList, callback){
         showDictionary.time = docs[i].time
         showDictionary.date = docs[i].date
         showDictionary.showId = docs[i].showId
-        showDictionary.source = [search(docs[i].name, showIdList)]
+        showDictionary.source = ["no source"]
         docs[i] = showDictionary
       }
       callback(docs);
@@ -150,16 +150,16 @@ exports.parseShowData = function(shows){
 function getSource(sourceData){
   switch(sourceData.source){
     case "top":
-    return "Recently played"
-    break;
-    case "album":
-    return "From your library"
-    break;
+      return "Recently played"
+      break;
+    case "saved":
+      return "From your library"
+      break;
     case "related":
-    return "Because you like "+sourceData.relatedTo
-    break;
+      return "Because you like "+sourceData.relatedTo
+      break;
     default:
-    return ""
+      return ""
   }
 }
 
@@ -208,7 +208,7 @@ function formatAMPM(date) {
 function search(nameKey, myArray){
 
   for (var i=0; i < myArray.length; i++) {
-    if (myArray[i].name === nameKey) {
+    if (myArray[i].name.toLowerCase() === nameKey.toLowerCase()) {
       return myArray[i];
     }
   }
