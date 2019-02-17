@@ -140,7 +140,6 @@
         }
 
         $("#saveToCalendar-"+index).click(function(e){
-          console.log("Save to calendar button clicked!")
           e.preventDefault();
           $.ajax({
             datatype:"json",
@@ -166,13 +165,14 @@
 
       function shareShowEventHandler(index, showId){
         $("#share-"+index).click(function(e){
-          copyTextToClipboard('https://www.sxdiscover.com/show/'+showId)
-          showToast("We've copied a link to this show to share with your friends!")
+          copyTextToClipboard('/'+showId+'?ref=shareShowButton');
+          showToast("Show link copied!");
         })
       }
 
     </script>
 
+    <header>Your custom schedule</header>
     <div class="showlist">
       {{#if shows}}
       <form name="showsForm">
@@ -227,8 +227,8 @@
     })
 
     $('#share-schedule').click(function(e){
-      copyTextToClipboard(window.location.href)
-      showToast("Schedule link copied. Share away!")
+      copyTextToClipboard(window.location.href+'?ref=shareScheduleButton')
+      showToast("Schedule link copied!")
     })
   </script>
 </div>
