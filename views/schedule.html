@@ -235,17 +235,14 @@
       // copyTextToClipboard(window.location.href+'?ref=shareScheduleButton')
       // showToast("Schedule link copied!")
 
-      vex.dialog.open({
-        unsafeMessage: '<div class="modal__header">Here\'s your unique schedule link</div><div class="modal__subtitle">Copy it to quickly access it later or share with friends!</div>',
-        input: [
-        '<input name="schedule" type="text" value='+shareUrl+' />'
-        ].join(''),
-        buttons: [{
-          type:'submit',
-          text:'Back to schedule',
-          className:'modal-button'
-        }]
-      })
+      vex.dialog.buttons.YES.text = 'Back to schedule';
+
+      vex.dialog.alert({unsafeMessage: '<div class="modal__header">Here\'s your unique schedule link</div><div class="modal__subtitle">Copy it to quickly access it later or share with friends!</div><textarea rows="3" class="modal__textarea" id="scheduleUrlTextArea">'+shareUrl+'</textarea>'})
+
+    })
+
+    $('#scheduleUrlTextArea').click(function(){
+       $(this).select();
     })
   </script>
 </div>
