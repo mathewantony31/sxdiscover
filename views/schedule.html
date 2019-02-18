@@ -239,6 +239,7 @@
 
       vex.dialog.alert({unsafeMessage: '<div class="modal__header">Here\'s your unique schedule link</div><div class="modal__subtitle">Copy it to quickly access it later or share with friends!</div><textarea readonly rows="3" class="modal__textarea" id="scheduleUrlTextArea">'+shareUrl+'</textarea>'})
 
+document.getElementById('scheduleUrlTextArea').focus();
       document.getElementById('scheduleUrlTextArea').select();
 
     })
