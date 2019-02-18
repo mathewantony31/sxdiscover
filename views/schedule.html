@@ -161,9 +161,9 @@
               }
               if(result.status==403){
                 showCalendarModal(result.redirectURI)
-             }
-           }
-         });
+              }
+            }
+          });
         })
       }
 
@@ -180,14 +180,20 @@
             }
           }
         })
-
-
       }
 
       function shareShowEventHandler(index, showId){
         $("#share-"+index).click(function(e){
-          copyTextToClipboard('https://www.sxdiscover.com/show/'+showId+'?ref=shareShowButton');
-          showToast("Show link copied!");
+          var shareUrl = 'https://www.sxdiscover.com/show/'+showId+'?ref=shareShowButton'
+
+          vex.dialog.buttons.YES.text = 'Back to schedule';
+
+          vex.dialog.alert({unsafeMessage: '<div class="modal__header">Share the link below with your friends:</div><textarea rows="3" class="modal__textarea" id="scheduleUrlTextArea">'+shareUrl+'</textarea>'})
+
+
+          setTimeout(function(){
+            document.getElementById('scheduleUrlTextArea').setSelectionRange(0, 9999);
+          }, 1)
         })
       }
 
@@ -249,14 +255,12 @@
 
     $('#save-schedule').click(function(e){
       var shareUrl = window.location.href+'?ref=shareScheduleButton'
-      // copyTextToClipboard(window.location.href+'?ref=shareScheduleButton')
-      // showToast("Schedule link copied!")
 
       vex.dialog.buttons.YES.text = 'Back to schedule';
 
       vex.dialog.alert({unsafeMessage: '<div class="modal__header">Here\'s your unique schedule link</div><textarea rows="3" class="modal__textarea" id="scheduleUrlTextArea">'+shareUrl+'</textarea><div class="modal__subtitle">Copy it to quickly access it later or share with friends!</div>'})
 
-    
+
       setTimeout(function(){
         document.getElementById('scheduleUrlTextArea').setSelectionRange(0, 9999);
       }, 1)
