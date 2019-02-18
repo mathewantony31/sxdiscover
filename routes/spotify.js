@@ -106,11 +106,14 @@ router.get('/login', function(req, res, next){
           };
 
           request.get(getEmailOptions, function(error, response, body){
+            try{
+              userName = body.id;
+              email = body.email;
+              displayName = body.display_name;
+            } catch(e){
+              return res.send({"error":"Error fetching data from Spotify. If this persists, please email us at sxdiscovermusic@gmail.com"})
+            }
 
-            userName = body.id;
-            email = body.email;
-            displayName = body.display_name;
-     
           // Info required to get user's top tracks
           var topTracksOptions = {
             url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=50',
@@ -121,13 +124,17 @@ router.get('/login', function(req, res, next){
           // Call to get top tracks
           request.get(topTracksOptions, function(topError, topResponse, topBody){
             for(var i=0; i <topBody.items.length; i++){
-              bandName = topBody.items[i].name;
-              bandId = topBody.items[i].id;
-              spotifyBands.push({
-                "name": bandName,
-                "source":"top",
-                "id":bandId});
-              console.log("Bandname: " + bandName + " - source: top");
+              try{
+                bandName = topBody.items[i].name;
+                bandId = topBody.items[i].id;
+                spotifyBands.push({
+                  "name": bandName,
+                  "source":"top",
+                  "id":bandId});
+                console.log("Bandname: " + bandName + " - source: top");
+              } catch(e){
+                console.log("Error fetching top artists from Spotify")
+              }
             }
 
             // Info required to get user's saved albums
@@ -140,14 +147,19 @@ router.get('/login', function(req, res, next){
             // Call to get saved albums
             request.get(savedAlbumOptions, function(savedError, savedResponse, savedBody){
               for(var i=0; i <savedBody.items.length; i++){
-                // we're assuming that all albums have only 1 artist which is def not true
-                bandName = savedBody.items[i].album.artists[0].name;
-                bandId = savedBody.items[i].album.artists[0].id;
-                spotifyBands.push({
-                  "name": bandName,
-                  "source":"saved",
-                  "id":bandId});
-                console.log("Bandname: " + bandName + " - source: saved");
+
+                try{
+                  // we're assuming that all albums have only 1 artist which is def not true
+                  bandName = savedBody.items[i].album.artists[0].name;
+                  bandId = savedBody.items[i].album.artists[0].id;
+                  spotifyBands.push({
+                    "name": bandName,
+                    "source":"saved",
+                    "id":bandId});
+                  console.log("Bandname: " + bandName + " - source: saved");
+                } catch(e){
+                  console.log("Error fetching saved artists from Spotify")
+                }
               }
 
               var bandsForAsyncLoop = spotifyBands
@@ -210,9 +222,9 @@ router.get('/login', function(req, res, next){
               })
           });
           });
-          });
-        }
-      });
+        });
+}
+});
 }
 });
 
