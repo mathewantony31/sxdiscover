@@ -8,15 +8,19 @@ label {
     cursor: pointer;
 }
 
-header {
-    font-size: 2em;
+.header{
+    margin-right: 15vw;
+}
+
+.title {
+    font-size: 1.8em;
     font-weight: 800;
     margin-left: 17.2vw;
     margin-top: 7vw;
 }
 
 .subtitle{
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: 600;
     margin-left: 17.2vw;
     margin-top: 1vw;
@@ -192,11 +196,11 @@ and (min-device-width: 550px) {
         grid-template-columns: 1fr 2fr 1fr;
     }
 
-    .show__day, .subtitle, header{
+    .show__day, .subtitle, .title{
         margin-left: 11.25vw;
     }
 
-    header{
+    .title{
         font-size: 3em;
     }
 
