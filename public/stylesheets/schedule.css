@@ -156,6 +156,7 @@ header {
 }
 
 .footer-button{
+    width: 100%;
     font-weight: 800;
     font-size: 1.5em;
     text-align: center;
