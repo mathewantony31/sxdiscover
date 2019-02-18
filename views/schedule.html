@@ -237,10 +237,12 @@
 
       vex.dialog.buttons.YES.text = 'Back to schedule';
 
-      vex.dialog.alert({unsafeMessage: '<div class="modal__header">Here\'s your unique schedule link</div><div class="modal__subtitle">Copy it to quickly access it later or share with friends!</div><textarea readonly rows="3" class="modal__textarea" id="scheduleUrlTextArea">'+shareUrl+'</textarea>'})
+      vex.dialog.alert({unsafeMessage: '<div class="modal__header">Here\'s your unique schedule link</div><div class="modal__subtitle">Copy it to quickly access it later or share with friends!</div><textarea rows="3" class="modal__textarea" id="scheduleUrlTextArea">'+shareUrl+'</textarea>'})
 
-document.getElementById('scheduleUrlTextArea').focus();
-      document.getElementById('scheduleUrlTextArea').select();
+    
+      setTimeout(function(){
+        document.getElementById('scheduleUrlTextArea').setSelectionRange(0, 9999);
+      }, 1)
 
     })
   </script>
