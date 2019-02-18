@@ -94,6 +94,7 @@ header {
 
 .show__venue, .show__price, .show__source{
     font-size: 1em;
+    margin-bottom: 0.2em;
 }
 
 .show__source{
