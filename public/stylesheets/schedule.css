@@ -174,6 +174,25 @@ header {
     cursor: pointer;
 }
 
+.modal__header{
+    font-weight: 600;
+    font-size: 1.5em;
+    line-height: 1.2em;
+    margin-bottom: 0.6em;
+}
+
+.modal__subtitle{
+    font-size: 1em;
+}
+
+.vex.vex-theme-wireframe .vex-dialog-button{
+    float: left !important;
+    margin: 0 !important;
+    background-color: #383838;
+    color: white;
+    font-weight: 500;
+}
+
 a{
     text-decoration: none;
     color: white;
