@@ -214,13 +214,13 @@
     <br /><br />
     {{/if}}
     <div class="footer">
-        <div class="footer-button" id="back-to-results">
-          <div class="footer-button__text">Back to all shows</div>
-        </div>
-        <div class="footer-button" id="share-schedule">
-          <div class="footer-button__text">Share schedule</div>
-        </div>
+      <div class="footer-button" id="back-to-results">
+        <div class="footer-button__text">Back to all shows</div>
       </div>
+      <div class="footer-button" id="save-schedule">
+        <div class="footer-button__text">Save schedule</div>
+      </div>
+    </div>
   </div>
   <script>
     $('#back-to-results').click(function(){
@@ -230,9 +230,22 @@
       window.location.assign('/pages/'+userId)
     })
 
-    $('#share-schedule').click(function(e){
-      copyTextToClipboard(window.location.href+'?ref=shareScheduleButton')
-      showToast("Schedule link copied!")
+    $('#save-schedule').click(function(e){
+      var shareUrl = window.location.href+'?ref=shareScheduleButton'
+      // copyTextToClipboard(window.location.href+'?ref=shareScheduleButton')
+      // showToast("Schedule link copied!")
+
+      vex.dialog.open({
+        unsafeMessage: '<div class="modal__header">Here\'s your unique schedule link</div><div class="modal__subtitle">Copy it to quickly access it later or share with friends!</div>',
+        input: [
+        '<input name="schedule" type="text" value='+shareUrl+' />'
+        ].join(''),
+        buttons: [{
+          type:'submit',
+          text:'Back to schedule',
+          className:'modal-button'
+        }]
+      })
     })
   </script>
 </div>
