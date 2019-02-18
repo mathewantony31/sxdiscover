@@ -4,17 +4,11 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user.js');
 var Band = require('../models/band.js');
-var scheduleList;
-
-// For testing only - Remove this code once we save "savedToSchedule" for a User in the database
-// scheduleList = ["3122141864708247082", "5293595573443264360","1976575785152822475","6754240347892465380", "2204820016604094268"]
 
 router.get('/schedule/*', function(req, res){
     try{
         User.find({name: req.params[0]}, {"savedToSchedule":true,"uid":true,"displayName":true}).exec(function(err, docs){
-            if(docs[0].savedToSchedule){
-                scheduleList = docs[0].savedToSchedule;
-            }
+            var scheduleList;
             var currentSessionId = req.session.id;
             var savedSessionId = docs[0].uid;
             var isOwner=false;

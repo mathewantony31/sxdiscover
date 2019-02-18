@@ -15,18 +15,20 @@ router.post('/updateSchedule', function(req, res){
     if(err){
       return res.send({errors:"Error finding profile. If issue persists, please message us on Facebook."})
     }
-    if(docs[0].name){
+    try{
       currentUser = docs[0].name;
+      // Update saved shows in database
+      User.update({ "name" : currentUser }, {$set: {"savedToSchedule" : savedShows}}, function(err){
+        if(err){
+          console.log("Error: Failed save shows to schedule");
+          return res.send({errors: "Failed to save schedule!"});
+        } else{
+          return res.send({"success" : "Schedule updated!", "status" : 200})
+        }
+      });
+    } catch(e){
+      return res.send({errors: "Failed to save schedule. Error is "+e});
     }
-    // Update saved shows in database
-    User.update({ "name" : currentUser }, {$set: {"savedToSchedule" : savedShows}}, function(err){
-    if(err){
-      console.log("Error: Failed save shows to schedule");
-      return res.send({errors: "Failed to save schedule!"});
-    } else{
-      return res.send({"success" : "Schedule updated!", "status" : 200})
-    }
-    });
   });
 });
 
