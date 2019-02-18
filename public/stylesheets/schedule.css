@@ -156,6 +156,11 @@ header {
     grid-template-columns: 1fr 1fr;
 }
 
+.footer.viewer{
+    background-color: #383838;
+    height: 9em;
+}
+
 .footer-button{
     width: 100%;
     font-weight: 800;

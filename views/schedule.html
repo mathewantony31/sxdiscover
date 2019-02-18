@@ -14,7 +14,9 @@
   <title>Schedule</title>
   <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
+  <link rel="stylesheet" href="/stylesheets/show.css">
   <link rel="stylesheet" type="text/css" href="/stylesheets/schedule.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/loader.css">
   <link rel="stylesheet" href="/stylesheets/vex.css" />
   <link rel="stylesheet" type="text/css" href="/stylesheets/snackbar.css">
   <link rel="stylesheet" href="/stylesheets/vex-theme-wireframe.css" />
@@ -198,8 +200,12 @@
       }
 
     </script>
-
     <div class="showlist">
+    {{#if owner}}
+      <header>Your custom schedule</header>
+    {{else}}
+      <header>{{ownerName}}'s schedule</header>
+    {{/if}}
     <header>Your custom schedule</header>
       {{#if shows}}
       <form name="showsForm">
@@ -236,6 +242,10 @@
     </div> 
     <br /><br />
     {{/if}}
+    <!-- Check if user is owner of the schedule. If they are, show the "Back to all shows" option -->
+
+    <!-- OWNER = true -->
+    {{#if owner}}
     <div class="footer">
       <div class="footer-button" id="back-to-results">
         <div class="footer-button__text">Back to all shows</div>
@@ -244,6 +254,25 @@
         <div class="footer-button__text">Save schedule</div>
       </div>
     </div>
+    {{else}}
+
+    <!-- OWNER = false -->
+    <div class="footer viewer">
+      <div class="subtitle">Build your own custom SXSW schedule</div>
+      <a href="/login" class="spotify-button">
+        <img id="spotify" src="../images/spotify-button.svg">
+      </a>
+      <div id="green-button-no-text" style="visibility: hidden;" class="spotify-button no-text">
+        <div class="lds-ellipsis" id="loader"><div></div><div></div><div></div><div></div></div>
+      </div>
+      <script>
+        $('#spotify').click(function(){
+          // Show loading animation 
+          document.getElementById("green-button-no-text").style.visibility = "visible"
+        });
+      </script>
+    </div>
+    {{/if}}
   </div>
   <script>
     $('#back-to-results').click(function(){
