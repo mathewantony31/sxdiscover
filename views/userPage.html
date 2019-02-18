@@ -57,16 +57,6 @@
       }(document, 'script', 'facebook-jssdk'));
     </script>
     <script>
-
-      // If we're redirected to this page from a Google Auth, we add ?auth=true to the URL.
-      // Check if "auth=true" exists and show a success toast that the calendar event was added.
-      window.onload = function(){
-        var param = window.location.search.substring(1) 
-        if(param.includes("auth")){
-          showToast("Show added to calendar.");
-        }
-      }
-
       $(document).ready(function(){
         $('input[type=checkbox]').click(function(){
           document.getElementById("go-to-schedule").style.visibility = "visible"
