@@ -160,11 +160,28 @@
                 showToast("Error adding show to calendar.");
               }
               if(result.status==403){
-               window.location.assign(result.redirectURI);
+                showCalendarModal(result.redirectURI)
              }
            }
          });
         })
+      }
+
+      function showCalendarModal(redirectURI){
+        // show Toast with button redirectURI
+
+        vex.dialog.buttons.YES.text = 'Continue to Google';
+
+        vex.dialog.confirm({
+          message: 'We\'ll need your permission to save events to your Google calendar.',
+          callback: function(value){
+            if(value){
+              window.location.assign(redirectURI)
+            }
+          }
+        })
+
+
       }
 
       function shareShowEventHandler(index, showId){
