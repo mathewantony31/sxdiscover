@@ -185,6 +185,16 @@ header {
     font-size: 1em;
 }
 
+.modal__textarea{
+    width: 100%;
+    font-family: Raleway;
+    font-weight: 600;
+    font-size: 1em;
+    color: #32ABB7;
+    padding: 0.5em;
+    border: 1px solid black;
+}
+
 .vex.vex-theme-wireframe .vex-dialog-button{
     float: left !important;
     margin: 0 !important;
