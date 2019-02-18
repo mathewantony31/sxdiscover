@@ -104,7 +104,7 @@ exports.parseShowData = function(shows){
     if(shows[i].time=="TBD"){
       showTime = "TBD"
     } else {
-      showTime = formatAMPM(Date.parse(shows[i].time));
+      showTime = getTimeText(Date.parse(shows[i].time));
     }
     var showInfo = {
       name:shows[i].name,
@@ -189,7 +189,7 @@ function getDayName(index){
   }
 }
 
-function formatAMPM(date) {
+function getTimeText(date) {
   var hours = date.getHours();
   var minutes = date.getMinutes();
   var ampm = hours >= 12 ? 'pm' : 'am';
@@ -202,6 +202,16 @@ function formatAMPM(date) {
     minutes = ':' + minutes.toString()
   } // if minutes is 00, remove it
   var strTime = hours + minutes + ' ' + ampm;
+
+  switch(strTime){
+    case "12 pm":
+      strTime = "Noon"
+      break;
+    case "12 am":
+      strTime = "Midnight"
+      break;
+  }
+
   return strTime;
 }
 
