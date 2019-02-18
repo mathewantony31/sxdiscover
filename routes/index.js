@@ -2,13 +2,8 @@ var express = require('express');
 var router = express.Router();
 var Band = require('../models/band.js'); // Get Show info
 
-/* Get comingSoon page. */
-router.get('/', function(req, res, next) {
-  res.render('comingSoon');
-});
-
 /* Get home page. */
-router.get('/x', function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.render('index');
 });
 
