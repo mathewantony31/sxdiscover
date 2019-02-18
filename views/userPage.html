@@ -76,58 +76,60 @@
       setTimeout(function(){ x.className = x.className.replace("display", ""); }, 2500);
     }
     
-    </script>
+  </script>
 
-    <!-- page content -->
+  <!-- page content -->
 
-    <div class="showlist">
-      <header>Your full show list</header>
+  <div class="showlist">
+    <div class="header">
+      <div class="title">Your full show list</div>
       <div class="subtitle">Click the plus buttons on the right to save a custom schedule</div>
-      {{#if shows}}
-      <form name="showsForm">
-        {{#each shows}}
-        <div class="show__day">{{this.day}}, March {{this.date}}</div>
-        {{#each shows}}
-        <div class="show">
-          <div class="show__time-wrapper">
-            <div class="show__time">{{this.time}}</div>
-          </div>
-          <div class="show__info">
-            <a href="{{this.link}}" target="_blank"><div class="show__band">{{this.name}}</div></a>
-            <div class="show__source">{{this.source}}</div>
-            <h3 class="show__venue">{{this.venue}}</h3>
-            <h3 class="show__price">{{this.price}}</h3>
-          </div>
-          <div class="show__add">
-            <!-- generate plus buttons for each show -->
-            <input type="checkbox" id="checkbox-{{this.showId}}" class="show__add-button" />
-            <label for="checkbox-{{this.showId}}" />
-          </div>
+    </div>
+    {{#if shows}}
+    <form name="showsForm">
+      {{#each shows}}
+      <div class="show__day">{{this.day}}, March {{this.date}}</div>
+      {{#each shows}}
+      <div class="show">
+        <div class="show__time-wrapper">
+          <div class="show__time">{{this.time}}</div>
         </div>
-        {{/each}}
-        {{/each}}
-      </form>
-      {{else}}
-    </div> 
-    <br /><br />
-    <div class="no-shows-placeholder">No shows found yet 😞</div>
-    <div class="no-shows-placeholder">Don't worry – new shows are added every day. Check back soon!</div>
-    {{/if}}
-  </div>
-  <div class="go-to-schedule" id="go-to-schedule" onclick="getCheckedShows()">
-    <div class="go-to-schedule__cell">
-      <div id="go-to-schedule" class="go-to-schedule__button-text">
-        Go to schedule
+        <div class="show__info">
+          <a href="{{this.link}}" target="_blank"><div class="show__band">{{this.name}}</div></a>
+          <div class="show__source">{{this.source}}</div>
+          <h3 class="show__venue">{{this.venue}}</h3>
+          <h3 class="show__price">{{this.price}}</h3>
+        </div>
+        <div class="show__add">
+          <!-- generate plus buttons for each show -->
+          <input type="checkbox" id="checkbox-{{this.showId}}" class="show__add-button" />
+          <label for="checkbox-{{this.showId}}" />
+        </div>
       </div>
-      <div class="go-to-schedule__subtitle-text">
-        Don't worry. You can come back to this list later.
-      </div>
-    </div>  
-  </div>
+      {{/each}}
+      {{/each}}
+    </form>
+    {{else}}
+  </div> 
+  <br /><br />
+  <div class="no-shows-placeholder">No shows found yet 😞</div>
+  <div class="no-shows-placeholder">Don't worry – new shows are added every day. Check back soon!</div>
+  {{/if}}
+</div>
+<div class="go-to-schedule" id="go-to-schedule" onclick="getCheckedShows()">
+  <div class="go-to-schedule__cell">
+    <div id="go-to-schedule" class="go-to-schedule__button-text">
+      Go to schedule
+    </div>
+    <div class="go-to-schedule__subtitle-text">
+      Don't worry. You can come back to this list later.
+    </div>
+  </div>  
+</div>
 
-  <script>
-    function getCheckedShows(form){
-      var savedShows = [];
+<script>
+  function getCheckedShows(form){
+    var savedShows = [];
 
       // get all checked checkboxes
       var checkboxes = document.querySelectorAll("input[type=checkbox]");
