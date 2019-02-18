@@ -102,7 +102,7 @@ router.get('/calendar-callback', function(req, res, next) {
 
 function decodeText(string){
   var decodedString = string.replace(/&amp;/g, '&');
-  decodedString.replace(/&#039;/g, '\'');
+  decodedString.replace(/&#x27;/g, '\'');
   return decodedString
 }
 
