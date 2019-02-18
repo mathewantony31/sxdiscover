@@ -169,7 +169,7 @@
 
       function shareShowEventHandler(index, showId){
         $("#share-"+index).click(function(e){
-          copyTextToClipboard('/'+showId+'?ref=shareShowButton');
+          copyTextToClipboard('https://www.sxdiscover.com/show/'+showId+'?ref=shareShowButton');
           showToast("Show link copied!");
         })
       }
