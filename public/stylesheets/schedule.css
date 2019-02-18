@@ -9,10 +9,11 @@ label {
 }
 
 header {
-    font-size: 35px;
+    font-size: 2em;
     font-weight: 800;
-    margin-left: 14.3vw;
-    margin-top: 5vw;
+    margin-left: 17.2vw;
+    margin-top: 7vw;
+    vertical-align: baseline;
 }
 
 .add-shows-tooltip{
@@ -213,6 +214,9 @@ a{
 /* Desktop */
 @media only screen
 and (min-device-width: 550px) {
+    header{
+        font-size: 3em;
+    }
     .showlist{
         width: 45vw;
     }
@@ -221,7 +225,7 @@ and (min-device-width: 550px) {
         grid-template-columns: 4fr 10fr 1fr 1fr;
     }
 
-    .show__day{
+    .show__day, header{
         margin-left: 11.25vw;
     }
 
