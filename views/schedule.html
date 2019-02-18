@@ -200,13 +200,13 @@
       }
 
     </script>
-
+    <div class="showlist">
     {{#if owner}}
       <header>Your custom schedule</header>
     {{else}}
       <header>{{ownerName}}'s schedule</header>
     {{/if}}
-    <div class="showlist">
+    <header>Your custom schedule</header>
       {{#if shows}}
       <form name="showsForm">
         {{#each shows}}

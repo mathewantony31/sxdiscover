@@ -85,32 +85,7 @@
       // After 3 seconds, remove the show class from DIV
       setTimeout(function(){ x.className = x.className.replace("display", ""); }, 2500);
     }
-
-      // Function that adds an event handler for each "Save to calendar button". index tells us which date and show the "Save to calendar" button was clicked for.
-      function addCalendarButtonEventHandler(index, name, venue, date, time, link){
-        var year = (new Date()).getFullYear() // Get current year
-        var month = 3 // Assuming all shows are in March
-        var hour = Date.parse(time).getHours()
-        var min = Date.parse(time).getMinutes()
-        var endHour;
-        if(hour==23){
-          endHour = 0
-        } else {
-          endHour = hour+1
-        }
-
-        var startDateTime = year+"-"+month+"-"+date+"T"+hour+":"+min+":00"
-        var endDateTime = year+"-"+month+"-"+date+"T"+endHour+":"+min+":00"
-
-        var eventData = {
-          'summary': 'SXSW: '+name,
-          'location': venue,
-          'description': link,
-          'start': startDateTime,
-          'end': endDateTime,
-          'currentURL':window.location.href
-        }
-      }
+    
     </script>
 
     <!-- page content -->
