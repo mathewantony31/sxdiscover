@@ -42,9 +42,9 @@ router.post('/calendar', function(req, res) {
 
   // Ideally, we wouldn't need to recreate the event dictionary, but, for some reason, the start and end key/value pairs are not getting passed into the request body if they're in a dictionary. Hacky workaround for now is to change the value of start and end to be a string when making the POST request. I'm recreating the event dictionary with the correct formatting before making the API call.
   event = {
-    'summary': req.body.summary,
-    'location': req.body.location,
-    'description': req.body.description,
+    'summary': decodeText(req.body.summary),
+    'location': decodeText(req.body.location),
+    'description': decodeText(req.body.description),
     'start': {'dateTime':req.body.start, 'timeZone':'America/Chicago'},
     'end': {'dateTime':req.body.end, 'timeZone':'America/Chicago'}
   }
@@ -70,6 +70,7 @@ router.post('/calendar', function(req, res) {
       })
     }
   })
+  console.log("Event description is "+event.summary)
 });
 
 // After successfully signing in to Google, you're redirected back to this route.
@@ -98,5 +99,11 @@ router.get('/calendar-callback', function(req, res, next) {
 }
 });
 });
+
+function decodeText(string){
+  var decodedString = string.replace(/&amp;/g, '&');
+  decodedString.replace(/&#039;/g, '\'');
+  return decodedString
+}
 
 module.exports = router;
