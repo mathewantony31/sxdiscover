@@ -10,15 +10,15 @@ var priceMap = exports.map =
  },
  {
    "original": "Free | All Ages",
-   "concise": "Free"
+   "concise": "Free show"
  },
  {
    "original": "Free",
-   "concise": "Free"
+   "concise": "Free show"
  },
  {
    "original": "Free | 21+",
-   "concise": "Free"
+   "concise": "Free show"
  },
  {
    "original": "Free w/ RSVP | All Ages",
@@ -54,7 +54,7 @@ var priceMap = exports.map =
  },
  {
    "original": "Free | 21+ | $10 Minor Surcharge",
-   "concise": "Free"
+   "concise": "Free show"
  },
  {
    "original": "11.48",
@@ -74,7 +74,7 @@ var priceMap = exports.map =
  },
  {
    "original": "All Ages",
-   "concise": "Free"
+   "concise": "Free show"
  },
  {
    "original": "Badge / Wristband Priority | $5 Cover for Public | 21+",
@@ -102,6 +102,6 @@ var priceMap = exports.map =
  },
  {
    "original": "Free | Open To The Public | Open To All Badges",
-   "concise": "Free"
+   "concise": "Free show"
  }
 ]

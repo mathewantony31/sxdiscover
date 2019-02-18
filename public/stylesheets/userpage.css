@@ -9,10 +9,10 @@ label {
 }
 
 header {
-    font-size: 35px;
+    font-size: 2em;
     font-weight: 800;
-    margin-left: 14.3vw;
-    margin-top: 5vw;
+    margin-left: 17.2vw;
+    margin-top: 7vw;
 }
 
 .add-shows-tooltip{
@@ -58,7 +58,7 @@ header {
 }
 
 .show__day{
-    margin-top: 3em;
+    margin-top: 2em;
     margin-left: 17.2vw;
     margin-bottom: 1em;
     font-weight: 800;
@@ -71,9 +71,12 @@ header {
 .show__time{
     display: table-cell;
     font-weight: 800;
-    font-size: 0.8em;
+    font-family: Roboto;
+    font-weight: 400;
+    font-size: 10px;
+    padding-top: 0.9em;
+    text-transform: uppercase;
     text-align: center;
-    vertical-align: middle;
 }
 
 .show__time-wrapper{
@@ -86,22 +89,32 @@ header {
 
 .show__band{
     font-weight: 800;
-    font-size: 25px;
+    font-size: 1.5em;
 }
 
-.show__venue, .show__price{
+.show__venue, .show__price, .show__source{
+    font-size: 1em;
+}
+
+.show__source{
+    display: inline-block;
+    background-color: #32ABB7;
+    padding: 0.3em 0.5em;
+    border-radius: 8px;
+    margin: 0.2em 0;
+    margin-right: 0.2em;
+    font-size: 0.9em;
     font-weight: 500;
-    font-size: 13px;
-}
-
-.show_source{
-    margin-bottom: 1em;
 }
 
 
 .show__add-button{
     display: none;
 
+}
+
+.show__related{
+    background-color: #32ABB7;
 }
 
 .show__add-button + label{
@@ -171,8 +184,12 @@ and (min-device-width: 550px) {
         grid-template-columns: 1fr 2fr 1fr;
     }
 
-    .show__day{
+    .show__day, header{
         margin-left: 11.25vw;
+    }
+
+    header{
+        font-size: 3em;
     }
 
     .show__add{
@@ -180,6 +197,6 @@ and (min-device-width: 550px) {
     }
 
     .show__time{
-        font-size: 1.1em;
+        font-size: 0.8em;
     }
 }
