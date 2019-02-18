@@ -8,7 +8,7 @@ var Band = require('../models/band.js');
 router.get('/schedule/*', function(req, res){
     try{
         User.find({name: req.params[0]}, {"savedToSchedule":true,"uid":true,"displayName":true}).exec(function(err, docs){
-            var scheduleList;
+            var scheduleList=docs[0].savedToSchedule;
             var currentSessionId = req.session.id;
             var savedSessionId = docs[0].uid;
             var isOwner=false;
