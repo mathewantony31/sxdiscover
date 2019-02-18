@@ -11,10 +11,17 @@ var scheduleList;
 
 router.get('/schedule/*', function(req, res){
     try{
-        User.find({name: req.params[0]}, {"savedToSchedule":true}).exec(function(err, docs){
-            // Uncomment the code below once we have saved shows in the database
+        User.find({name: req.params[0]}, {"savedToSchedule":true,"uid":true,"displayName":true}).exec(function(err, docs){
             if(docs[0].savedToSchedule){
                 scheduleList = docs[0].savedToSchedule;
+            }
+            var currentSessionId = req.session.id;
+            var savedSessionId = docs[0].uid;
+            var isOwner=false;
+            var firstName=docs[0].displayName.split(" ",1)[0]
+
+            if(currentSessionId==savedSessionId){
+                isOwner = true;
             }
 
             if(err){
@@ -35,7 +42,7 @@ router.get('/schedule/*', function(req, res){
                         return Date.parse(a.date+" 2019 "+a.time)-Date.parse(b.date+" 2019 "+b.time);
                     })
                     console.log(result)
-                    res.render('schedule', {shows:Band.parseShowData(result)})
+                    res.render('schedule', {shows:Band.parseShowData(result), owner:isOwner, ownerName:firstName})
                 });
             }
         });
