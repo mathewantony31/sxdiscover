@@ -107,15 +107,6 @@
             <h3 class="show__venue">{{this.venue}}</h3>
             <h3 class="show__price">{{this.price}}</h3>
           </div>
-
-          <script>
-            var name = "{{this.name}}"
-            var venue = "{{this.venue}}"
-            var date = "{{../this.date}}"
-            var time = "{{this.time}}"
-            var link = "{{this.link}}"
-            addCalendarButtonEventHandler("{{@../index}}-{{@index}}",name,venue,date,time,link)
-          </script>
           <div class="show__add">
             <!-- generate plus buttons for each show -->
             <input type="checkbox" id="checkbox-{{this.showId}}" class="show__add-button" />
