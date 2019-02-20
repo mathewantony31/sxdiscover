@@ -75,6 +75,87 @@
       // After 3 seconds, remove the show class from DIV
       setTimeout(function(){ x.className = x.className.replace("display", ""); }, 2500);
     }
+
+    // Function that adds an event handler for each "Save to calendar button". index tells us which date and show the "Save to calendar" button was clicked for.
+      function addCalendarButtonEventHandler(index, name, venue, date, time, link){
+        var year = (new Date()).getFullYear() // Get current year
+        var month = 3 // Assuming all shows are in March
+        var hour = Date.parse(time).getHours()
+        var min = Date.parse(time).getMinutes()
+        var endHour;
+        if(hour==23){
+          endHour = 0
+        } else {
+          endHour = hour+1
+        }
+
+        var startDateTime = year+"-"+month+"-"+date+"T"+hour+":"+min+":00"
+        var endDateTime = year+"-"+month+"-"+date+"T"+endHour+":"+min+":00"
+
+        var eventData = {
+          'summary': 'SXSW: '+name,
+          'location': venue,
+          'description': link,
+          'start': startDateTime,
+          'end': endDateTime,
+          'currentURL':window.location.href
+        }
+
+        $("#saveToCalendar-"+index).click(function(e){
+          e.preventDefault();
+          
+          $.ajax({
+            datatype:"json",
+            type: 'POST',
+            url: '/calendar',
+            data: eventData,
+            success: function(result){
+              if(result.status==200){
+                showToast("Show added to calendar.");
+                var x = document.getElementById("saveToCalendar-"+index)
+                x.style.backgroundImage = "url('/images/calendar-checked.svg')"
+              }
+              if(result.status==500){
+                // some UI indication that the calendar event was not added
+                showToast("Error adding show to calendar.");
+              }
+              if(result.status==403){
+                showCalendarModal(result.redirectURI)
+              }
+            }
+          });
+        })
+      }
+
+      function showCalendarModal(redirectURI){
+        // show Toast with button redirectURI
+
+        vex.dialog.buttons.YES.text = 'Continue to Google';
+
+        vex.dialog.confirm({
+          message: 'We\'ll need your permission to save events to your Google calendar.',
+          callback: function(value){
+            if(value){
+              window.location.assign(redirectURI)
+            }
+          }
+        })
+      }
+
+      function shareShowEventHandler(index, showId){
+        $("#share-"+index).click(function(e){
+          var shareUrl = 'https://www.sxdiscover.com/show/'+showId+'?ref=shareShowButton'
+
+          vex.dialog.buttons.YES.text = 'Back to schedule';
+
+          vex.dialog.alert({unsafeMessage: '<div class="modal__header">Share the link below with your friends:</div><textarea rows="3" class="modal__textarea" id="scheduleUrlTextArea">'+shareUrl+'</textarea>'})
+
+
+          setTimeout(function(){
+            document.getElementById('scheduleUrlTextArea').setSelectionRange(0, 9999);
+          }, 1)
+        })
+      }
     
   </script>
 
@@ -82,8 +163,11 @@
 
   <div class="showlist">
     <div class="header">
-      <div class="title">Your full show list</div>
-      <div class="subtitle">Click the plus buttons on the right to save a custom schedule</div>
+    {{#if owner}}
+      <div class="title">Your SX Schedule</div>
+    {{else}}
+      <div class="title">{{ownerName}}'s schedule</div>
+    {{/if}}
     </div>
     {{#if shows}}
     <form name="showsForm">
@@ -100,15 +184,50 @@
           <h3 class="show__venue">{{this.venue}}</h3>
           <h3 class="show__price">{{this.price}}</h3>
         </div>
-        <div class="show__add">
-          <!-- generate plus buttons for each show -->
-          <input type="checkbox" id="checkbox-{{this.showId}}" class="show__add-button" />
-          <label for="checkbox-{{this.showId}}" />
-        </div>
+        <div id="share-{{@../index}}-{{@index}}" class="show__button share-schedule"></div>
+        <div id="saveToCalendar-{{@../index}}-{{@index}}" class="show__button add-to-calendar"></div>
+          <script>
+            var name = "{{this.name}}"
+            var venue = "{{this.venue}}"
+            var date = "{{../this.date}}"
+            var time = "{{this.time}}"
+            var link = "{{this.link}}"
+            var showId = "{{this.showId}}"
+            addCalendarButtonEventHandler("{{@../index}}-{{@index}}",name,venue,date,time,link)
+            shareShowEventHandler("{{@../index}}-{{@index}}", showId)
+          </script>
       </div>
       {{/each}}
       {{/each}}
     </form>
+    <!-- Check if user is owner of the schedule and show different footer buttons accordingly -->
+
+    <!-- OWNER = true -->
+    {{#if owner}}
+    <div class="footer">
+      <div class="footer-button" id="save-schedule">
+        <div class="footer-button__text">Copy link to schedule</div>
+      </div>
+    </div>
+    {{else}}
+
+    <!-- OWNER = false -->
+    <div class="footer viewer">
+      <div class="subtitle">Build your own custom SXSW schedule</div>
+      <a href="/login" class="spotify-button">
+        <img id="spotify" src="../images/spotify-button.svg">
+      </a>
+      <div id="green-button-no-text" style="visibility: hidden;" class="spotify-button no-text">
+        <div class="lds-ellipsis" id="loader"><div></div><div></div><div></div><div></div></div>
+      </div>
+      <script>
+        $('#spotify').click(function(){
+          // Show loading animation 
+          document.getElementById("green-button-no-text").style.visibility = "visible"
+        });
+      </script>
+    </div>
+    {{/if}}
     {{else}}
   </div> 
   <br /><br />
@@ -126,87 +245,22 @@
     </div>
   </div>  
 </div>
-
-<script>
-  function getCheckedShows(form){
-    var savedShows = [];
-
-      // get all checked checkboxes
-      var checkboxes = document.querySelectorAll("input[type=checkbox]");
-      for(var i = 0; i < checkboxes.length; i++ ){
-        if(checkboxes[i].checked == true){
-
-          // checkbox ids are formatted as `checkbox-<showId>`
-          // strip first 9 chars to get just showId
-          var thisShowId = checkboxes[i].id.substr(9,);
-          savedShows.push(thisShowId);
-        }
-      }
-
-      // make sure at least one box was checked
-      if(savedShows.length < 1){
-        vex.dialog.alert({ 
-          message: "Oops, no shows were selected. Try clicking the + icon next to a show!" 
-        })
-        return 1;
-      }
-
-      sendCheckedShowsToDatabase(savedShows);
-
-      function sendCheckedShowsToDatabase(savedShows){
-        var showData = {
-          'savedShows': savedShows
-        }
-        $.ajax({
-          datatype:"json",
-          type: 'POST',
-          url: '/updateSchedule',
-          data: showData,
-          success: function(result){
-            if(result.status==200){
-              var url = window.location.href // https://www.sxdiscover.com/pages/mathew.antony31
-              var indexOfUserId = url.indexOf("pages") + 6
-              var userId = url.substring(indexOfUserId) // mathew.antony31
-              window.location.assign('/schedule/'+userId)
-            }
-            if(result.status!=200){
-              showToast("Error saving schedule");
-            }
-          }
-        });
-      }
-    }
-  </script>
 </div>
-
+</div>
 <script>
-  $('#changeStatus').click(function(){
-    $.get("/private", function(data) {
-      location.reload();
-    }); return false;
-  });
+  $('#save-schedule').click(function(e){
+      var shareUrl = window.location.href+'?ref=share'
 
-  $('#changeStatus1').click(function(){
-    $.get("/private", function(data) {
-      location.reload();
-    }); return false;
-  });
+      vex.dialog.buttons.YES.text = 'Back to schedule';
 
-  if("{{canDelete}}"=='y'){
-    $(".friendPage").hide();
-    if("{{public}}"=='y'){
-      $(".public").show();
-      $(".private").hide();
-    } else {
-      $(".public").hide();
-      $(".private").show();
-    }
-  } else {
-    $(".friendPage").show();
-    $(".public").hide();
-    $(".private").hide();
-  }
+      vex.dialog.alert({unsafeMessage: '<div class="modal__header">Here\'s your unique schedule link</div><textarea rows="3" class="modal__textarea" id="scheduleUrlTextArea">'+shareUrl+'</textarea><div class="modal__subtitle">Copy it to quickly access it later or share with friends!</div>'})
+
+
+      setTimeout(function(){
+        document.getElementById('scheduleUrlTextArea').setSelectionRange(0, 9999);
+      }, 1)
+
+    })
 </script>
-</div>
 </body>
 </html>
