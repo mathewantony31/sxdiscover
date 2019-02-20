@@ -17,13 +17,14 @@ router.get('/show/*', function(req, res, next){
           var name = docs[0].name
           var venue = docs[0].venue
           var image = docs[0].image
+          var showLink = 'http://do512.com/'+docs[0].show_link
 
           var fullDate = new Date("2019-"+docs[0].date)
           var date = fullDate.getDate()
           var day = getDayName(fullDate.getDay())
           var time = formatAMPM(Date.parse(docs[0].time));
 
-          res.render('show', {name:name, venue:venue, day:day, date:date, time:time, image:image})
+          res.render('show', {name:name, venue:venue, day:day, date:date, time:time, image:image, showLink:showLink})
         } catch(e){
           // Error: We fetched something from the database but hit an error trying to parse it.
           console.log("We fetched something from the database but hit an error trying to parse it.")
