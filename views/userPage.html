@@ -168,33 +168,31 @@
 
     </script>
 
-    <!-- page content -->
-
-    <div class="showlist">
-      <div class="header">
-        {{#if owner}}
-        <div class="title">Your SX Schedule</div>
-        {{else}}
-        <div class="title">{{ownerName}}'s schedule</div>
-        {{/if}}
-      </div>
-      {{#if shows}}
-      <form name="showsForm">
-        {{#each shows}}
-        <div class="show__day">{{this.day}}, March {{this.date}}</div>
-        {{#each shows}}
-        <div class="show">
-          <div class="show__time-wrapper">
-            <div class="show__time">{{this.time}}</div>
-          </div>
-          <div class="show__info">
-            <a href="{{this.link}}" target="_blank"><div class="show__band">{{this.name}}</div></a>
-            <div class="show__source">{{this.source}}</div>
-            <h3 class="show__venue">{{this.venue}}</h3>
-            <h3 class="show__price">{{this.price}}</h3>
-          </div>
-          <div id="share-{{@../index}}-{{@index}}" class="show__button share-schedule"></div>
-          <div id="saveToCalendar-{{@../index}}-{{@index}}" class="show__button add-to-calendar"></div>
+  <div class="showlist">
+    <div class="header">
+    {{#if owner}}
+      <div class="title">Your SX Schedule</div>
+    {{else}}
+      <div class="title">{{ownerName}}'s schedule</div>
+    {{/if}}
+    </div>
+    {{#if shows}}
+    <form name="showsForm">
+      {{#each shows}}
+      <div class="show__day">{{this.day}}, March {{this.date}}</div>
+      {{#each shows}}
+      <div class="show">
+        <div class="show__time-wrapper">
+          <div class="show__time">{{this.time}}</div>
+        </div>
+        <div class="show__info">
+          <a href="/show/{{this.showId}}" target="_blank"><div class="show__band">{{this.name}}</div></a>
+          <div class="show__source">{{this.source}}</div>
+          <h3 class="show__venue">{{this.venue}}</h3>
+          <h3 class="show__price">{{this.price}}</h3>
+        </div>
+        <div id="share-{{@../index}}-{{@index}}" class="show__button share-schedule"></div>
+        <div id="saveToCalendar-{{@../index}}-{{@index}}" class="show__button add-to-calendar"></div>
           <script>
             var name = "{{this.name}}"
             var venue = "{{this.venue}}"
