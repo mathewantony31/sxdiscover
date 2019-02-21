@@ -3,8 +3,8 @@
 var express = require('express');
 var Band = require('../models/band.js');
 const fs = require('fs');
-const Cryptr = require('cryptr'); // To encrypt the access token
-const cryptr = new Cryptr('myTotalySecretKey');
+// const Cryptr = require('cryptr'); // To encrypt the access token
+// const cryptr = new Cryptr('myTotalySecretKey');
 
 var router = express.Router();
 
@@ -91,9 +91,8 @@ router.get('/calendar-callback', function(req, res, next) {
       console.error('Error retrieving access token', err);
     } else {
       oAuth2Client.setCredentials(token);
-      console.log("Access token from Google is:")
-      console.log(token)
-      // Encrypt Google access token and save it to session in the backend. This is stored in the mySessions-2019 database in Mongo
+      
+      // Save Google access token to session in the backend. This is stored in the mySessions-2019 database in Mongo
       req.session.access_token = token
 
   // Save event to calendar
