@@ -57,6 +57,15 @@
       }(document, 'script', 'facebook-jssdk'));
     </script>
     <script>
+      // If we're redirected to this page from a Google Auth, we add ?auth=true to the URL.
+      // Check if "auth=true" exists and show a success toast that the calendar event was added.
+      window.onload = function(){
+        var param = window.location.search.substring(1) 
+        if(param.includes("auth")){
+          showToast("Show added to calendar.");
+        }
+      }
+      
       $(document).ready(function(){
         $('input[type=checkbox]').click(function(){
           document.getElementById("go-to-schedule").style.visibility = "visible"
@@ -77,7 +86,7 @@
     }
 
     // Function that adds an event handler for each "Save to calendar button". index tells us which date and show the "Save to calendar" button was clicked for.
-      function addCalendarButtonEventHandler(index, name, venue, date, time, link){
+    function addCalendarButtonEventHandler(index, name, venue, date, time, link){
         var year = (new Date()).getFullYear() // Get current year
         var month = 3 // Assuming all shows are in March
         var hour = Date.parse(time).getHours()
@@ -156,10 +165,8 @@
           }, 1)
         })
       }
-    
-  </script>
 
-  <!-- page content -->
+    </script>
 
   <div class="showlist">
     <div class="header">
@@ -196,32 +203,32 @@
             addCalendarButtonEventHandler("{{@../index}}-{{@index}}",name,venue,date,time,link)
             shareShowEventHandler("{{@../index}}-{{@index}}", showId)
           </script>
-      </div>
-      {{/each}}
-      {{/each}}
-    </form>
-    <!-- Check if user is owner of the schedule and show different footer buttons accordingly -->
+        </div>
+        {{/each}}
+        {{/each}}
+      </form>
+      <!-- Check if user is owner of the schedule and show different footer buttons accordingly -->
 
-    <!-- OWNER = true -->
-    {{#if owner}}
-    <div class="footer">
-      <div class="footer-button" id="save-schedule">
-        <div class="footer-button__text">Copy link to schedule</div>
+      <!-- OWNER = true -->
+      {{#if owner}}
+      <div class="footer">
+        <div class="footer-button" id="save-schedule">
+          <div class="footer-button__text">Copy link to schedule</div>
+        </div>
       </div>
-    </div>
-    {{else}}
+      {{else}}
 
-    <!-- OWNER = false -->
-    <div class="footer viewer">
-      <div class="subtitle">Build your own custom SXSW schedule</div>
-      <a href="/login" class="spotify-button">
-        <img id="spotify" src="../images/spotify-button.svg">
-      </a>
-      <div id="green-button-no-text" style="visibility: hidden;" class="spotify-button no-text">
-        <div class="lds-ellipsis" id="loader"><div></div><div></div><div></div><div></div></div>
-      </div>
-      <script>
-        $('#spotify').click(function(){
+      <!-- OWNER = false -->
+      <div class="footer viewer">
+        <div class="subtitle">Build your own custom SXSW schedule</div>
+        <a href="/login" class="spotify-button">
+          <img id="spotify" src="../images/spotify-button.svg">
+        </a>
+        <div id="green-button-no-text" style="visibility: hidden;" class="spotify-button no-text">
+          <div class="lds-ellipsis" id="loader"><div></div><div></div><div></div><div></div></div>
+        </div>
+        <script>
+          $('#spotify').click(function(){
           // Show loading animation 
           document.getElementById("green-button-no-text").style.visibility = "visible"
         });
@@ -249,18 +256,18 @@
 </div>
 <script>
   $('#save-schedule').click(function(e){
-      var shareUrl = window.location.href+'?ref=share'
+    var shareUrl = window.location.href+'?ref=share'
 
-      vex.dialog.buttons.YES.text = 'Back to schedule';
+    vex.dialog.buttons.YES.text = 'Back to schedule';
 
-      vex.dialog.alert({unsafeMessage: '<div class="modal__header">Here\'s your unique schedule link</div><textarea rows="3" class="modal__textarea" id="scheduleUrlTextArea">'+shareUrl+'</textarea><div class="modal__subtitle">Copy it to quickly access it later or share with friends!</div>'})
+    vex.dialog.alert({unsafeMessage: '<div class="modal__header">Here\'s your unique schedule link</div><textarea rows="3" class="modal__textarea" id="scheduleUrlTextArea">'+shareUrl+'</textarea><div class="modal__subtitle">Copy it to quickly access it later or share with friends!</div>'})
 
 
-      setTimeout(function(){
-        document.getElementById('scheduleUrlTextArea').setSelectionRange(0, 9999);
-      }, 1)
+    setTimeout(function(){
+      document.getElementById('scheduleUrlTextArea').setSelectionRange(0, 9999);
+    }, 1)
 
-    })
+  })
 </script>
 </body>
 </html>

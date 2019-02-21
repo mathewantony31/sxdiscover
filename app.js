@@ -44,7 +44,7 @@ mongoose.connect(uri, function (error) {
 // Set up session store
 var store = new MongoDBStore({
         uri: process.env.MONGOLAB_URI,
-        collection: 'mySessions'
+        collection: 'mySessions-2019'
 });
 
 // Catch errors
