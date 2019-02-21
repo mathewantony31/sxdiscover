@@ -85,11 +85,17 @@ exports.saveToGoogleCalendar = function(auth, data, callback){
     resource: data,
   }, function(err, event) {
     if (err) {
-      console.log(err);
-      callback(false);
+      console.log("ERROR")
+      console.log(err); // Err is "TypeError: callback is not a function"
+      if(callback){
+        callback(false);
+      }
       return;
     } else {
-      callback(true);
+      console.log("SUCCESS")
+      if(callback){
+        callback(true);
+      }
     }
   });
 }
