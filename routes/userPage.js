@@ -17,11 +17,17 @@ router.get('/pages/*', function(req, res){
       } else{
         try{
         // Check to see if current page matches the user's logged in session
-        var requestSession = req.session.id;
-        var userSession = docs[0].uid;
+        var currentSessionId = req.session.id;
+        var savedSessionId = docs[0].uid;
         var displayName = docs[0].displayName;
+        var firstName= displayName.split(" ",1)[0]
+        var isOwner=false;
         var public = docs[0].public;
         var link = "https://www.sxdiscover.com/pages/"+req.params[0];
+
+        if(currentSessionId==savedSessionId){
+          isOwner = true;
+        }
 
         var results = Band.fetchBandInfo(docs[0].rawBandsFromSpotify, function(result){
 
@@ -35,21 +41,8 @@ router.get('/pages/*', function(req, res){
             }
             return Date.parse(a.date+" 2018 "+a.time)-Date.parse(b.date+" 2018 "+b.time);
           })
-
           var r = Band.parseShowData(result);
-
-          if(public==true){
-            if(requestSession==userSession){
-            // If user is visiting their own page, show the delete button
-            res.render('userPage', {shows:r, canDelete:'y', public:'y', status:"public", link:link});
-          } else {
-            res.render('userPage', {shows:r, canDelete:'n', public:'y', status:"public", link:link});
-          }
-        } else if(requestSession==userSession){
-          res.render('userPage', {shows:r, canDelete:'y', public:'n', status:"private"});
-        } else {
-          return res.render('privateUser');
-        }
+          res.render('userPage',{shows:r,owner:isOwner, ownerName:firstName})
       });
       } catch (e){
         console.log("Error is " + e);

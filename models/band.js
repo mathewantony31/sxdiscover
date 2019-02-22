@@ -10,10 +10,11 @@ var bandSchema = mongoose.Schema({
   link: String,
   time: String,
   date: String,
-  showId: String
+  showId: String,
+  show_link: String
 });
 
-var Band = exports.model = mongoose.model('_2019-02-21', bandSchema);
+var Band = exports.model = mongoose.model('_2019-02-19-v2', bandSchema);
 var priceMap = require('../public/javascripts/priceMapping.js')
 
 exports.fetchBandInfo = function(bandList, callback){
@@ -84,11 +85,17 @@ exports.saveToGoogleCalendar = function(auth, data, callback){
     resource: data,
   }, function(err, event) {
     if (err) {
-      console.log(err);
-      callback(false);
+      console.log("ERROR")
+      console.log(err); // Err is "TypeError: callback is not a function"
+      if(callback){
+        callback(false);
+      }
       return;
     } else {
-      callback(true);
+      console.log("SUCCESS")
+      if(callback){
+        callback(true);
+      }
     }
   });
 }

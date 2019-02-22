@@ -20,7 +20,6 @@ router.get('/privateUser', function(req, res, next){
 /* Load privacy policy page. */
 router.get('/privacy-policy', function(req, res, next){
   res.render('privacy-policy');
-  console.log("Fetching privacy page. Current memory usage is "+(Math.round(process.memoryUsage().heapUsed/1048576))+" MB.")
 });
 
 /* Load page for a specific show ID. */
@@ -35,19 +34,17 @@ router.use('/', require('./spotify'));
 /* Load a user's itinerary. */
 router.use('/', require('./userPage'));
 
-/* Load test sandbox for schedule. */
-router.use('/', require('./schedule-sandbox'));
-
-/* Load a user's schedule. */
-router.use('/', require('./schedule'));
-
 /* Testing Google calendar integration. */
 router.use('/', require('./calendar'));
 
 /* Toggle's user's itinerary between public and private. */
 router.use('/', require('./private'));
 
+// Removing /schedule and /updateSchedule route for SXD2019
+/* Load a user's schedule. */ 
+// router.use('/', require('./schedule'));
+
 /* Updates the shows saved to current user's schedule */
-router.use('/', require('./updateSchedule'))
+// router.use('/', require('./updateSchedule'))
 
 module.exports = router;

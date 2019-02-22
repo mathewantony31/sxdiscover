@@ -3,6 +3,8 @@
 var express = require('express');
 var Band = require('../models/band.js');
 const fs = require('fs');
+// const Cryptr = require('cryptr'); // To encrypt the access token
+// const cryptr = new Cryptr('myTotalySecretKey');
 
 var router = express.Router();
 
@@ -13,11 +15,6 @@ const {google} = require('googleapis');
 const SCOPES = ['https://www.googleapis.com/auth/calendar','https://www.googleapis.com/auth/calendar.events'];
 const client_secret = process.env.GCAL_CLIENT_SECRET,
 client_id = process.env.GCAL_CLIENT_ID;
-
-// The file token.json stores the user's access and refresh tokens, and is
-// created automatically when the authorization flow completes for the first
-// time.
-const TOKEN_PATH = 'token.json';
 
 var redirect_uri;
 var event;
@@ -51,26 +48,34 @@ router.post('/calendar', function(req, res) {
 
   sourceURL = req.body.currentURL;
 
-  // Check if we previously stored a token
-  fs.readFile(TOKEN_PATH, (err, token) => {
-    if(err){
-      // No previous token. Redirect to authURL to get code
-      res.send({"error" : "Not authenticated to Google", "status" : 403, "redirectURI":authUrl});
-    } else {
-      // Token exists. Set credentials so we can make API calls.
-      oAuth2Client.setCredentials(JSON.parse(token));
+  // Check if we have a saved token
+  if(req.session.access_token){
+    // Token exists. Decrypt token.
 
-      Band.saveToGoogleCalendar(oAuth2Client, event, function(status){
-        console.log("Status IS "+status)
-        if(status==false){
-          res.send({"error" : "Calendar event not added", "status" : 500});
-        } else {
-          res.send({"success" : "Calendar event added successfully", "status" : 200});
-        }
-      })
+    var token = req.session.access_token
+
+    // Set credentials so we can make API calls with decrypted token.
+    try{
+      oAuth2Client.setCredentials(token);
+    } catch(e){
+      console.log("Error setting credentials: "+e)
+      return res.send({"error" : "Not authenticated to Google", "status" : 403, "redirectURI":authUrl});
     }
-  })
-  console.log("Event description is "+event.summary)
+
+    Band.saveToGoogleCalendar(oAuth2Client, event, function(status){
+      console.log("Status IS "+status)
+      if(status==false){
+        console.log("Calendar event not added")
+        res.send({"error" : "Calendar event not added", "status" : 500});
+      } else {
+        res.send({"success" : "Calendar event added successfully", "status" : 200});
+        console.log("Calendar event added")
+      }
+    })
+  } else {
+    // Token variable is empty. Redirect to authenticate
+    res.send({"error" : "Not authenticated to Google", "status" : 403, "redirectURI":authUrl});
+  }
 });
 
 // After successfully signing in to Google, you're redirected back to this route.
@@ -86,12 +91,9 @@ router.get('/calendar-callback', function(req, res, next) {
       console.error('Error retrieving access token', err);
     } else {
       oAuth2Client.setCredentials(token);
-
-  // Store the token to disk for later program executions
-  fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-    if (err) console.error(err);
-    console.log('Token stored to', TOKEN_PATH);
-  });
+      
+      // Save Google access token to session in the backend. This is stored in the mySessions-2019 database in Mongo
+      req.session.access_token = token
 
   // Save event to calendar
   Band.saveToGoogleCalendar(oAuth2Client, event)
@@ -105,5 +107,28 @@ function decodeText(string){
   decodedString.replace(/&#x27;/g, '\'');
   return decodedString
 }
+
+// TODO: Encrypt access token before saving to session object
+// Function that takes an access token object from Google an encrypts it so that we can save the object with the session in MongoDB. An example of an access token object looks like:
+// { access_token: 'ACCESS_TOKEN',
+//  scope:
+//  'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events',
+//  token_type: 'Bearer',
+//  expiry_date: EXPIRY_DATE }
+// function encryptGoogleAccessToken(accessToken, expiryDate){
+//   return {
+//     access_token: cryptr.encrypt(accessToken),
+//     scope: 'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events',
+//     token_type: 'Bearer',
+//     expiry_date: expiryDate
+//   }
+// }
+
+// // TODO: If the decrypt fails, force user to reauth
+// function decryptGoogleAccessToken(accessTokenObject){
+//   var encryptedAccessToken = accessTokenObject.access_token
+//   accessTokenObject.access_token = cryptr.decrypt(encryptedAccessToken)
+//   return accessTokenObject
+// }
 
 module.exports = router;

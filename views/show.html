@@ -27,9 +27,10 @@
     <div class="container__content">
       <div class="container__content__band-name">{{name}}</div>
       <div class="container__content__show-info">is playing {{venue}} on {{day}}, March {{date}} at {{time}}.</div>
+      <div class="event-button" id="event">Go to event page</div>
     </div>
   </div>
-  <div class="subtitle">Build your own custom SXSW schedule</div>
+  <div class="subtitle">Build your own custom SXSW schedule.</div>
   <a href="/login" class="spotify-button">
     <img id="spotify" src="../images/spotify-button.svg">
   </a>
@@ -41,6 +42,13 @@
        // Show loading animation     
        document.getElementById("green-button-no-text").style.visibility = "visible"
      });
+
+    $('#event').click(function(){
+      // Open show page in do512
+      window.open("{{showLink}}")
+    })
+
+
 
     // Update body background image to artist image
     function setBackgroundImage(){

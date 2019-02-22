@@ -42,6 +42,23 @@ body {
     padding: 0 2em;
 }
 
+.event-button{
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0.7em 1.7em;
+    border-radius: 25px;
+    margin-top: 1em;
+    font-size: 1em;
+    background-color: coral;
+}
+
+.event-button:hover{
+    color: #383838;
+    background-color: #FFFFFF;
+}
+
 .spotify-button{
     width: 299px;
     height: 49px;

@@ -15,7 +15,6 @@ label {
 .title {
     font-size: 1.8em;
     font-weight: 800;
-    margin-left: 17.2vw;
     margin-top: 7vw;
 }
 
@@ -61,7 +60,7 @@ label {
 .show{
     margin-bottom: 2em;
     display: grid;
-    grid-template-columns: 2fr 8fr 1fr;
+    grid-template-columns: 2fr 8fr 2fr 2fr;
 }
 
 .show__info{
@@ -70,13 +69,16 @@ label {
 
 .show__day{
     margin-top: 2em;
-    margin-left: 17.2vw;
     margin-bottom: 1em;
     font-weight: 800;
     font-size: 1em;
     text-transform: uppercase;
     border-bottom: 2px solid white;
     padding-bottom: 0.2em;
+}
+
+.show__day, .header{
+    margin-left: 14.3vw;
 }
 
 .show__time{
@@ -123,6 +125,23 @@ label {
 .show__add-button{
     display: none;
 
+}
+
+.show__button{
+    margin: 0 auto;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}
+
+.show__button.add-to-calendar{
+    background:url('/images/add calendar_1002631.svg') no-repeat;
+    background-size: contain;
+}
+
+.show__button.share-schedule{
+    background:url('/images/share_schedule_670654.svg') no-repeat;
+    background-size: contain;
 }
 
 .show__related{
@@ -185,6 +204,68 @@ a{
     color: white;
 }
 
+.modal__header{
+    font-weight: 600;
+    font-size: 1.2em;
+    line-height: 1.2em;
+    margin-bottom: 0.6em;
+}
+
+.modal__subtitle{
+    font-size: 1em;
+}
+
+.modal__textarea{
+    width: 100%;
+    font-family: Raleway;
+    font-weight: 600;
+    font-size: 1em;
+    color: #32ABB7;
+    padding: 0.5em;
+    border: 1px solid black;
+}
+
+.vex.vex-theme-wireframe .vex-dialog-button{
+    float: left !important;
+    margin: 0 !important;
+    background-color: #383838;
+    color: white;
+    font-weight: 500;
+}
+
+.footer{
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    display: grid;
+}
+
+.footer.viewer{
+    background-color: #383838;
+    height: 9em;
+}
+
+.footer-button{
+    width: 100%;
+    font-weight: 800;
+    font-size: 1.5em;
+    text-align: center;
+    display: table;
+    background-color: #32ABB7;
+    height: 4em;
+}
+
+.footer-button__text{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.footer-button:hover{
+    background-color: #FFFFFF;
+    color: #383838;
+    cursor: pointer;
+}
+
 /* Desktop */
 @media only screen
 and (min-device-width: 550px) {
@@ -193,10 +274,10 @@ and (min-device-width: 550px) {
     }
 
     .show{
-        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-columns: 4fr 10fr 1fr 1fr;
     }
 
-    .show__day, .subtitle, .title{
+    .show__day, .header{
         margin-left: 11.25vw;
     }
 
@@ -210,5 +291,13 @@ and (min-device-width: 550px) {
 
     .show__time{
         font-size: 0.8em;
+    }
+
+    .footer-button{
+        margin: 0 0.05em;
+    }
+
+    .footer{
+        position: relative;
     }
 }
