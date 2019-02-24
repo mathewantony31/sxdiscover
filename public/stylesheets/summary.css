@@ -6,6 +6,7 @@ body {
 
 .container{
     margin: 0 auto;
+    margin-bottom: 5em;
     padding-left: 2em;
     padding-right: 2em;
 }
@@ -30,7 +31,6 @@ body {
 .band{
     font-size: 2em;
     font-weight: 800;
-    margin-bottom: 4em;
 }
 
 .band__name{
@@ -40,7 +40,6 @@ body {
 /* Setting it up as a table so I can get vertically center the button text */
 .view-all-results{
     position: fixed;
-    bottom: 0;
     font-weight: 800;
     font-size: 1.5em;
     display: table;
@@ -85,5 +84,7 @@ and (min-device-width: 550px) {
 @media only screen
 and (min-device-width: 320px)
 and (max-device-width: 550px) {
-
+    .view-all-results{
+        bottom: 0;
+    }
 }
