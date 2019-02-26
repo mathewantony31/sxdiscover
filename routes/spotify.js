@@ -220,10 +220,14 @@ router.get('/login', function(req, res, next){
 
                 res.redirect('summary?user='+userName);
               })
-          });
-          });
-        });
-}
+          }); // Saved album. Closing line 148.
+          }); // Top artists. Closing line 125.
+        }); // Email options. Closing line 108.
+      // Closing if statement in line 97.
+      } else{
+       // Status isn't 200 and error exists
+       return res.send({"error":"Error fetching data from Spotify. Please try again and if this persists, please email us at sxdiscovermusic@gmail.com"})
+      }
 });
 }
 });
