@@ -25,18 +25,18 @@
   <div class="container">
     <!-- if top or saved, show those -->
     {{#if topOrSaved}}
-    <div class="helper">We found {{ topOrSaved.length }} artists from your Spotify profile playing at SXSW:</div>
+    <div class="helper">{{ topOrSaved.length }} artists from your Spotify profile are playing at SXSW:</div>
     <div id="band" class="band">
       {{#each topOrSaved}}
       <div class="band__name">{{this}}</div>
       {{/each}}
     </div>
-    <div class="helper">...plus {{ related.length }} more related artists.</div>
+    <div class="helper">...plus {{ related.length }} related artists.</div>
 
     {{else}}
     <!-- if no top or saved, default to related  -->
       {{#if related}}
-        <div class="helper">We found {{ related.length }} artists playing at SXSW this year we think you'll love:</div>
+        <div class="helper">We found {{ related.length }} artists playing at SXSW related to artists you love:</div>
         <div id="band" class="band">
           {{#each related}}
           <div class="band__name">{{this}}</div>
@@ -56,7 +56,7 @@
       <div class="lds-ellipsis summary" id="loader"><div></div><div></div><div></div><div></div></div>
     </div>
     <div id="view-all-results" class="view-all-results">
-      <div id="text" class="view-all-results__button-text">VIEW ALL RESULTS</div>
+      <div id="text" class="view-all-results__button-text">SEE YOUR SXSW LINEUP</div>
     </div>
     <script>
       var user = "{{name}}";
