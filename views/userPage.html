@@ -72,8 +72,8 @@
         });
 
         // helper modal
-        // vex.dialog.buttons.YES.text = 'Got it'
-        // vex.dialog.alert({ message: "Here are all the SXSW shows we think you'll love based on your Spotify profile. Click the + button to add a show to your schedule." })
+        vex.dialog.buttons.YES.text = 'Got it'
+        vex.dialog.alert({ unsafeMessage: "Here are all the SXSW shows we think you'll love based on your Spotify profile. <br /><br />Save individual shows to your Google calendar or share them with friends." })
       });
 
       // Function to show toast at the top
@@ -155,7 +155,7 @@
         $("#share-"+index).click(function(e){
           var shareUrl = 'https://www.sxdiscover.com/show/'+showId+'?ref=shareShowButton'
 
-          vex.dialog.buttons.YES.text = 'Back to schedule';
+          vex.dialog.buttons.YES.text = 'Back to lineup';
 
           vex.dialog.alert({unsafeMessage: '<div class="modal__header">Share the link below with your friends:</div><textarea rows="3" class="modal__textarea" id="scheduleUrlTextArea">'+shareUrl+'</textarea>'})
 
@@ -171,7 +171,7 @@
   <div class="showlist">
     <div class="header">
     {{#if owner}}
-      <div class="title">Your SX Schedule</div>
+      <div class="title">Your SXSW Lineup</div>
     {{else}}
       <div class="title">{{ownerName}}'s schedule</div>
     {{/if}}
@@ -213,14 +213,14 @@
       {{#if owner}}
       <div class="footer">
         <div class="footer-button" id="save-schedule">
-          <div class="footer-button__text">Copy link to schedule</div>
+          <div class="footer-button__text">Copy link to lineup</div>
         </div>
       </div>
       {{else}}
 
       <!-- OWNER = false -->
       <div class="footer viewer">
-        <div class="subtitle">Build your own custom SXSW schedule</div>
+        <div class="subtitle">Discover SXSW shows from your favorite artists.</div>
         <a href="/login" class="spotify-button">
           <img id="spotify" src="../images/spotify-button.svg">
         </a>
@@ -258,9 +258,9 @@
   $('#save-schedule').click(function(e){
     var shareUrl = window.location.href+'?ref=share'
 
-    vex.dialog.buttons.YES.text = 'Back to schedule';
+    vex.dialog.buttons.YES.text = 'Back to lineup';
 
-    vex.dialog.alert({unsafeMessage: '<div class="modal__header">Here\'s your unique schedule link</div><textarea rows="3" class="modal__textarea" id="scheduleUrlTextArea">'+shareUrl+'</textarea><div class="modal__subtitle">Copy it to quickly access it later or share with friends!</div>'})
+    vex.dialog.alert({unsafeMessage: '<div class="modal__header">Your unique lineup link</div><textarea rows="3" class="modal__textarea" id="scheduleUrlTextArea">'+shareUrl+'</textarea><div class="modal__subtitle">Copy this link to share with friends or access your lineup later.</div>'})
 
 
     setTimeout(function(){
