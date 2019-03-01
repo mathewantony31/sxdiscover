@@ -43,7 +43,7 @@ router.get('/pages/*', function(req, res){
           })
           var r = Band.parseShowData(result);
           res.render('userPage',{shows:r,owner:isOwner, ownerName:firstName})
-      });
+        });
       } catch (e){
         console.log("Error is " + e);
         return res.send({errors: "User page doesn't exist"});
@@ -58,22 +58,14 @@ router.get('/pages/*', function(req, res){
 router.get('/summary', function(req, res){
   var user = req.query.user;
 
-  fetchBandSummary(user, function(topOrSaved, related){
-    res.render('summary', {name:user, topOrSaved:topOrSaved, related:related});
-  });
-});
-
-function fetchBandSummary(user, callback){
   User.find({name: user}).exec(function(err, docs){
     if(err){
-      return {errors: "Error connecting to our database"};
+      return res.send({errors: "Error connecting to our database"});
     } else {
       try{
         var results = Band.fetchBandInfo(docs[0].rawBandsFromSpotify, function(result){
-
           var topOrSavedBandList = [];
           var relatedBandList = [];
-
           var resultsJson = JSON.parse(JSON.stringify(result));
 
           for (var i=0; i < resultsJson.length; i++){
@@ -90,15 +82,14 @@ function fetchBandSummary(user, callback){
               }
             }
           }
-
-          callback(topOrSavedBandList, relatedBandList);
+          res.render('summary', {name:user, topOrSaved:topOrSavedBandList, related:relatedBandList});
         });
       } catch(e){
         console.log("! Error is " + e);
-        return {errors: "User page doesn't exist"};
+        return res.send({errors: "User page doesn't exist"});
       }
     }
   }); 
-}
+});
 
 module.exports = router;
