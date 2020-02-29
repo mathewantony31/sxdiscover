@@ -16,6 +16,7 @@ if(!isProduction){
   // Load local environment file
   require('dotenv').load();
 } else {
+  console.log("Redirect URI is "+redirect_uri)
   redirect_uri = 'https://www.sxdiscover.com/callback';
 }
 
