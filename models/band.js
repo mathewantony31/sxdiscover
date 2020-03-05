@@ -14,7 +14,7 @@ var bandSchema = mongoose.Schema({
   show_link: String
 });
 
-var Band = exports.model = mongoose.model('_2020-02-28-v3', bandSchema);
+var Band = exports.model = mongoose.model('_2020-03-05', bandSchema);
 var priceMap = require('../public/javascripts/priceMapping.js')
 
 exports.fetchBandInfo = function(bandList, callback){
